@@ -1,0 +1,19 @@
+:root {
+  --color-primary: #b24be2;
+  --color-secondary: #fafafe;
+  --color-base-primary: #331936;
+  --color-font-base-primary: #333;
+  --color-font-light-primary: #fafafe;
+  --color-font-primary: #b83da8;
+  --color-font-secondary: #fafafe;
+  --color-font-danger: #f46d22;
+  --color-font-danger-light: #f46d2220;
+  --color-font-success: #1ecb4f;
+  --color-font-success-light: #1ecb4f20;
+  --color-font-placeholder: rgba(124, 124, 124, 0.2);
+  --color-font-input: #989898;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
