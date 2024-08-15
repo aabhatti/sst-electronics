@@ -6,7 +6,7 @@ import { HttpStatusCode } from "../../../../../constants";
 import { cookies } from "next/headers";
 
 connection();
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   // login route
   try {
     const body = await req.json();

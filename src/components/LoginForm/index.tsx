@@ -6,9 +6,12 @@ import { loginSchema } from "../../utils/zodValidations";
 import { loginDefaultValues } from "../../utils/defaultValues";
 import { ILoginInput } from "../../utils/interfaces";
 import FormBody from "./FormBody";
+import { authenticate } from "@/app/lib/actions";
+import { useFormState, useFormStatus } from "react-dom";
 
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
   const {
     handleSubmit,
@@ -21,19 +24,22 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<ILoginInput> = (data) => {
-    console.log(data);
-  };
+  // const onSubmit: SubmitHandler<ILoginInput> = (data) => {
+  //   console.log("data>>", data);
+  //   authenticate();
+  // };
+  console.log("errorMessage>>>", errorMessage);
+  const { pending } = useFormStatus();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(dispatch)}>
       <FormBody
         errors={errors}
-        isSubmitting={isSubmitting}
+        isSubmitting={isSubmitting || pending}
         watch={watch}
         trigger={trigger}
         setValue={setValue}
-        loading={loading}
+        loading={loading || pending}
       />
     </form>
   );
