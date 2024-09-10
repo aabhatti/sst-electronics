@@ -16,11 +16,13 @@ const ObjectId = mongoose.Types.ObjectId;
 
 const UserSchema = z.object({
   id: dbId.optional(),
-  firstName: z.string(),
-  lastName: z.string(),
+  firstName: z.string().optional().default(""),
+  lastName: z.string().optional().default(""),
+  name: z.string().optional().default(""),
   email: z.string().email(),
   salt: z.string().optional(),
   password: z.string().optional(),
+  status: z.string().optional().default(""),
   refreshToken: z.string().optional().default(""),
   createdAt: z.instanceof(Date).nullable().optional(),
   updatedAt: z.instanceof(Date).nullable().optional(),
@@ -30,9 +32,11 @@ interface IUser {
   id?: string | Types.ObjectId | null | undefined;
   firstName: string;
   lastName: string;
+  name: string;
   email: string;
   salt?: string;
   password?: string;
+  status?: string;
   refreshToken?: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
@@ -42,9 +46,11 @@ class User {
   id: string | Types.ObjectId | null | undefined;
   firstName: string;
   lastName: string;
+  name: string;
   email: string;
   #password?: string | undefined;
   #salt?: string | undefined;
+  status: string;
   refreshToken: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
@@ -54,9 +60,11 @@ class User {
     this.id = parsed.id;
     this.firstName = parsed.firstName;
     this.lastName = parsed.lastName;
+    this.name = parsed.name;
     this.email = parsed.email;
     this.#password = parsed.password;
     this.#salt = parsed.salt;
+    this.status = parsed.status;
     this.refreshToken = parsed.refreshToken;
     this.createdAt = parsed.createdAt;
     this.updatedAt = parsed.updatedAt;
@@ -92,6 +100,7 @@ class User {
       email: this.email,
       firstName: this.firstName,
       lastName: this.lastName,
+      name: this.name,
       role: UserConstants.USER,
     });
   }
@@ -102,6 +111,7 @@ class User {
       email: this.email,
       firstName: this.firstName,
       lastName: this.lastName,
+      name: this.name,
     });
   }
 
@@ -120,6 +130,7 @@ class User {
       email: this.email,
       firstName: this.firstName,
       lastName: this.lastName,
+      name: this.name,
     };
   }
 

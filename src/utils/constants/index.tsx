@@ -1,8 +1,29 @@
+export const OFFSET = Number(process.env.REACT_APP_PAGE_OFFSET) || 10;
+export const DEBOUNCE_TIME = 1000;
+
+export const HTTP_STATUS_CODE = {
+  OK: 200,
+  CREATED: 201,
+  NOT_EXECUTE: 210,
+  NOT_FOUND: 404,
+  Expectation_Failed: 417,
+  CONFLICT: 409,
+};
+
 export const LENGTH = {
   MAX_30: "Maximum 30 characters",
   MAX_60: "Maximum 60 characters",
+  MAX_13: "Maximum 13 characters",
+  MAX_11: "Maximum 11 characters",
+  MAX_100: "Maximum 100 characters",
 };
 
+export const SERVICE_ERROR = "Something went wrong, Please try again.";
+export const HTTP_REQUEST_ERROR = {
+  INCORRECT_METHOD: (method: string = "") => {
+    return `Unsupported method: ${method}`;
+  },
+};
 export const ERRORS = {
   NUMERICAL_VALUE_REQUIRED: "Input numerical value to continue",
   NON_ZERO_VALUE_REQUIRED: "Value must be above 0",
@@ -56,6 +77,13 @@ export const ERRORS = {
   ORGANIZATION_NAME_REQUIRED: "Organization Name is required",
   ORGANIZATION_NAME_INVALID:
     "Organization name must contain only alphanumeric characters and spaces",
+  CNIC_REQUIRED: "CNIC is required",
+  CNIC_INVALID: "CNIC must contain only numbers",
+  MOBILE_REQUIRED: "Mobile number is required",
+  MOBILE_INVALID: "Mobile number must contain only numbers",
+  ADDRESS_REQUIRED: "Address is required",
+  ADDRESS_INVALID:
+    "Address must contain only alphanumeric characters and spaces",
 };
 
 export const GENERIC = {
@@ -112,6 +140,9 @@ export const LABELS = {
   DEPOSIT_THRESHOLD_LIMIT: "Deposit Threshold Limit",
   CONTACT_EMAIL: "Contact Email*",
   SEARCH: "Search",
+  MOBILE: "Mobile",
+  CNIC: "CNIC",
+  ADDRESS: "Address",
 };
 
 export const PLACEHOLDERS = {
@@ -152,17 +183,61 @@ export const PLACEHOLDERS = {
   SET_PASSWORD: "Enter New Password",
   SET_CONFIRM_PASSWORD: "Re-Enter New Password",
   SET_EMAIL: "Enter email address",
+  MOBILE: "Enter mobile number",
+  CNIC: "Enter CNIC number",
+  ADDRESS: "Enter home address",
 };
 
 export enum NAMES {
   FIRST_NAME = "firstName",
   LAST_NAME = "lastName",
   EMAIL = "email",
-  PASSWORD = "password",
-  CONFIRM_PASSWORD = "confirmPassword",
+  MOBILE = "mobile",
+  CNIC = "cnic",
+  ADDRESS = "address",
 }
 
 export const BUTTON_TYPE = {
   SUBMIT: "submit",
   BUTTON: "button",
+};
+
+export const GENERIC_MESSAGES = {
+  SOMETHING_WENT_WRONG: "Something went wrong",
+  NO_DATA_AVAILABLE: "Sorry, no data available",
+  NO_RESULTS_TO_DISPLAY: "No results to display",
+  NO_DATA_TO_DISPLAY: "No results to display",
+  ADMINS: "Admins",
+  USERS: "Users",
+  CREATE_ADMIN: "Create Admin",
+  GENERATE_BANK_ACCOUNT: "Generate Bank Account",
+  RESET: "Reset",
+};
+
+export const GENERIC_CONSTANTS = {
+  DATE_TIME_FORMAT: "YYYY-MM-DD HH:mm:ss",
+  DATE_FORMAT: "YYYY-MM-DD",
+};
+
+export enum TooltipPosition {
+  TOP = "top",
+  RIGHT = "right",
+  BOTTOM = "bottom",
+  LEFT = "left",
+}
+
+export enum METHODES {
+  GET = "get",
+  POST = "post",
+  PUT = "put",
+  DELETE = "delete",
+}
+
+export const ENCRYPTED_KEYS = {
+  token: "X7gF9Lm",
+  user: "r8kT2Vb",
+  permissions: "W9hP1Qs",
+  userInfo: "y3dN6Jw",
+  loginKey: "L7kD5Xt",
+  maintenanceDate: "T1wN6Qy",
 };

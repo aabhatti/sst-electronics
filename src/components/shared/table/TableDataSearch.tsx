@@ -1,14 +1,33 @@
 import React, { useEffect, useMemo } from "react";
-import { TYPE, DEBOUNCE_TIME, LABELS } from "../../../utils/Constants";
+import { TYPE, DEBOUNCE_TIME, LABELS } from "@/utils/constants";
 import { initialSearch } from "./helper";
-import Input from "../Input/Input";
 import { debounce } from "lodash";
+import TextField from "../inputs/TextField";
+import { RxCross2 } from "react-icons/rx";
 
-const TableDataSearch = ({ searchVal, setSearchVal, handleSearch }) => {
+// Define the shape of the search value state
+interface SearchVal {
+  prev: string;
+  current: string;
+}
+
+// Define the props for the component
+interface TableDataSearchProps {
+  searchVal: SearchVal;
+  setSearchVal: React.Dispatch<React.SetStateAction<SearchVal>>;
+  handleSearch: (search: string) => void;
+}
+
+const TableDataSearch: React.FC<TableDataSearchProps> = ({
+  searchVal,
+  setSearchVal,
+  handleSearch,
+}) => {
   const debounceSearch = useMemo(
-    () => debounce((search) => handleSearch(search), DEBOUNCE_TIME),
+    () => debounce((search: string) => handleSearch(search), DEBOUNCE_TIME),
     [handleSearch]
   );
+
   useEffect(() => {
     if (searchVal.prev !== searchVal.current)
       debounceSearch(searchVal?.current?.trim());
@@ -18,11 +37,12 @@ const TableDataSearch = ({ searchVal, setSearchVal, handleSearch }) => {
   return (
     <div className="d-flex flex-column flex-wrap ml-2">
       <span className="my-2 text-body">{LABELS.SEARCH}</span>
-      <div className="input-group table-search-area width-300 position-relative">
-        <Input
+      <div className="width-300 relative">
+        <TextField
           type={TYPE.TEXT}
+          name="search"
           value={searchVal?.current || ""}
-          className="input-search bg-transparent"
+          className="input-search bg-transparent pr-7"
           onChange={(e) => {
             setSearchVal((prev) => ({
               prev: prev.current,
@@ -32,13 +52,13 @@ const TableDataSearch = ({ searchVal, setSearchVal, handleSearch }) => {
         />
         {searchVal?.current && (
           <span
-            className="clear-auto-complete c-pointer"
+            className="clear-auto-complete cursor-pointer"
             onClick={() => {
               if (searchVal?.current?.trim()) handleSearch("");
               setSearchVal(initialSearch);
             }}
           >
-            <i className="bi bi-x text-primary fs-3 fw-bold"></i>
+            <RxCross2 className="text-primary text-lg" />
           </span>
         )}
       </div>

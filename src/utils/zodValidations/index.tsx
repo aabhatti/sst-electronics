@@ -4,6 +4,9 @@ import {
   emailValidation,
   firstNameValidation,
   lastNameValidation,
+  cnicValidation,
+  mobileValidation,
+  addressValidation,
 } from "./common";
 import { passwordRegex } from "./regex";
 
@@ -33,5 +36,14 @@ export const registerSchema = z
       });
     }
   });
+
+export const createUserSchema = z.object({
+  firstName: firstNameValidation,
+  lastName: lastNameValidation,
+  email: emailValidation,
+  mobile: mobileValidation,
+  cnic: cnicValidation,
+  address: addressValidation,
+});
 
 export { loginSchema };

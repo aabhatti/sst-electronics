@@ -4,11 +4,19 @@ import {
   isCurrentEnabled,
   isForwardEnabled,
   isPreviousEnabled,
-  dataExists,
   isPageButtonEnabled,
 } from "./helper";
 
-const TableFooter = ({
+interface TableFooterProps {
+  loading: boolean;
+  page: number;
+  total: number;
+  limit: number;
+  pagination: number[];
+  handlePagination: (page: number) => void;
+}
+
+const TableFooter: React.FC<TableFooterProps> = ({
   loading,
   page,
   total,
@@ -38,7 +46,7 @@ const TableFooter = ({
             <i className="fa fa-angle-double-left"></i>
           </button>
           <span>
-            {dataExists(pagination) > 0 ? (
+            {!!(pagination?.length > 0) ? (
               pagination.map(
                 (number, i) =>
                   isPageButtonEnabled(page, number) && (

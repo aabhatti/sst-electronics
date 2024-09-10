@@ -1,7 +1,58 @@
-import React from "react";
-
+"use client";
+import React, { useState, useEffect, useCallback } from "react";
+import { initialUsersValue, fetchUsers, headerUsersValues } from "./helper";
+import Table from "@/components/shared/table";
+import { useRouter } from "next/navigation";
 const Users = () => {
-  return <div>{"Users"}</div>;
+  const router = useRouter();
+  const [users, setUsers] = useState(initialUsersValue());
+  // initialUsersValue(searchParams?.get("search"))
+
+  console.log("users>>>>", users);
+
+  useEffect(() => {
+    fetchUsers({ page: users.page, search: users.search, setData: setUsers });
+    //eslint-disable-next-line
+  }, []);
+
+  const handleSearch = useCallback((search: string) => {
+    console.log("search>", search);
+    setUsers((prev) => ({ ...prev, search }));
+    fetchUsers({ page: users.page, search: search, setData: setUsers });
+  }, []);
+
+  const handlePagination = useCallback((page: number) => {
+    setUsers((prev) => ({ ...prev, page }));
+    fetchUsers({ page, search: users.search, setData: setUsers });
+  }, []);
+
+  const handleRefresh = useCallback(() => {
+    fetchUsers({ page: 1, search: users.search, setData: setUsers });
+  }, []);
+
+  const handleNavigate = () => router.push("/users/create");
+  return (
+    <>
+      <div className="card">
+        <h2 className="m-0">{"users"}</h2>
+      </div>
+      <div className="card">
+        <Table
+          loading={users.loading}
+          search={users.search}
+          handleSearch={handleSearch}
+          header={headerUsersValues}
+          bodyData={users.list}
+          limit={users?.offset}
+          total={users?.total}
+          page={users?.page}
+          handlePagination={handlePagination}
+          handleRefresh={handleRefresh}
+          handleCreate={handleNavigate}
+        />
+      </div>
+    </>
+  );
 };
 
 export default Users;

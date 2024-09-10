@@ -184,7 +184,30 @@ const UserMessages = {
   EMAIL_ALREADY_EXIST:
     "An account with this email address is already registered",
   REGISTER_ACCOUNT_SUCCESS: "Your account created successfully",
+  USERS_FETCHED_SUCCESS: "Users fetched successfully",
 };
+
+const DealMessages = {
+  FAILED_TO_FIND_DEAL: "Failed to find deal",
+  FAILED_TO_SAVE_DEAL: "Failed to save deal",
+  CREATE_SUCCESS: "Deal created successfully",
+  FETCHED_SUCCESS: "Deal(s) fetched successfully",
+};
+
+const InstallmentMessages = {
+  FAILED_TO_FIND_INSTALLMENT: "Failed to find installment",
+  FAILED_TO_SAVE_INSTALLMENT: "Failed to save installment",
+  CREATE_SUCCESS: "Installment created successfully",
+  FETCHED_SUCCESS: "Installment(s) fetched successfully",
+};
+
+const Roles = {
+  USER: "user",
+  SUPER_ADMIN: "superAdmin",
+  SUPERVISOR: "supervisor",
+};
+
+const OFFSET_LIMIT = 10;
 
 export {
   HttpStatusCode,
@@ -192,4 +215,8 @@ export {
   GENERIC_CONSTANTS,
   UserConstants,
   UserMessages,
+  Roles,
+  OFFSET_LIMIT,
+  DealMessages,
+  InstallmentMessages,
 };

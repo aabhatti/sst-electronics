@@ -10,4 +10,13 @@ interface IRegisterInput {
   password: string;
   confirmPassword: string;
 }
-export type { ILoginInput, IRegisterInput };
+
+interface ICreateUserInput {
+  firstName: string;
+  lastName: string;
+  email: string;
+  mobile: number;
+  cnic: number;
+  address: string;
+}
+export type { ILoginInput, IRegisterInput, ICreateUserInput };

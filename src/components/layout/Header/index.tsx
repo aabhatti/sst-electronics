@@ -1,13 +1,31 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { usePathname } from "next/navigation";
 import Logout from "@/components/shared/logout";
+import { CgMenuGridO } from "react-icons/cg";
+import { MdArrowForward } from "react-icons/md";
+
+import {
+  SidebarContext,
+  SidebarContextType,
+} from "@/app/context/SidebarContext";
 
 const Header = () => {
+  const { open, handleSidebarToggle } = useContext(
+    SidebarContext
+  ) as SidebarContextType;
+
   const path = usePathname();
-  console.log("usePathname>>>", usePathname);
+  console.log("open in header>", open);
   return (
-    <div className="header p-2 flex items-center justify-between bg-gradient-to-r fixed pl-[250px] top-0 right-0 w-full h-[70px] bg-gradient-to-tl from-cyan-400 from-0% via-purple-300 via-0% to-indigo-300">
+    <div className="bg-[#36246514] header flex items-center justify-between fixed top-0 right-0 w-full">
+      <span
+        className="text-primary text-[32px] cursor-pointer mx-4 inline-block"
+        onClick={handleSidebarToggle}
+      >
+        {open ? <CgMenuGridO /> : <MdArrowForward />}
+      </span>
+
       <h2>{path}</h2>
       <Logout />
     </div>

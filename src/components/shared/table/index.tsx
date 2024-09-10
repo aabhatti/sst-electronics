@@ -7,7 +7,7 @@ interface TableProps {
   loading: boolean;
   title?: string;
   search?: string;
-  handleSearch?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearch?: (searchVal: string) => void;
   header?: any[]; // Define the exact type if possible
   children?: ReactNode;
   bodyData?: any[]; // Define the exact type if possible
@@ -84,9 +84,6 @@ const Table: React.FC<TableProps> = ({
               loading={loading}
               header={header}
               bodyData={bodyData}
-              page={page}
-              total={total}
-              handlePagination={handlePagination}
               actionHandler={actionHandler}
             >
               {children}

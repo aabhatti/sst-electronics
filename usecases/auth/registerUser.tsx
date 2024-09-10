@@ -23,6 +23,7 @@ async function registerUser(
   let creatingUser = new User({
     firstName: body?.firstName,
     lastName: body?.lastName,
+    name: `${body?.firstName || ""} ${body?.lastName || ""}`,
     email: body.email,
   });
 

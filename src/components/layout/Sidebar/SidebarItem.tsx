@@ -14,18 +14,16 @@ interface ItemProps {
 const SidebarItem: React.FC<ItemProps> = ({ item }) => {
   const pathName = usePathname();
   const { title, icon, path } = item;
-  console.log("pathName>", pathName);
-  console.log("path>", path);
 
   return (
     <Link
       href={path}
-      className={`mw-[100%] m-1 flex items-center p-2 rounded-md ${
-        pathName === path ? "active bg-primary" : ""
-      } hover:bg-primary cursor-pointer `}
+      className={`sidebar-item mw-[100%] flex items-center rounded-md text-fontPrimary ${
+        pathName === path ? "active bg-lightBasePrimary" : ""
+      } hover:bg-lightBasePrimary cursor-pointer `}
     >
-      <span className="text-lg">{icon}</span>
-      <p className="text-md ml-2">{title}</p>
+      <span className="icon text-lg">{icon}</span>
+      <p className="text text-md">{title}</p>
     </Link>
   );
 };

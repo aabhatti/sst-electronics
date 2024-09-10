@@ -25,6 +25,7 @@ const config: Config = {
       },
       backgroundColor: {
         primary: "var(--color-primary)",
+        lightPrimary: "var(--color-light-primary)",
         secondary: "var(--color-secondary)",
         borderPrimary: "var(--color-border-primary)",
         fontPrimary: "var(--color-font-primary)",
@@ -32,11 +33,15 @@ const config: Config = {
         danger: "var(--color-font-danger)",
         dangerLight: "var(--color-font-danger-light)",
         successLight: "var(--color-font-success-light)",
+        lightBasePrimary: "var(--color-light-base-primary)",
+        baseSecondary: "var(--color-base-secondary)",
       },
       borderColor: {
+        lightPrimary: "var(--color-font-light-primary)",
         themePrimary: "var(--color-font-primary)",
         primary: "var(--color-primary)",
         secondary: "var(--color-border-secondary)",
+        baseSecondary: "var(--color-base-secondary)",
       },
       screens: {
         "3xl": "1770px",

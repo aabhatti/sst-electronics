@@ -11,4 +11,13 @@ const registerDefaultValues = {
   confirmPassword: "",
 };
 
-export { loginDefaultValues, registerDefaultValues };
+const createUserDefaultValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  mobile: 0,
+  cnic: 0,
+  address: "",
+};
+
+export { loginDefaultValues, registerDefaultValues, createUserDefaultValues };

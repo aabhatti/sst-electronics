@@ -1,14 +1,22 @@
-import mongoose, { Schema, Document, Model, ClientSession } from "mongoose";
+import mongoose, {
+  Schema,
+  Document,
+  Model,
+  ClientSession,
+  PipelineStage,
+} from "mongoose";
 import { User } from "../models/User";
 import { InternalServerError } from "../errors";
-import { UserMessages } from "../constants";
+import { GenericMessages, UserMessages } from "../constants";
 
 interface IUserDocument extends Document {
   firstName: string;
   lastName: string;
+  name: string;
   salt: string;
   password: string;
   email: string;
+  status: string;
   refreshToken: string;
 }
 
@@ -16,9 +24,11 @@ const UserSchema: Schema<IUserDocument> = new Schema(
   {
     firstName: { type: String, default: "" },
     lastName: { type: String, default: "" },
+    name: { type: String, default: "" },
     salt: { type: String, default: "" },
     password: { type: String, default: "" },
     email: { type: String, unique: true, default: "" },
+    status: { type: String, default: "unverified" },
     refreshToken: { type: String, default: "" },
   },
   {
@@ -29,7 +39,7 @@ const UserSchema: Schema<IUserDocument> = new Schema(
 );
 
 const UserRecord: Model<IUserDocument> =
-  mongoose.models.users || mongoose.model<IUserDocument>("User", UserSchema);
+  mongoose.models.User || mongoose.model<IUserDocument>("User", UserSchema);
 
 class UserRepository {
   async findById(id: string | null): Promise<User | null> {
@@ -44,6 +54,18 @@ class UserRepository {
     }
   }
 
+  async find(condition: object = {}): Promise<User[] | []> {
+    try {
+      const records = await UserRecord.find(condition).exec();
+      if (records) {
+        return records.map((record) => new User(record));
+      }
+      return [];
+    } catch (err) {
+      throw new InternalServerError(UserMessages.FAILED_TO_FIND_USER);
+    }
+  }
+
   async findByEmail(email: string): Promise<User | null> {
     try {
       const record = await UserRecord.findOne({ email }).exec();
@@ -53,6 +75,13 @@ class UserRepository {
       return null;
     } catch (err) {
       throw new InternalServerError(UserMessages.FAILED_TO_FIND_USER);
+    }
+  }
+  async findByAggregation(aggregator: PipelineStage[]): Promise<any[]> {
+    try {
+      return await UserRecord.aggregate(aggregator).exec();
+    } catch (err) {
+      throw new InternalServerError(GenericMessages.RECORD_NOT_FOUND);
     }
   }
 
