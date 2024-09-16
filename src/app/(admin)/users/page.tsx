@@ -6,29 +6,31 @@ import { useRouter } from "next/navigation";
 const Users = () => {
   const router = useRouter();
   const [users, setUsers] = useState(initialUsersValue());
-  // initialUsersValue(searchParams?.get("search"))
-
-  console.log("users>>>>", users);
 
   useEffect(() => {
     fetchUsers({ page: users.page, search: users.search, setData: setUsers });
     //eslint-disable-next-line
   }, []);
 
-  const handleSearch = useCallback((search: string) => {
-    console.log("search>", search);
-    setUsers((prev) => ({ ...prev, search }));
-    fetchUsers({ page: users.page, search: search, setData: setUsers });
-  }, []);
+  const handleSearch = useCallback(
+    (search: string) => {
+      setUsers((prev) => ({ ...prev, search }));
+      fetchUsers({ page: users.page, search: search, setData: setUsers });
+    },
+    [users.page]
+  );
 
-  const handlePagination = useCallback((page: number) => {
-    setUsers((prev) => ({ ...prev, page }));
-    fetchUsers({ page, search: users.search, setData: setUsers });
-  }, []);
+  const handlePagination = useCallback(
+    (page: number) => {
+      setUsers((prev) => ({ ...prev, page }));
+      fetchUsers({ page, search: users.search, setData: setUsers });
+    },
+    [users.search]
+  );
 
   const handleRefresh = useCallback(() => {
     fetchUsers({ page: 1, search: users.search, setData: setUsers });
-  }, []);
+  }, [users.search]);
 
   const handleNavigate = () => router.push("/users/create");
   return (
