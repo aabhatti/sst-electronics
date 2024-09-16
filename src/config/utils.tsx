@@ -31,25 +31,32 @@ export const getAuthorizationToken = (
     return optional;
   }
 };
+interface ErrorMessage {
+  msg?: string;
+}
+export const ParseError = (error: any): string => {
+  let err: string = SOMETHING_WENT_WRONG;
 
-export const ParseError = (error: any) => {
-  let err = SOMETHING_WENT_WRONG;
   if (error.message && isArray(error.message)) {
     err = error.message[0];
     if (!isString(err) && isArray(err)) {
-      err = err[0] && err[0].msg ? err[0].msg : err[0];
-    } else {
-      err = err.msg;
+      const firstError = err[0] as ErrorMessage;
+      err =
+        firstError && firstError.msg
+          ? firstError.msg
+          : JSON.stringify(firstError);
+    } else if (!isString(err) && (err as ErrorMessage).msg) {
+      err = (err as ErrorMessage).msg!;
     }
-  } else {
-    if (error.message && isString(error.message)) {
-      err = error.message;
-      console.log(err, "string");
-    }
+  } else if (error.message && isString(error.message)) {
+    err = error.message;
+    console.log(err, "string");
   }
+
   if (err === INVALID_CREDIENTIALS) {
     err = EMAIL_PASSWORD_INVALID;
   }
+
   return err;
 };
 
