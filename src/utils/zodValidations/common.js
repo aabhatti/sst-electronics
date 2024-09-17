@@ -23,14 +23,20 @@ const lastNameValidation = z
   })
   .max(30, { message: LENGTH.MAX_30 });
 
-const cnicValidation = z.number();
+const cnicValidation = z
+  .string()
+  .min(13, { message: ERRORS.CNIC_REQUIRED })
+  .max(13, { message: LENGTH.MAX_13 });
 // .min(13, { message: ERRORS.CNIC_REQUIRED })
 // // .regex(nameRegex, {
 // //   message: ERRORS.CNIC_INVALID,
 // // })
 // .max(13, { message: LENGTH.MAX_13 });
 
-const mobileValidation = z.number();
+const mobileValidation = z
+  .string()
+  .min(7, { message: ERRORS.MOBILE_REQUIRED })
+  .max(13, { message: LENGTH.MAX_13 });
 // .min(11, { message: ERRORS.MOBILE_REQUIRED })
 // // .regex(nameRegex, {
 // //   message: ERRORS.MOBILE_INVALID,

@@ -20,6 +20,10 @@ const UserSchema = z.object({
   lastName: z.string().optional().default(""),
   name: z.string().optional().default(""),
   email: z.string().email(),
+  cnic: z.string().optional().default(""),
+  mobile: z.string().optional().default(""),
+  address: z.string().optional().default(""),
+  emailToken: z.string().optional().default(""),
   salt: z.string().optional(),
   password: z.string().optional(),
   status: z.string().optional().default(""),
@@ -34,6 +38,10 @@ interface IUser {
   lastName: string;
   name: string;
   email: string;
+  cnic?: string | undefined;
+  mobile?: string | undefined;
+  address?: string | undefined;
+  emailToken?: string | undefined;
   salt?: string;
   password?: string;
   status?: string;
@@ -48,10 +56,14 @@ class User {
   lastName: string;
   name: string;
   email: string;
+  cnic?: string;
+  mobile?: string;
+  address?: string;
+  emailToken?: string;
   #password?: string | undefined;
   #salt?: string | undefined;
   status: string;
-  refreshToken: string;
+  refreshToken?: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
 
@@ -62,6 +74,10 @@ class User {
     this.lastName = parsed.lastName;
     this.name = parsed.name;
     this.email = parsed.email;
+    this.cnic = parsed.cnic || "";
+    this.mobile = parsed.mobile || "";
+    this.address = parsed.address || "";
+    this.emailToken = parsed.emailToken || "";
     this.#password = parsed.password;
     this.#salt = parsed.salt;
     this.status = parsed.status;
@@ -131,6 +147,22 @@ class User {
       firstName: this.firstName,
       lastName: this.lastName,
       name: this.name,
+    };
+  }
+
+  toUser() {
+    return {
+      id: this.id,
+      email: this.email,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      name: this.name,
+      cnic: this.cnic,
+      mobile: this.mobile,
+      address: this.address,
+      status: this.status,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
   }
 

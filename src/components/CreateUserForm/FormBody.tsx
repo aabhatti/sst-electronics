@@ -84,7 +84,7 @@ const FormBody: React.FC<FormBodyProps> = ({
       </div>
       <div>
         <TextField
-          type={TYPE.NUMBER}
+          type={TYPE.TEXT}
           name={MOBILE}
           label={LABELS.MOBILE}
           placeholder={PLACEHOLDERS.MOBILE}
@@ -92,14 +92,14 @@ const FormBody: React.FC<FormBodyProps> = ({
           error={errors?.[MOBILE]?.message}
           onBlur={() => trigger(MOBILE)}
           onChange={(e) => {
-            setValue(MOBILE, Number(e.target.value));
+            setValue(MOBILE, e.target.value);
             trigger(MOBILE);
           }}
         />
       </div>
       <div>
         <TextField
-          type={TYPE.NUMBER}
+          type={TYPE.TEXT}
           name={CNIC}
           label={LABELS.CNIC}
           placeholder={PLACEHOLDERS.CNIC}
@@ -107,7 +107,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           error={errors?.[CNIC]?.message}
           onBlur={() => trigger(CNIC)}
           onChange={(e) => {
-            setValue(CNIC, Number(e.target.value));
+            setValue(CNIC, e.target.value);
             trigger(CNIC);
           }}
         />

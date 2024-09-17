@@ -9,14 +9,6 @@ import FormBody from "./FormBody";
 import { useRouter } from "next/navigation";
 import { handleCreateUser } from "../../app/(admin)/users/helper";
 
-// Define the type for the props
-// interface CreateUserFormProps {
-//   handleCreateUser: (
-//     data: ICreateUserInput
-//     // navigate: () => void
-//   ) => Promise<void>;
-// }
-
 const CreateUserForm: React.FC = ({}) => {
   const router = useRouter();
 
@@ -36,8 +28,7 @@ const CreateUserForm: React.FC = ({}) => {
   const handleNavigate = () => router.push("/users");
 
   const onSubmit: SubmitHandler<ICreateUserInput> = async (data) => {
-    console.log("data in CreateUserForm>>", data);
-    await handleCreateUser({ data });
+    await handleCreateUser({ data, navigate: handleNavigate });
   };
 
   return (

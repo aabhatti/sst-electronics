@@ -15,8 +15,8 @@ interface ICreateUserInput {
   firstName: string;
   lastName: string;
   email: string;
-  mobile: number;
-  cnic: number;
+  mobile: string;
+  cnic: string;
   address: string;
 }
 export type { ILoginInput, IRegisterInput, ICreateUserInput };

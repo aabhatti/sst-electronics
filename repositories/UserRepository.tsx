@@ -16,6 +16,10 @@ interface IUserDocument extends Document {
   salt: string;
   password: string;
   email: string;
+  cnic: string;
+  mobile: string;
+  address: string;
+  emailToken: string;
   status: string;
   refreshToken: string;
 }
@@ -28,6 +32,10 @@ const UserSchema: Schema<IUserDocument> = new Schema(
     salt: { type: String, default: "" },
     password: { type: String, default: "" },
     email: { type: String, unique: true, default: "" },
+    cnic: { type: String, default: "" },
+    mobile: { type: String, default: "" },
+    address: { type: String, default: "" },
+    emailToken: { type: String, default: "" },
     status: { type: String, default: "unverified" },
     refreshToken: { type: String, default: "" },
   },

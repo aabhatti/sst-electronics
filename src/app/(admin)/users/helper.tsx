@@ -28,7 +28,7 @@ interface FetchUsersParams {
 // Define the types for the fetchUsers function parameters
 interface ICreateUsersParams {
   data: ICreateUserInput;
-  //   navigate: () => void;
+  navigate: () => void;
 }
 
 // The initial state function
@@ -80,8 +80,8 @@ export const fetchUsers = async ({
 // The fetchUsers function
 export const handleCreateUser = async ({
   data,
-}: //   navigate,
-ICreateUsersParams): Promise<void> => {
+  navigate,
+}: ICreateUsersParams): Promise<void> => {
   try {
     const resp = await ExecuteHttpRequest(
       METHODES.POST,
@@ -89,7 +89,7 @@ ICreateUsersParams): Promise<void> => {
       data
     );
     console.log("resp>>>", resp);
-    // navigate && navigate();
+    navigate && navigate();
   } catch (err) {
     console.log("err>>>>", err);
   }
@@ -98,8 +98,11 @@ ICreateUsersParams): Promise<void> => {
 export const headerUsersValues = [
   { type: "string", name: "Name", value: "name" },
   { type: "string", name: "Email", value: "email" },
+  { type: "string", name: "Mobile", value: "mobile" },
+  { type: "string", name: "CNIC", value: "cnic" },
+  { type: "string", name: "Address", value: "address" },
   { type: "string", name: "Status", value: "status" },
-  { type: "string", name: "Created At", value: "createdAt" },
-  { type: "string", name: "Updated At", value: "updatedAt" },
+  { type: "date", name: "Created At", value: "createdAt" },
+  { type: "date", name: "Updated At", value: "updatedAt" },
   //   { type: "string", name: "Action", value: "action" },
 ];

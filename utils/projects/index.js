@@ -9,6 +9,8 @@ const userProject = {
     dob: 1,
     status: 1,
     mobile: 1,
+    cnic: 1,
+    address: 1,
     createdAt: 1,
     updatedAt: 1,
   },
