@@ -197,6 +197,11 @@ export enum NAMES {
   ADDRESS = "address",
 }
 
+export enum LOGIN_NAMES {
+  EMAIL = "email",
+  PASSWORD = "password",
+}
+
 export const BUTTON_TYPE = {
   SUBMIT: "submit",
   BUTTON: "button",

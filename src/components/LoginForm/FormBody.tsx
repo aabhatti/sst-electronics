@@ -7,7 +7,7 @@ import {
   TYPE,
   LABELS,
   PLACEHOLDERS,
-  NAMES,
+  LOGIN_NAMES,
   GENERIC,
 } from "../../utils/constants";
 import {
@@ -35,7 +35,7 @@ const FormBody: React.FC<FormBodyProps> = ({
   setValue,
   loading,
 }) => {
-  const { EMAIL, PASSWORD } = NAMES;
+  const { EMAIL, PASSWORD } = LOGIN_NAMES;
   return (
     <div className="mt-5">
       <TextField
