@@ -195,11 +195,8 @@ export enum NAMES {
   MOBILE = "mobile",
   CNIC = "cnic",
   ADDRESS = "address",
-}
-
-export enum LOGIN_NAMES {
-  EMAIL = "email",
   PASSWORD = "password",
+  CONFIRM_PASSWORD = "confirmPassword",
 }
 
 export const BUTTON_TYPE = {
