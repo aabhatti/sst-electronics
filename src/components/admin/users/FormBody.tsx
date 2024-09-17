@@ -1,22 +1,16 @@
 "use client";
 import React from "react";
-import TextField from "../shared/inputs/TextField";
-import TextFieldPassword from "../shared/inputs/TextFieldPassword";
-import Button from "../shared/button";
-import {
-  TYPE,
-  LABELS,
-  PLACEHOLDERS,
-  NAMES,
-  GENERIC,
-} from "../../utils/constants";
+import TextField from "@/components/shared/inputs/TextField";
+import TextFieldPassword from "@/components/shared/inputs/TextFieldPassword";
+import Button from "@/components/shared/button";
+import { TYPE, LABELS, PLACEHOLDERS, NAMES, GENERIC } from "@/utils/constants";
 import {
   FieldErrors,
   UseFormWatch,
   UseFormTrigger,
   UseFormSetValue,
 } from "react-hook-form";
-import { IRegisterInput } from "../../utils/interfaces";
+import { IRegisterInput } from "@/utils/interfaces";
 
 interface FormBodyProps {
   errors: FieldErrors<IRegisterInput>;
