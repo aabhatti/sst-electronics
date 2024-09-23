@@ -20,4 +20,19 @@ const createUserDefaultValues = {
   address: "",
 };
 
-export { loginDefaultValues, registerDefaultValues, createUserDefaultValues };
+const createDealDefaultValues = {
+  userId: "",
+  name: "",
+  description: "",
+  worth: 0,
+  advance: 0,
+  referenceOne: "",
+  referenceTwo: "",
+};
+
+export {
+  loginDefaultValues,
+  registerDefaultValues,
+  createUserDefaultValues,
+  createDealDefaultValues,
+};

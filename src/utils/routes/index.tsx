@@ -41,5 +41,13 @@ export const AdminUrls = {
       search ? encodeURIComponent(search) : ""
     }`;
   },
+  fetchAllDeals: (page: number, offset: number, search: string) => {
+    return `/admin/deals?page=${page}&offset=${offset}&searched=${
+      search ? encodeURIComponent(search) : ""
+    }`;
+  },
+  queryUsers: (query: string) => "/admin/users/" + query,
+
   createUser: "/admin/users",
+  createDeal: "/admin/deals",
 };

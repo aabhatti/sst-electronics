@@ -84,12 +84,31 @@ export const ERRORS = {
   ADDRESS_REQUIRED: "Address is required",
   ADDRESS_INVALID:
     "Address must contain only alphanumeric characters and spaces",
+
+  USER_REQUIRED: "User is required",
+  DESCRIPTION_REQUIRED: "Description is required",
+  WORTH_REQUIRED: "Worth is required",
+  WORTH_BETWEEN_1_10000000: "Worth must be between 1 and 10000000",
+  ADVANCE_REQUIRED: "Advance is required",
+  ADVANCE_GREATER_REQUIRED: "Advance must not be greater than Worth",
+  REFERENCE_REQUIRED: "Reference is required",
 };
 
 export const GENERIC = {
   PASSWORD: "password",
   CONFIRM_PASSWORD: "confirmPassword",
+  ADVANCE: "advance",
   SUBMIT: "Submit",
+
+  EDIT: "edit",
+  DELETE: "delete",
+  _STANDARD: "standard",
+  _SAVE: "save",
+  _NAME: "name",
+  BACKSPACE: "Backspace",
+  LOADING: "Loading...",
+  CLICK: "click",
+  BUTTON: "button",
 };
 
 export const TYPE = {
@@ -143,6 +162,14 @@ export const LABELS = {
   MOBILE: "Mobile",
   CNIC: "CNIC",
   ADDRESS: "Address",
+
+  // create deal form LABELS
+  USER_ID: "Select user",
+  DESCRIPTION: "Description*",
+  WORTH: "Worth*",
+  ADVANCE: "Advance*",
+  REFERENCE_ONE: "Reference One*",
+  REFERENCE_TWO: "Reference Two*",
 };
 
 export const PLACEHOLDERS = {
@@ -186,6 +213,15 @@ export const PLACEHOLDERS = {
   MOBILE: "Enter mobile number",
   CNIC: "Enter CNIC number",
   ADDRESS: "Enter home address",
+
+  // create deal form PLACE_HOLDERS
+  USER_ID: "Please type 2-3 letter to select user",
+  NAME: "Enter name",
+  DESCRIPTION: "Enter description",
+  WORTH: "Enter total worth",
+  ADVANCE: "Enter advance",
+  REFERENCE_ONE: "Please type 2-3 letter to select user",
+  REFERENCE_TWO: "Please type 2-3 letter to select user",
 };
 
 export enum NAMES {
@@ -197,6 +233,13 @@ export enum NAMES {
   ADDRESS = "address",
   PASSWORD = "password",
   CONFIRM_PASSWORD = "confirmPassword",
+  USER_ID = "userId",
+  NAME = "name",
+  DESCRIPTION = "description",
+  WORTH = "worth",
+  ADVANCE = "advance",
+  REFERENCE_ONE = "referenceOne",
+  REFERENCE_TWO = "referenceTwo",
 }
 
 export const BUTTON_TYPE = {

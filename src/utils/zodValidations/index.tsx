@@ -7,6 +7,13 @@ import {
   cnicValidation,
   mobileValidation,
   addressValidation,
+  userIdValidation,
+  nameValidation,
+  descriptionValidation,
+  worthValidation,
+  advanceValidation,
+  referenceOneValidation,
+  referenceTwoValidation,
 } from "./common";
 import { passwordRegex } from "./regex";
 
@@ -45,5 +52,25 @@ export const createUserSchema = z.object({
   cnic: cnicValidation,
   address: addressValidation,
 });
+
+export const createDealSchema = z
+  .object({
+    userId: userIdValidation,
+    name: nameValidation,
+    description: descriptionValidation,
+    worth: worthValidation,
+    advance: advanceValidation,
+    referenceOne: referenceOneValidation,
+    referenceTwo: referenceTwoValidation,
+  })
+  .superRefine((value, ctx) => {
+    if (Number(value.advance) > Number(value.worth)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: ERRORS.ADVANCE_GREATER_REQUIRED,
+        path: [GENERIC.ADVANCE],
+      });
+    }
+  });
 
 export { loginSchema };

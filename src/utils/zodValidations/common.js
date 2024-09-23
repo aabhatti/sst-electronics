@@ -48,6 +48,40 @@ const addressValidation = z
   .min(0, { message: ERRORS.ADDRESS_REQUIRED })
   .max(100, { message: LENGTH.MAX_100 });
 
+const userIdValidation = z.string().min(1, { message: ERRORS.USER_REQUIRED });
+const nameValidation = z
+  .string()
+  .min(1, { message: ERRORS.NAME_REQUIRED })
+  .regex(nameRegex, {
+    message: ERRORS.NAME_INVALID,
+  })
+  .max(30, { message: LENGTH.MAX_30 });
+
+const descriptionValidation = z
+  .string()
+  .min(1, { message: ERRORS.DESCRIPTION_REQUIRED })
+  .regex(nameRegex, {
+    message: ERRORS.DESCRIPTION_REQUIRED,
+  })
+  .max(30, { message: LENGTH.MAX_30 });
+
+const worthValidation = z
+  .number()
+  .min(1, { message: ERRORS.WORTH_REQUIRED })
+  .max(10000000, { message: ERRORS.WORTH_BETWEEN_1_10000000 });
+
+const advanceValidation = z
+  .number()
+  .min(1, { message: ERRORS.ADVANCE_REQUIRED });
+
+const referenceOneValidation = z
+  .string()
+  .min(1, { message: ERRORS.REFERENCE_REQUIRED });
+
+const referenceTwoValidation = z
+  .string()
+  .min(1, { message: ERRORS.REFERENCE_REQUIRED });
+
 export {
   emailValidation,
   firstNameValidation,
@@ -55,4 +89,11 @@ export {
   cnicValidation,
   mobileValidation,
   addressValidation,
+  userIdValidation,
+  nameValidation,
+  descriptionValidation,
+  worthValidation,
+  advanceValidation,
+  referenceOneValidation,
+  referenceTwoValidation,
 };

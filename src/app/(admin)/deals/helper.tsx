@@ -2,15 +2,12 @@ import { parseUrl } from "../../../config/helper";
 import { OFFSET, METHODES, HTTP_STATUS_CODE } from "../../../utils/constants";
 import { AdminUrls } from "../../../utils/routes";
 import { ExecuteHttpRequest } from "../../../config/ExecuteHttpRequest";
-import { ICreateUserInput } from "@/utils/interfaces";
+import { ICreateDealInput } from "@/utils/interfaces";
 
-// Define the types for the user data and state
-interface User {
-  // Define properties for a User if necessary
-}
+interface Data {}
 
-interface UsersState {
-  list: User[];
+interface StateData {
+  list: Data[];
   loading: boolean;
   page: number;
   offset: number;
@@ -19,20 +16,20 @@ interface UsersState {
 }
 
 // Define the types for the fetchUsers function parameters
-interface FetchUsersParams {
+interface FetchParams {
   page: number;
   search: string;
-  setData: React.Dispatch<React.SetStateAction<UsersState>>;
+  setData: React.Dispatch<React.SetStateAction<StateData>>;
 }
 
 // Define the types for the fetchUsers function parameters
-interface ICreateUsersParams {
-  data: ICreateUserInput;
+interface ICreateDealParams {
+  data: ICreateDealInput;
   navigate: () => void;
 }
 
 // The initial state function
-export const initialUsersValue = (): UsersState => {
+export const initialUsersValue = (): StateData => {
   return {
     list: [],
     loading: true,
@@ -44,15 +41,15 @@ export const initialUsersValue = (): UsersState => {
 };
 
 // The fetchUsers function
-export const fetchUsers = async ({
+export const fetchDeals = async ({
   page,
   search,
   setData,
-}: FetchUsersParams): Promise<void> => {
+}: FetchParams): Promise<void> => {
   try {
     setData((prev) => ({ ...prev, loading: true }));
 
-    const url = parseUrl(AdminUrls.fetchAllUsers(page, OFFSET, search));
+    const url = parseUrl(AdminUrls.fetchAllDeals(page, OFFSET, search));
     const resp = await ExecuteHttpRequest(METHODES.GET, url);
 
     if (resp.status === HTTP_STATUS_CODE.OK) {
@@ -77,15 +74,15 @@ export const fetchUsers = async ({
   }
 };
 
-// The fetchUsers function
-export const handleCreateUser = async ({
+// create deal handler
+export const handleCreateDeal = async ({
   data,
   navigate,
-}: ICreateUsersParams): Promise<void> => {
+}: ICreateDealParams): Promise<void> => {
   try {
     const resp = await ExecuteHttpRequest(
       METHODES.POST,
-      AdminUrls.createUser,
+      AdminUrls.createDeal,
       data
     );
     console.log("resp>>>", resp);
@@ -95,14 +92,14 @@ export const handleCreateUser = async ({
   }
 };
 
-export const headerUsersValues = [
-  { type: "string", name: "User ID", value: "id" },
+export const headerValues = [
   { type: "string", name: "Name", value: "name" },
-  { type: "string", name: "Email", value: "email" },
-  { type: "string", name: "Mobile", value: "mobile" },
-  { type: "string", name: "CNIC", value: "cnic" },
-  { type: "string", name: "Address", value: "address" },
-  { type: "string", name: "Status", value: "status" },
+  { type: "string", name: "User Name", value: "userName" },
+  { type: "string", name: "Description", value: "description" },
+  { type: "string", name: "References", value: "references" },
+  { type: "string", name: "Worth", value: "worth" },
+  { type: "string", name: "Advance", value: "advance" },
+  { type: "string", name: "Due", value: "due" },
   { type: "date", name: "Created At", value: "createdAt" },
   { type: "date", name: "Updated At", value: "updatedAt" },
   //   { type: "string", name: "Action", value: "action" },

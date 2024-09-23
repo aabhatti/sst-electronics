@@ -38,7 +38,7 @@ const Users = () => {
       <div className="card">
         <h2 className="m-0">{"users"}</h2>
       </div>
-      <div className="card">
+      <div className="card flex flex-1 overflow-hidden m-0">
         <Table
           loading={users.loading}
           search={users.search}

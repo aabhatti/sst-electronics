@@ -185,6 +185,7 @@ const UserMessages = {
     "An account with this email address is already registered",
   REGISTER_ACCOUNT_SUCCESS: "Your account created successfully",
   USERS_FETCHED_SUCCESS: "Users fetched successfully",
+  REFERENCES_NOT_SAME: "References could not be same",
 };
 
 const DealMessages = {

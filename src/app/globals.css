@@ -169,6 +169,8 @@
     border-bottom: 0.125rem solid var(--color-border-primary);
     text-align: left;
     padding: 0.625rem 0.625rem;
+    background: var(--color-secondary) !important;
+    z-index: 9999;
   }
 
   .table tbody tr:hover {
@@ -179,5 +181,6 @@
     font-size: 0.875rem;
     padding: 0.7rem;
     color: var(--color-font-base-primary);
+    z-index: 99;
   }
 }

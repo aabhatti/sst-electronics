@@ -44,10 +44,13 @@ const TableBody: React.FC<TableBodyProps> = ({
         className="table dataTable shadow-hover display m-0"
         style={{ minWidth: "fit-content" }}
       >
-        <thead className="sticky top-0 z-index-3">
+        <thead className="sticky top-0 z-index-3 bg-lightBasePrimary">
           <tr>
             {header.map((head, i) => (
-              <th key={i}> {head?.name}</th>
+              <th className="bg-lightBasePrimary" key={i}>
+                {" "}
+                {head?.name}
+              </th>
             ))}
           </tr>
         </thead>
@@ -63,7 +66,7 @@ const TableBody: React.FC<TableBodyProps> = ({
         </tbody>
       </table>
       {!shouldDataDisplay(loading, !!children, bodyData) && (
-        <div className="d-flex flex-grow-1 fs-4 fw-normal card-table-color align-items-center justify-content-center py-4">
+        <div className="flex flex-1 fs-4 fw-normal card-table-color items-center justify-center py-4">
           {loading ? <Spinner color="text-primary" /> : <NoDataFound />}
         </div>
       )}

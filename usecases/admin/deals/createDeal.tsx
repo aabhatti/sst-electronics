@@ -5,7 +5,7 @@ import { UserRepository } from "../../../repositories/UserRepository";
 import { InstallmentRepository } from "../../../repositories/InstallmentRepository";
 import { IDeal, Deal } from "../../../models/Deal";
 import { Installment } from "../../../models/Installment";
-import { NotFound, InternalServerError } from "../../../errors";
+import { NotFound, InternalServerError, Conflict } from "../../../errors";
 import {
   UserMessages,
   DealMessages,
@@ -35,8 +35,19 @@ async function createDeal(
   { userRepository, dealRepository, installmentRepository }: CreateDeps,
   session?: ClientSession | undefined
 ): Promise<FetchDealResponse> {
-  const { name, userName, userId, worth, advance, referenceOne, referenceTwo } =
+  let { name, userName, userId, worth, advance, referenceOne, referenceTwo } =
     body;
+
+  console.log(
+    "name, userName, userId, worth, advance, referenceOne, referenceTwo>>>>>",
+    name,
+    userName,
+    userId,
+    worth,
+    advance,
+    referenceOne,
+    referenceTwo
+  );
 
   let user, userOne, userTwo;
   user = await userRepository.findById(userId?.toString() || "");
@@ -53,6 +64,11 @@ async function createDeal(
     throw new NotFound(`${UserMessages.FAILED_TO_FIND_USER} Reference Two`);
   }
 
+  if (referenceOne === referenceTwo) {
+    throw new Conflict(`${UserMessages.REFERENCES_NOT_SAME}`);
+  }
+
+  userName = user?.name || "";
   let createDeal = new Deal({
     name,
     userName,

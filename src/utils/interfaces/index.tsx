@@ -19,4 +19,14 @@ interface ICreateUserInput {
   cnic: string;
   address: string;
 }
-export type { ILoginInput, IRegisterInput, ICreateUserInput };
+
+interface ICreateDealInput {
+  userId: string;
+  name: string;
+  description: string;
+  worth: number;
+  advance: number;
+  referenceOne: string;
+  referenceTwo: string;
+}
+export type { ILoginInput, IRegisterInput, ICreateUserInput, ICreateDealInput };
