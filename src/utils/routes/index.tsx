@@ -46,8 +46,14 @@ export const AdminUrls = {
       search ? encodeURIComponent(search) : ""
     }`;
   },
+  fetchAllInstallments: (page: number, offset: number, search: string) => {
+    return `/admin/installments?page=${page}&offset=${offset}&searched=${
+      search ? encodeURIComponent(search) : ""
+    }`;
+  },
   queryUsers: (query: string) => "/admin/users/" + query,
 
   createUser: "/admin/users",
   createDeal: "/admin/deals",
+  createInstallment: "/admin/installments",
 };

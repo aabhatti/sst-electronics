@@ -30,9 +30,16 @@ const createDealDefaultValues = {
   referenceTwo: "",
 };
 
+const createInstallmentDefaultValues = {
+  userId: "",
+  dealId: "",
+  amount: 0,
+};
+
 export {
   loginDefaultValues,
   registerDefaultValues,
   createUserDefaultValues,
   createDealDefaultValues,
+  createInstallmentDefaultValues,
 };

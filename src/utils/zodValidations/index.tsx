@@ -14,6 +14,8 @@ import {
   advanceValidation,
   referenceOneValidation,
   referenceTwoValidation,
+  dealIdValidation,
+  amountValidation,
 } from "./common";
 import { passwordRegex } from "./regex";
 
@@ -72,5 +74,20 @@ export const createDealSchema = z
       });
     }
   });
+
+export const createInstallmentSchema = z.object({
+  userId: userIdValidation,
+  dealId: dealIdValidation,
+  amount: amountValidation,
+});
+// .superRefine((value, ctx) => {
+//   if (Number(value.advance) > Number(value.worth)) {
+//     ctx.addIssue({
+//       code: z.ZodIssueCode.custom,
+//       message: ERRORS.ADVANCE_GREATER_REQUIRED,
+//       path: [GENERIC.ADVANCE],
+//     });
+//   }
+// });
 
 export { loginSchema };

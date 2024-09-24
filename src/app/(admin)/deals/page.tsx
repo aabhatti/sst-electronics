@@ -39,7 +39,7 @@ const Deals = () => {
       <div className="card">
         <h2 className="m-0">{"Deals"}</h2>
       </div>
-      <div className="card">
+      <div className="card flex flex-1 overflow-hidden m-0">
         <Table
           loading={data.loading}
           search={data.search}

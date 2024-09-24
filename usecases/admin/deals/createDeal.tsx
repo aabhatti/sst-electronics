@@ -35,19 +35,15 @@ async function createDeal(
   { userRepository, dealRepository, installmentRepository }: CreateDeps,
   session?: ClientSession | undefined
 ): Promise<FetchDealResponse> {
-  let { name, userName, userId, worth, advance, referenceOne, referenceTwo } =
-    body;
-
-  console.log(
-    "name, userName, userId, worth, advance, referenceOne, referenceTwo>>>>>",
+  let {
     name,
-    userName,
+    description,
     userId,
     worth,
     advance,
     referenceOne,
-    referenceTwo
-  );
+    referenceTwo,
+  } = body;
 
   let user, userOne, userTwo;
   user = await userRepository.findById(userId?.toString() || "");
@@ -68,12 +64,13 @@ async function createDeal(
     throw new Conflict(`${UserMessages.REFERENCES_NOT_SAME}`);
   }
 
-  userName = user?.name || "";
   let createDeal = new Deal({
     name,
-    userName,
+    userName: user?.name || "",
+    description,
     userId: userId ? new Types.ObjectId(userId) : null,
     worth: Number(worth),
+    advance: Number(advance),
     due: Number(worth),
     referenceOne: referenceOne ? new Types.ObjectId(referenceOne) : null,
     referenceTwo: referenceTwo ? new Types.ObjectId(referenceTwo) : null,

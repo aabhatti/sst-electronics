@@ -49,6 +49,7 @@ const addressValidation = z
   .max(100, { message: LENGTH.MAX_100 });
 
 const userIdValidation = z.string().min(1, { message: ERRORS.USER_REQUIRED });
+const dealIdValidation = z.string().min(1, { message: ERRORS.DEAL_REQUIRED });
 const nameValidation = z
   .string()
   .min(1, { message: ERRORS.NAME_REQUIRED })
@@ -82,6 +83,11 @@ const referenceTwoValidation = z
   .string()
   .min(1, { message: ERRORS.REFERENCE_REQUIRED });
 
+const amountValidation = z
+  .number()
+  .min(1, { message: ERRORS.AMOUNT_REQUIRED })
+  .max(10000000, { message: ERRORS.AMOUNT_BETWEEN_1_10000000 });
+
 export {
   emailValidation,
   firstNameValidation,
@@ -96,4 +102,6 @@ export {
   advanceValidation,
   referenceOneValidation,
   referenceTwoValidation,
+  dealIdValidation,
+  amountValidation,
 };

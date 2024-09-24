@@ -92,6 +92,9 @@ export const ERRORS = {
   ADVANCE_REQUIRED: "Advance is required",
   ADVANCE_GREATER_REQUIRED: "Advance must not be greater than Worth",
   REFERENCE_REQUIRED: "Reference is required",
+
+  DEAL_REQUIRED: "Deal is required",
+  AMOUNT_BETWEEN_1_10000000: "Amount must be between 1 and 10000000",
 };
 
 export const GENERIC = {
@@ -170,6 +173,8 @@ export const LABELS = {
   ADVANCE: "Advance*",
   REFERENCE_ONE: "Reference One*",
   REFERENCE_TWO: "Reference Two*",
+
+  DEAL_ID: "Select Deal*",
 };
 
 export const PLACEHOLDERS = {
@@ -222,6 +227,8 @@ export const PLACEHOLDERS = {
   ADVANCE: "Enter advance",
   REFERENCE_ONE: "Please type 2-3 letter to select user",
   REFERENCE_TWO: "Please type 2-3 letter to select user",
+
+  DEAL_ID: "Please type or select deal",
 };
 
 export enum NAMES {
@@ -240,6 +247,9 @@ export enum NAMES {
   ADVANCE = "advance",
   REFERENCE_ONE = "referenceOne",
   REFERENCE_TWO = "referenceTwo",
+
+  DEAL_ID = "dealId",
+  AMOUNT = "amount",
 }
 
 export const BUTTON_TYPE = {

@@ -2,7 +2,7 @@ import { parseUrl } from "../../../config/helper";
 import { OFFSET, METHODES, HTTP_STATUS_CODE } from "../../../utils/constants";
 import { AdminUrls } from "../../../utils/routes";
 import { ExecuteHttpRequest } from "../../../config/ExecuteHttpRequest";
-import { ICreateDealInput } from "@/utils/interfaces";
+import { ICreateInstallmentInput } from "@/utils/interfaces";
 
 interface Data {}
 
@@ -23,8 +23,8 @@ interface FetchParams {
 }
 
 // Define the types for the fetchUsers function parameters
-interface ICreateDealParams {
-  data: ICreateDealInput;
+interface ICreateParams {
+  data: ICreateInstallmentInput;
   navigate: () => void;
 }
 
@@ -40,36 +40,8 @@ export const initialUsersValue = (): StateData => {
   };
 };
 
-const formatDataObj = (row: any) => {
-  return {
-    id: row.id,
-    name: row.name,
-    userName: row.userName,
-    due: row.due,
-    worth: row.worth,
-    advance: row.advance,
-    description: row.description,
-    createdAt: row.createdAt,
-    updatedAt: row.updatedAt,
-    references: (
-      <div className="flex flex-col">
-        <div className="flex flex-col">
-          <span>{row.referenceOne.name}</span>
-          <span>{row.referenceOne.cnic}</span>
-        </div>
-        <div className="flex flex-col">
-          <span>{row.referenceTwo.name}</span>
-          <span>{row.referenceTwo.cnic}</span>
-        </div>
-      </div>
-    ),
-  };
-};
-const formateDeals = (data: any) =>
-  data?.length > 0 ? data.map((row: any) => formatDataObj(row)) : [];
-
 // The fetchUsers function
-export const fetchDeals = async ({
+export const fetchInstallments = async ({
   page,
   search,
   setData,
@@ -77,7 +49,7 @@ export const fetchDeals = async ({
   try {
     setData((prev) => ({ ...prev, loading: true }));
 
-    const url = parseUrl(AdminUrls.fetchAllDeals(page, OFFSET, search));
+    const url = parseUrl(AdminUrls.fetchAllInstallments(page, OFFSET, search));
     const resp = await ExecuteHttpRequest(METHODES.GET, url);
 
     if (resp.status === HTTP_STATUS_CODE.OK) {
@@ -85,7 +57,7 @@ export const fetchDeals = async ({
         ...prev,
         total: resp?.data?.count || 0,
         loading: false,
-        list: formateDeals(resp?.data?.list || []),
+        list: resp?.data?.list || [],
         page,
       }));
     } else {
@@ -102,22 +74,22 @@ export const fetchDeals = async ({
   }
 };
 
-// create deal handler
-export const handleCreateDeal = async ({
+// create installment handler
+export const handleCreateInstallment = async ({
   data,
   navigate,
-}: ICreateDealParams): Promise<void> => {
+}: ICreateParams): Promise<void> => {
   try {
     const resp = await ExecuteHttpRequest(
       METHODES.POST,
-      AdminUrls.createDeal,
+      AdminUrls.createInstallment,
       data
     );
     console.log("resp>>>", resp);
-    if (resp.status === 200) {
+    if (resp && resp.status === 200) {
       navigate && navigate();
     } else {
-      // show errror
+      // show error message to the user
     }
   } catch (err) {
     console.log("err>>>>", err);
@@ -125,14 +97,9 @@ export const handleCreateDeal = async ({
 };
 
 export const headerValues = [
-  { type: "string", name: "ID", value: "id" },
-  { type: "string", name: "Name", value: "name" },
   { type: "string", name: "User Name", value: "userName" },
-  { type: "string", name: "Description", value: "description" },
-  { type: "component", name: "References", value: "references" },
-  { type: "string", name: "Worth", value: "worth" },
-  { type: "string", name: "Advance", value: "advance" },
-  { type: "string", name: "Due", value: "due" },
+  { type: "string", name: "Deal", value: "dealName" },
+  { type: "string", name: "Amount", value: "amount" },
   { type: "date", name: "Created At", value: "createdAt" },
   { type: "date", name: "Updated At", value: "updatedAt" },
   //   { type: "string", name: "Action", value: "action" },

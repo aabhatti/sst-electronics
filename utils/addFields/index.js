@@ -14,4 +14,21 @@ const nameAddField = {
   },
 };
 
-export { nameAddField, userNameAddField };
+const referenceOneAddField = {
+  $addFields: {
+    referenceOne: { $arrayElemAt: ["$referenceOne", 0] },
+  },
+};
+
+const referenceTwoAddField = {
+  $addFields: {
+    referenceTwo: { $arrayElemAt: ["$referenceTwo", 0] },
+  },
+};
+
+export {
+  nameAddField,
+  userNameAddField,
+  referenceOneAddField,
+  referenceTwoAddField,
+};

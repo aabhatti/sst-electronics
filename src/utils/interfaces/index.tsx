@@ -29,4 +29,16 @@ interface ICreateDealInput {
   referenceOne: string;
   referenceTwo: string;
 }
-export type { ILoginInput, IRegisterInput, ICreateUserInput, ICreateDealInput };
+
+interface ICreateInstallmentInput {
+  userId: string;
+  dealId: string;
+  amount: number;
+}
+export type {
+  ILoginInput,
+  IRegisterInput,
+  ICreateUserInput,
+  ICreateDealInput,
+  ICreateInstallmentInput,
+};

@@ -15,7 +15,9 @@ interface IDealDocument extends Document {
   userName: String;
   userId: Types.ObjectId;
   worth: Number;
+  advance: Number;
   due: Number;
+  description: String;
   referenceOne: Types.ObjectId;
   referenceTwo: Types.ObjectId;
 }
@@ -30,6 +32,7 @@ const DealSchema: Schema<IDealDocument> = new Schema(
       ref: "User",
     },
     worth: { type: Number, default: 0 },
+    advance: { type: Number, default: 0 },
     due: { type: Number, default: 0 },
     referenceOne: {
       type: Schema.Types.ObjectId,
@@ -41,6 +44,7 @@ const DealSchema: Schema<IDealDocument> = new Schema(
       default: null,
       ref: "User",
     },
+    description: { type: String, default: "" },
   },
   {
     timestamps: true,

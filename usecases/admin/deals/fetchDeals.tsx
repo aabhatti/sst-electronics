@@ -6,7 +6,12 @@ import {
   getDatesSearchCondition,
   getDealSearchCondition,
 } from "../../../utils/searches";
+import { referenceOneLookup, referenceTwoLookup } from "../../../utils/lookUps";
 import { dealProject } from "../../../utils/projects";
+import {
+  referenceOneAddField,
+  referenceTwoAddField,
+} from "../../../utils/addFields";
 
 interface FetchDeps {
   dealRepository: DealRepository;
@@ -52,7 +57,15 @@ async function fetchDeals(
   condition = { $match: condition };
 
   const facet = getPaginationWithTotalCountFacet({ pageLimit, limit });
-  const pipeline = [condition, dealProject, facet];
+  const pipeline = [
+    condition,
+    referenceOneLookup,
+    referenceOneAddField,
+    referenceTwoLookup,
+    referenceTwoAddField,
+    dealProject,
+    facet,
+  ];
 
   const records = await dealRepository.findByAggregation(pipeline);
   return {
