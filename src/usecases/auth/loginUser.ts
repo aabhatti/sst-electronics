@@ -1,5 +1,4 @@
 import { ClientSession } from "mongoose";
-import isEmpty from "lodash/isEmpty";
 import { UserRepository } from "../../repositories/UserRepository";
 import { Conflict, BadRequest } from "../../../errors";
 import { GenericMessages, UserMessages } from "../../../constants";
@@ -26,10 +25,8 @@ async function loginUser(
 ): Promise<IUserResp | null> {
   const { email, password } = body;
 
-  console.log("email, password>>>>", email, password);
-
   let user = await userRepository.findByEmail(email);
-  if (isEmpty(user)) {
+  if (!user) {
     throw new Conflict(UserMessages.FAILED_TO_FIND_USER);
   }
 
