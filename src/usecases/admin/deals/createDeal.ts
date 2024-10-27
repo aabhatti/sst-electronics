@@ -1,5 +1,5 @@
 import { ClientSession, Types } from "mongoose";
-const { isEmpty } = require("lodash");
+import { isEmpty } from "lodash";
 import { DealRepository } from "../../../repositories/DealRepository";
 import { UserRepository } from "../../../repositories/UserRepository";
 import { InstallmentRepository } from "../../../repositories/InstallmentRepository";

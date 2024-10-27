@@ -1,5 +1,5 @@
 import { ClientSession } from "mongoose";
-const { isEmpty } = require("lodash");
+import { isEmpty } from "lodash";
 import { UserRepository } from "../../repositories/UserRepository";
 import { Conflict, BadRequest } from "../../../errors";
 import { GenericMessages, UserMessages } from "../../../constants";
