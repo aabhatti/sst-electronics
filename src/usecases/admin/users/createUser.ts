@@ -1,5 +1,5 @@
 import { ClientSession } from "mongoose";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import { UserRepository } from "../../../repositories/UserRepository";
 import { User, IUser } from "../../../models/User";
 import { Conflict, InternalServerError } from "../../../../errors";

@@ -1,5 +1,5 @@
 import { ClientSession } from "mongoose";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import { UserRepository } from "../../repositories/UserRepository";
 import { Conflict, BadRequest } from "../../../errors";
 import { GenericMessages, UserMessages } from "../../../constants";
