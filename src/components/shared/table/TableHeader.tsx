@@ -69,6 +69,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
 
   return (
     <div className="flex flex-col items-start pb-0">
+      {title && <h4 className="text-primary font-bold text-2xl">{title}</h4>}
       <div className="flex items-end justify-between flex-wrap w-full">
         {handleSearch && (
           <TableDataSearch

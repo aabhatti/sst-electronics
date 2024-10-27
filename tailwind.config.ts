@@ -3,9 +3,10 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   darkMode: "class",
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    // "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    // "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    // "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -22,6 +23,7 @@ const config: Config = {
         fontDanger: "var(--color-font-danger)",
         fontSuccess: "var(--color-font-success)",
         fontInputLabel: "var(--color-font-input-label)",
+        lightDanger: "var(--color-light-danger)",
       },
       backgroundColor: {
         primary: "var(--color-primary)",
@@ -35,6 +37,7 @@ const config: Config = {
         successLight: "var(--color-font-success-light)",
         lightBasePrimary: "var(--color-light-base-primary)",
         baseSecondary: "var(--color-base-secondary)",
+        lightDanger: "var(--color-light-danger)",
       },
       borderColor: {
         lightPrimary: "var(--color-font-light-primary)",

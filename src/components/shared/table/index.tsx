@@ -27,6 +27,7 @@ interface TableProps {
   actionHandler?: (action: string, id: string | number) => void;
   setToggleTabs?: (toggle: boolean) => void;
   isCreateWithdrawal?: boolean;
+  className?: string;
 }
 
 const Table: React.FC<TableProps> = ({
@@ -53,6 +54,7 @@ const Table: React.FC<TableProps> = ({
   actionHandler,
   setToggleTabs,
   isCreateWithdrawal = false,
+  className = "",
 }) => {
   const pagination = Array(Math.ceil(total / limit))
     .fill(0)
@@ -77,7 +79,9 @@ const Table: React.FC<TableProps> = ({
         isCreateWithdrawal={isCreateWithdrawal}
       />
 
-      <div className="flex flex-col flex-grow overflow-auto min-h-[220px] py-0">
+      <div
+        className={`flex flex-col flex-grow overflow-auto min-h-[220px] py-0 ${className}`}
+      >
         <div className="w-full h-full overflow-auto">
           <div className="h-full flex flex-col">
             <TableBody

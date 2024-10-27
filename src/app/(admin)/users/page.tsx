@@ -1,6 +1,10 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { initialUsersValue, fetchUsers, headerUsersValues } from "./helper";
+import {
+  initialUsersValue,
+  handleFetchUsers,
+  headerUsersValues,
+} from "./helper";
 import Table from "@/components/shared/table";
 import { useRouter } from "next/navigation";
 const Users = () => {
@@ -8,14 +12,18 @@ const Users = () => {
   const [users, setUsers] = useState(initialUsersValue());
 
   useEffect(() => {
-    fetchUsers({ page: users.page, search: users.search, setData: setUsers });
+    handleFetchUsers({
+      page: users.page,
+      search: users.search,
+      setData: setUsers,
+    });
     //eslint-disable-next-line
   }, []);
 
   const handleSearch = useCallback(
     (search: string) => {
       setUsers((prev) => ({ ...prev, search }));
-      fetchUsers({ page: users.page, search: search, setData: setUsers });
+      handleFetchUsers({ page: users.page, search: search, setData: setUsers });
     },
     [users.page]
   );
@@ -23,13 +31,13 @@ const Users = () => {
   const handlePagination = useCallback(
     (page: number) => {
       setUsers((prev) => ({ ...prev, page }));
-      fetchUsers({ page, search: users.search, setData: setUsers });
+      handleFetchUsers({ page, search: users.search, setData: setUsers });
     },
     [users.search]
   );
 
   const handleRefresh = useCallback(() => {
-    fetchUsers({ page: 1, search: users.search, setData: setUsers });
+    handleFetchUsers({ page: 1, search: users.search, setData: setUsers });
   }, [users.search]);
 
   const handleNavigate = () => router.push("/users/create");

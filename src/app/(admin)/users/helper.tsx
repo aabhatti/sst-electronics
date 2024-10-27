@@ -1,31 +1,15 @@
-import { parseUrl } from "../../../config/helper";
-import { OFFSET, METHODES, HTTP_STATUS_CODE } from "../../../utils/constants";
-import { AdminUrls } from "../../../utils/routes";
-import { ExecuteHttpRequest } from "../../../config/ExecuteHttpRequest";
-import { ICreateUserInput } from "@/utils/interfaces";
+import { OFFSET } from "../../../utils/constants";
+import {
+  IHandleFetchUsersParams,
+  ICreateUserInput,
+  UsersState,
+} from "@/utils/interfaces";
+import { FaEdit } from "react-icons/fa";
+import Link from "next/link";
+import { createUser, fetchUsers } from "@/lib/actions/users.actions";
+import { error, success } from "@/components/shared/alert";
+import { HttpStatusCode } from "../../../../constants";
 
-// Define the types for the user data and state
-interface User {
-  // Define properties for a User if necessary
-}
-
-interface UsersState {
-  list: User[];
-  loading: boolean;
-  page: number;
-  offset: number;
-  search: string;
-  total: number;
-}
-
-// Define the types for the fetchUsers function parameters
-interface FetchUsersParams {
-  page: number;
-  search: string;
-  setData: React.Dispatch<React.SetStateAction<UsersState>>;
-}
-
-// Define the types for the fetchUsers function parameters
 interface ICreateUsersParams {
   data: ICreateUserInput;
   navigate: () => void;
@@ -43,24 +27,56 @@ export const initialUsersValue = (): UsersState => {
   };
 };
 
+const formatDataObj = (row: any) => {
+  return {
+    id: row.id,
+    name: (
+      <div className="flex items-center justify-center">
+        <div className="p-1 cursor-pointer">
+          <Link href={`/details/${row.id}`} className="text-primary">
+            {row.name}
+          </Link>
+        </div>
+      </div>
+    ),
+    // name: row.name,
+    email: row.email,
+    mobile: row.mobile,
+    cnic: row.cnic,
+    address: row.address,
+    status: row.status,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
+    action: (
+      <div className="flex items-center justify-center">
+        <div className="p-1 cursor-pointer">
+          <Link href={`/users/${row.id}`} className="text-primary">
+            <FaEdit />
+          </Link>
+        </div>
+      </div>
+    ),
+  };
+};
+
+const formateData = (data: any) =>
+  data?.length > 0 ? data.map((row: any) => formatDataObj(row)) : [];
+
 // The fetchUsers function
-export const fetchUsers = async ({
+export const handleFetchUsers = async ({
   page,
   search,
   setData,
-}: FetchUsersParams): Promise<void> => {
+}: IHandleFetchUsersParams): Promise<void> => {
   try {
     setData((prev) => ({ ...prev, loading: true }));
-
-    const url = parseUrl(AdminUrls.fetchAllUsers(page, OFFSET, search));
-    const resp = await ExecuteHttpRequest(METHODES.GET, url);
-
-    if (resp.status === HTTP_STATUS_CODE.OK) {
+    const resp = await fetchUsers({ page, offset: OFFSET, search });
+    if (resp.status === HttpStatusCode.OK) {
       setData((prev) => ({
         ...prev,
         total: resp?.data?.count || 0,
         loading: false,
-        list: resp?.data?.list || [],
+        list: formateData(resp?.data?.list || []),
         page,
       }));
     } else {
@@ -83,15 +99,19 @@ export const handleCreateUser = async ({
   navigate,
 }: ICreateUsersParams): Promise<void> => {
   try {
-    const resp = await ExecuteHttpRequest(
-      METHODES.POST,
-      AdminUrls.createUser,
-      data
-    );
-    console.log("resp>>>", resp);
-    navigate && navigate();
+    const resp = await createUser(data);
+    if (resp?.code === HttpStatusCode.CREATED) {
+      if (resp.message) success(resp.message.toString());
+      navigate && navigate();
+    } else {
+      if (resp?.message) error(resp.message.toString());
+    }
   } catch (err) {
-    console.log("err>>>>", err);
+    if (err instanceof Error) {
+      error(err?.message);
+    } else {
+      error("An unknown error occurred.");
+    }
   }
 };
 
@@ -105,5 +125,5 @@ export const headerUsersValues = [
   { type: "string", name: "Status", value: "status" },
   { type: "date", name: "Created At", value: "createdAt" },
   { type: "date", name: "Updated At", value: "updatedAt" },
-  //   { type: "string", name: "Action", value: "action" },
+  { type: "string", name: "Action", value: "action" },
 ];

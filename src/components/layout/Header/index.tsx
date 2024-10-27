@@ -16,7 +16,6 @@ const Header = () => {
   ) as SidebarContextType;
 
   const path = usePathname();
-  console.log("open in header>", open);
   return (
     <div className="bg-[#36246514] header flex items-center justify-between fixed top-0 right-0 w-full">
       <span

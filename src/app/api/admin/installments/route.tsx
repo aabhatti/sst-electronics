@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DealRepository } from "../../../../../repositories/DealRepository";
-import { InstallmentRepository } from "../../../../../repositories/InstallmentRepository";
-import { UserRepository } from "../../../../../repositories/UserRepository";
-import { connection } from "../../../../../database/dbConnection";
-import { createInstallment } from "../../../../../usecases/admin/installments/createInstallment";
-import { fetchInstallments } from "../../../../../usecases/admin/installments/fetchInstallments";
+import { DealRepository } from "../../../../repositories/DealRepository";
+import { InstallmentRepository } from "../../../../repositories/InstallmentRepository";
+import { UserRepository } from "../../../../repositories/UserRepository";
+import { connection } from "../../../../database/dbConnection";
+import { createInstallment } from "../../../../usecases/admin/installments/createInstallment";
+import { fetchInstallments } from "../../../../usecases/admin/installments/fetchInstallments";
 
 connection();
 export async function GET(req: NextRequest) {

@@ -57,6 +57,10 @@ const nameValidation = z
     message: ERRORS.NAME_INVALID,
   })
   .max(30, { message: LENGTH.MAX_30 });
+const dealNameValidation = z
+  .string()
+  .min(1, { message: ERRORS.NAME_REQUIRED })
+  .max(100, { message: LENGTH.MAX_100 });
 
 const descriptionValidation = z
   .string()
@@ -74,6 +78,10 @@ const worthValidation = z
 const advanceValidation = z
   .number()
   .min(1, { message: ERRORS.ADVANCE_REQUIRED });
+
+const noOfInstallmentsValidation = z
+  .number()
+  .min(1, { message: ERRORS.NO_OF_INSTALLMENTS_REQUIRED });
 
 const referenceOneValidation = z
   .string()
@@ -100,8 +108,10 @@ export {
   descriptionValidation,
   worthValidation,
   advanceValidation,
+  noOfInstallmentsValidation,
   referenceOneValidation,
   referenceTwoValidation,
   dealIdValidation,
   amountValidation,
+  dealNameValidation,
 };

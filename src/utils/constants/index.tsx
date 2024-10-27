@@ -4,11 +4,17 @@ export const DEBOUNCE_TIME = 1000;
 export const HTTP_STATUS_CODE = {
   OK: 200,
   CREATED: 201,
+  BAD_REQUEST: 400,
   NOT_EXECUTE: 210,
   NOT_FOUND: 404,
   Expectation_Failed: 417,
   CONFLICT: 409,
 };
+
+export const INVALID_CREDENTIALS =
+  "Invalid login credentials. Please try again.";
+export const EMAIL_PASSWORD_INVALID = "Email and password is invalid";
+export const SOMETHING_WENT_WRONG = "Something went wrong, Please try again.";
 
 export const LENGTH = {
   MAX_30: "Maximum 30 characters",
@@ -93,6 +99,8 @@ export const ERRORS = {
   ADVANCE_GREATER_REQUIRED: "Advance must not be greater than Worth",
   REFERENCE_REQUIRED: "Reference is required",
 
+  NO_OF_INSTALLMENTS_REQUIRED: "No of installments is required",
+
   DEAL_REQUIRED: "Deal is required",
   AMOUNT_BETWEEN_1_10000000: "Amount must be between 1 and 10000000",
 };
@@ -171,6 +179,7 @@ export const LABELS = {
   DESCRIPTION: "Description*",
   WORTH: "Worth*",
   ADVANCE: "Advance*",
+  NO_OF_INSTALLMENTS: "No of installments*",
   REFERENCE_ONE: "Reference One*",
   REFERENCE_TWO: "Reference Two*",
 
@@ -225,6 +234,7 @@ export const PLACEHOLDERS = {
   DESCRIPTION: "Enter description",
   WORTH: "Enter total worth",
   ADVANCE: "Enter advance",
+  NO_OF_INSTALLMENTS: "Enter no of installments",
   REFERENCE_ONE: "Please type 2-3 letter to select user",
   REFERENCE_TWO: "Please type 2-3 letter to select user",
 
@@ -245,6 +255,7 @@ export enum NAMES {
   DESCRIPTION = "description",
   WORTH = "worth",
   ADVANCE = "advance",
+  NO_OF_INSTALLMENTS = "noOfInstallments",
   REFERENCE_ONE = "referenceOne",
   REFERENCE_TWO = "referenceTwo",
 

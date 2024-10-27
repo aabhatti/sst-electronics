@@ -13,10 +13,15 @@
   --color-font-danger-light: #f46d2220;
   --color-font-success: #1ecb4f;
   --color-font-success-light: #1ecb4f20;
-  --color-font-placeholder: rgba(124, 124, 124, 0.2);
+  --color-font-placeholder: #7c7c7c33;
   --color-font-input: #989898;
   --color-border-primary: #eeee;
   --color-primary-shadow: #9568ff33;
+  --color-light-danger: #fed7d7;
+  --color-light-success: #c6f6d5;
+  --color-light-info: #bee3f8;
+  --color-light-warning: #feebc8;
+  --color-light-primary-lighter: #e9d8fd;
 }
 
 @tailwind base;
@@ -183,4 +188,42 @@
     color: var(--color-font-base-primary);
     z-index: 99;
   }
+
+  .paginate_button {
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 5px;
+    margin-left: 0rem;
+    margin: 0 0.125rem;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 0 !important;
+    color: var(--color-primary) !important;
+  }
+  .paginate_button.current,
+  .paginate_button:hover {
+    color: var(--color-primary) !important;
+    background: var(--color-base-secondary) !important;
+  }
+}
+
+.bg-danger-light {
+  background: var(--color-light-danger);
+}
+
+.bg-success-light {
+  background: var(--color-light-success);
+}
+
+.bg-info-light {
+  background: var(--color-light-info);
+}
+
+.bg-warning-light {
+  background: var(--color-light-warning);
+}
+
+.bg-primary-light {
+  background: var(--color-base-secondary);
 }

@@ -5,7 +5,7 @@ const CreateDealPage = async () => {
   return (
     <>
       <h2 className="text-lg font-bold text-primary text-center border border-primary rounded-lg mb-1">
-        Create Deal
+        Create User
       </h2>
       <div className="flex flex-col h-fit overflow-auto">
         <CreateUserForm />

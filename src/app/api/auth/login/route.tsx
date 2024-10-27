@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { UserRepository } from "../../../../../repositories/UserRepository";
-import { loginUser } from "../../../../../usecases/auth/loginUser";
-import { connection } from "../../../../../database/dbConnection";
+import { UserRepository } from "../../../../repositories/UserRepository";
+import { loginUser } from "../../../../usecases/auth/loginUser";
+import { connection } from "../../../../database/dbConnection";
 import { HttpStatusCode } from "../../../../../constants";
 import { cookies } from "next/headers";
 
@@ -18,17 +18,17 @@ export async function POST(req: NextRequest) {
 
     console.log("resp >>>", resp);
 
-    cookies().set("token", resp.token, {
-      httpOnly: true,
-      maxAge: 300,
-      sameSite: "strict",
-    });
+    // cookies().set("token", resp.token, {
+    //   httpOnly: true,
+    //   maxAge: 300,
+    //   sameSite: "strict",
+    // });
 
-    cookies().set("refreshToken", resp.refreshToken, {
-      httpOnly: true,
-      // maxAge: 24 * 60 * 60,
-      sameSite: "strict",
-    });
+    // cookies().set("refreshToken", resp.refreshToken, {
+    //   httpOnly: true,
+    //   // maxAge: 24 * 60 * 60,
+    //   sameSite: "strict",
+    // });
     return NextResponse.json({ ...resp }, { status: HttpStatusCode.OK });
   } catch (err: any) {
     console.log("err", err);

@@ -26,6 +26,7 @@ const createDealDefaultValues = {
   description: "",
   worth: 0,
   advance: 0,
+  noOfInstallments: 12,
   referenceOne: "",
   referenceTwo: "",
 };

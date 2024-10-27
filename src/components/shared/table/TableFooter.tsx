@@ -1,5 +1,10 @@
 import React from "react";
 import {
+  MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight,
+} from "react-icons/md";
+
+import {
   rowDetails,
   isCurrentEnabled,
   isForwardEnabled,
@@ -26,14 +31,11 @@ const TableFooter: React.FC<TableFooterProps> = ({
 }) => {
   return (
     <div id="sellbthdata_wrapper" className="dataTables_wrapper no-footer">
-      <div className="d-sm-flex text-center justify-content-between align-items-center mt-3 mb-3 flex-wrap">
-        <div className="dataTables_info fs-14 text-body d-flex align-items-start">
+      <div className="flex text-center justify-between items-end mt-4 flex-wrap">
+        <div className="dataTables_info text-sm text-body flex items-end ml-1">
           {rowDetails(page, limit, total)}
         </div>
-        <div
-          className="dataTables_paginate paging_simple_numbers mb-0"
-          id="application-tbl1_paginate"
-        >
+        <div className="mb-0 flex items-center" id="application-tbl1_paginate">
           <button
             disabled={loading}
             className="paginate_button previous"
@@ -43,7 +45,7 @@ const TableFooter: React.FC<TableFooterProps> = ({
               }
             }}
           >
-            <i className="fa fa-angle-double-left"></i>
+            <MdKeyboardDoubleArrowLeft className="text-primary text-5xl" />
           </button>
           <span>
             {!!(pagination?.length > 0) ? (
@@ -79,7 +81,7 @@ const TableFooter: React.FC<TableFooterProps> = ({
               }
             }}
           >
-            <i className="fa fa-angle-double-right"></i>
+            <MdKeyboardDoubleArrowRight className="text-primary text-5xl" />
           </button>
         </div>
       </div>

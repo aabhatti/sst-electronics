@@ -6,8 +6,11 @@ import { registerSchema } from "../../utils/zodValidations";
 import { registerDefaultValues } from "../../utils/defaultValues";
 import { IRegisterInput } from "../../utils/interfaces";
 import FormBody from "./FormBody";
+import { handleRegister } from "./helper";
+import { useRouter } from "next/navigation";
 
-const LoginForm = () => {
+const RegisterForm = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const {
@@ -21,8 +24,9 @@ const LoginForm = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit: SubmitHandler<IRegisterInput> = (data) => {
-    console.log(data);
+  const redirectToLogin = () => router.push("/login");
+  const onSubmit: SubmitHandler<IRegisterInput> = async (data) => {
+    await handleRegister(data, redirectToLogin);
   };
 
   return (
@@ -39,4 +43,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

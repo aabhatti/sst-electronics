@@ -18,6 +18,7 @@ interface HeaderItem {
 
 // Define the structure for each row data item
 interface RowDataItem {
+  bg?: string;
   [key: string]: any; // The keys correspond to header values
 }
 
@@ -58,19 +59,6 @@ export const TableRows: React.FC<TableRowsProps> = ({
                       }
                     />
                   );
-
-                // case CUSTOM_TYPES.MENU:
-                //   return (
-                //     <TableMenu
-                //       list={cellData}
-                //       disabled={item.disabled}
-                //       onClick={(e: React.MouseEvent) =>
-                //         !item.disabled &&
-                //         actionHandler &&
-                //         actionHandler(item.value, e, rowData)
-                //       }
-                //     />
-                //   );
 
                 case CUSTOM_TYPES.TOGGLE:
                   return (
@@ -155,9 +143,10 @@ export const TableRows: React.FC<TableRowsProps> = ({
                   return cellData;
               }
             };
+            const bg = item?.bg ? `${item?.bg}` : "transparent";
 
             return (
-              <td key={index} className="text-tableBody">
+              <td key={index} className={`text-tableBody bg-${bg}`}>
                 {renderCellContent()}
               </td>
             );

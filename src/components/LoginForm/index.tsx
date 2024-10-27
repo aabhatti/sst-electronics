@@ -6,10 +6,13 @@ import { loginSchema } from "../../utils/zodValidations";
 import { loginDefaultValues } from "../../utils/defaultValues";
 import { ILoginInput } from "../../utils/interfaces";
 import FormBody from "./FormBody";
-// import { authenticate } from "@/app/lib/actions";
 import { useFormState, useFormStatus } from "react-dom";
+import { handleLogin } from "./helper";
+import { useRouter } from "next/navigation";
+import { DEFAULT_LOGGED_IN_REDIRECT } from "@/utils/routes";
 
 const LoginForm = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   // const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
@@ -24,15 +27,15 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  // const onSubmit: SubmitHandler<ILoginInput> = (data) => {
-  //   console.log("data>>", data);
-  //   authenticate();
-  // };
-  // console.log("errorMessage>>>", errorMessage);
+  const redirectDefaultRoute = () => router.push(DEFAULT_LOGGED_IN_REDIRECT);
+  const onSubmit: SubmitHandler<ILoginInput> = async (data) => {
+    await handleLogin(data, redirectDefaultRoute);
+  };
+
   const { pending } = useFormStatus();
 
   return (
-    <form onSubmit={() => {}}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <FormBody
         errors={errors}
         isSubmitting={isSubmitting || pending}

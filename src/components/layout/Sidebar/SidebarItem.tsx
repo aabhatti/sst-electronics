@@ -19,7 +19,7 @@ const SidebarItem: React.FC<ItemProps> = ({ item }) => {
     <Link
       href={path}
       className={`sidebar-item mw-[100%] flex items-center rounded-md text-fontPrimary ${
-        pathName === path ? "active bg-lightBasePrimary" : ""
+        pathName.startsWith(path) ? "active bg-lightBasePrimary" : ""
       } hover:bg-lightBasePrimary cursor-pointer `}
     >
       <span className="icon text-lg">{icon}</span>

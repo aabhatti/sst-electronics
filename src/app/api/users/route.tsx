@@ -1,8 +1,8 @@
 // import type { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
-import { UserRepository } from "../../../../repositories/UserRepository";
-import { registerUser } from "../../../../usecases/auth/registerUser";
-import { connection } from "../../../../database/dbConnection";
+import { UserRepository } from "../../../repositories/UserRepository";
+import { registerUser } from "../../../usecases/auth/registerUser";
+import { connection } from "../../../database/dbConnection";
 
 connection();
 export async function GET(req: NextRequest) {

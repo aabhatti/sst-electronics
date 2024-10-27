@@ -26,6 +26,18 @@ export const DEFAULT_LOGGED_IN_REDIRECT = "/dashboard";
 export const adminRoutes = ["/dashboard", "/users", "/deals", "/installments"];
 
 /**
+ * Any array routes that are used for user
+ * These routes will redirect logged in user to the user routes
+ * @type {string}
+ */
+export const userRoutes = [
+  "/dashboard",
+  "/profile",
+  "/userdeals",
+  "/userinstallments",
+];
+
+/**
  * Prefix for api authentication routes handlers
  * Routes that start with prefix for authentication
  * @type {string}
@@ -40,6 +52,9 @@ export const AdminUrls = {
     return `/admin/users?page=${page}&offset=${offset}&searched=${
       search ? encodeURIComponent(search) : ""
     }`;
+  },
+  fetchUserDetails: (id: string) => {
+    return `/admin/users/details/${id}`;
   },
   fetchAllDeals: (page: number, offset: number, search: string) => {
     return `/admin/deals?page=${page}&offset=${offset}&searched=${

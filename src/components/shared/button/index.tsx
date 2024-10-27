@@ -30,7 +30,7 @@ const Button: React.FC<ButtonProps> = ({
       >
         {loading ? (
           <div className="flex justify-center items-center">
-            <Spinner color="" />
+            <Spinner color="" className="w-[18px] h-[18px]" />
           </div>
         ) : (
           children

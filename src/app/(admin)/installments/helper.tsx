@@ -1,8 +1,12 @@
-import { parseUrl } from "../../../config/helper";
 import { OFFSET, METHODES, HTTP_STATUS_CODE } from "../../../utils/constants";
-import { AdminUrls } from "../../../utils/routes";
-import { ExecuteHttpRequest } from "../../../config/ExecuteHttpRequest";
 import { ICreateInstallmentInput } from "@/utils/interfaces";
+import {
+  createInstallment,
+  fetchInstallments,
+} from "@/lib/actions/installments.actions";
+import { HttpStatusCode } from "../../../../constants";
+import { error, success } from "@/components/shared/alert";
+import Link from "next/link";
 
 interface Data {}
 
@@ -41,7 +45,7 @@ export const initialUsersValue = (): StateData => {
 };
 
 // The fetchUsers function
-export const fetchInstallments = async ({
+export const handleFetchInstallments = async ({
   page,
   search,
   setData,
@@ -49,15 +53,14 @@ export const fetchInstallments = async ({
   try {
     setData((prev) => ({ ...prev, loading: true }));
 
-    const url = parseUrl(AdminUrls.fetchAllInstallments(page, OFFSET, search));
-    const resp = await ExecuteHttpRequest(METHODES.GET, url);
+    const resp = await fetchInstallments({ page, offset: OFFSET, search });
 
     if (resp.status === HTTP_STATUS_CODE.OK) {
       setData((prev) => ({
         ...prev,
         total: resp?.data?.count || 0,
         loading: false,
-        list: resp?.data?.list || [],
+        list: formateData(resp?.data?.list || []),
         page,
       }));
     } else {
@@ -74,33 +77,58 @@ export const fetchInstallments = async ({
   }
 };
 
+export const formateData = (data: any) =>
+  data?.length > 0 ? data.map((row: any) => formatDataObj(row)) : [];
+
+const formatDataObj = (row: any) => {
+  return {
+    id: row.id,
+    date: row.date,
+    userName: (
+      <div className="flex items-center justify-start">
+        <div className="cursor-pointer">
+          <Link href={`/details/${row.userId}`} className="text-primary">
+            {row.userName}
+          </Link>
+        </div>
+      </div>
+    ),
+    dealName: row.dealName,
+    receipt: row.receipt || "N/A",
+    status: row.status ? row.status.toUpperCase() : "N/A",
+    amount: `Rs ${row.amount || 0}/-`,
+    dealDues: `Rs ${row.dealDues || 0}/-`,
+  };
+};
+
 // create installment handler
 export const handleCreateInstallment = async ({
   data,
   navigate,
 }: ICreateParams): Promise<void> => {
   try {
-    const resp = await ExecuteHttpRequest(
-      METHODES.POST,
-      AdminUrls.createInstallment,
-      data
-    );
-    console.log("resp>>>", resp);
-    if (resp && resp.status === 200) {
+    const resp = await createInstallment(data);
+    if (resp?.code === HttpStatusCode.CREATED) {
+      if (resp.message) success(resp.message.toString());
       navigate && navigate();
     } else {
-      // show error message to the user
+      if (resp?.message) error(resp.message.toString());
     }
   } catch (err) {
-    console.log("err>>>>", err);
+    if (err instanceof Error) {
+      error(err?.message);
+    } else {
+      error("An unknown error occurred.");
+    }
   }
 };
 
 export const headerValues = [
-  { type: "string", name: "User Name", value: "userName" },
-  { type: "string", name: "Deal", value: "dealName" },
-  { type: "string", name: "Amount", value: "amount" },
-  { type: "date", name: "Created At", value: "createdAt" },
-  { type: "date", name: "Updated At", value: "updatedAt" },
-  //   { type: "string", name: "Action", value: "action" },
+  { type: "string", name: "Date", value: "date", bg: "primary-light" },
+  { type: "string", name: "User Name", value: "userName", bg: "primary-light" },
+  { type: "string", name: "Deal", value: "dealName", bg: "primary-light" },
+  { type: "string", name: "Receipt", value: "receipt", bg: "primary-light" },
+  { type: "string", name: "Status", value: "status", bg: "success-light" },
+  { type: "string", name: "Amount", value: "amount", bg: "success-light" },
+  { type: "string", name: "Due", value: "dealDues", bg: "danger-light" },
 ];

@@ -35,12 +35,13 @@ const FormBody: React.FC<FormBodyProps> = ({
     DESCRIPTION,
     WORTH,
     ADVANCE,
+    NO_OF_INSTALLMENTS,
     REFERENCE_ONE,
     REFERENCE_TWO,
   } = NAMES;
   return (
-    <div className="mt-5 grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
-      <div>
+    <div className="mt-5 grid lg:grid-cols-6 sm:grid-cols-1 gap-4">
+      <div className="lg:col-span-3">
         <TextField
           type={TYPE.TEXT}
           name={USER_ID}
@@ -67,7 +68,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         /> */}
       </div>
-      <div>
+      <div className="lg:col-span-3">
         <TextField
           type={TYPE.TEXT}
           name={NAME}
@@ -82,7 +83,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div className="col-span-2">
+      <div className="lg:col-span-6">
         <TextField
           type={TYPE.TEXT}
           name={DESCRIPTION}
@@ -97,7 +98,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div>
+      <div className="lg:col-span-2">
         <TextField
           type={TYPE.NUMBER}
           name={WORTH}
@@ -113,7 +114,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div>
+      <div className="lg:col-span-2">
         <TextField
           type={TYPE.NUMBER}
           name={ADVANCE}
@@ -129,7 +130,23 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div>
+      <div className="lg:col-span-2">
+        <TextField
+          type={TYPE.NUMBER}
+          name={NO_OF_INSTALLMENTS}
+          label={LABELS.NO_OF_INSTALLMENTS}
+          placeholder={PLACEHOLDERS.NO_OF_INSTALLMENTS}
+          value={watch(NO_OF_INSTALLMENTS)}
+          error={errors?.[NO_OF_INSTALLMENTS]?.message}
+          onBlur={() => trigger(NO_OF_INSTALLMENTS)}
+          min={0}
+          onChange={(e) => {
+            setValue(NO_OF_INSTALLMENTS, Number(e.target.value));
+            trigger(NO_OF_INSTALLMENTS);
+          }}
+        />
+      </div>
+      <div className="lg:col-span-3">
         <TextField
           type={TYPE.TEXT}
           name={REFERENCE_ONE}
@@ -145,7 +162,7 @@ const FormBody: React.FC<FormBodyProps> = ({
         />
       </div>
 
-      <div>
+      <div className="lg:col-span-3">
         <TextField
           type={TYPE.TEXT}
           name={REFERENCE_TWO}
@@ -160,7 +177,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div className="lg:col-span-2">
+      <div className="lg:col-span-6">
         <Button
           type={"submit"}
           disabled={loading}

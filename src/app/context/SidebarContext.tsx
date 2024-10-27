@@ -42,11 +42,10 @@ const SidebarContextProvider: React.FC<SidebarContextProviderProps> = ({
   const { open } = state;
 
   const handleSidebarToggle = useCallback(() => {
+    const isOpen = !open;
     const body = document.querySelector("body");
-
-    console.log("open>", open);
-    body?.setAttribute("data-sidebar", open ? "open" : "close");
-    dispatch({ open: !open });
+    body?.setAttribute("data-sidebar", isOpen ? "open" : "close");
+    dispatch({ open: isOpen });
   }, [open]);
 
   const value = useMemo(

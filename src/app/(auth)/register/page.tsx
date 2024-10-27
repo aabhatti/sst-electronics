@@ -1,10 +1,7 @@
 import RegisterForm from "@/components/RegisterForm";
 import Link from "next/link";
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const RegisterPage = async () => {
-  // await delay(50000);
   return (
     <>
       <h2 className="text-lg font-bold text-primary text-center border border-primary rounded-lg mb-1">

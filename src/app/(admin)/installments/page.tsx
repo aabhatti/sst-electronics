@@ -1,6 +1,10 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { initialUsersValue, fetchInstallments, headerValues } from "./helper";
+import {
+  initialUsersValue,
+  handleFetchInstallments,
+  headerValues,
+} from "./helper";
 import Table from "@/components/shared/table";
 import { useRouter } from "next/navigation";
 
@@ -9,7 +13,7 @@ const Installments = () => {
   const [data, setData] = useState(initialUsersValue());
 
   useEffect(() => {
-    fetchInstallments({
+    handleFetchInstallments({
       page: data.page,
       search: data.search,
       setData: setData,
@@ -20,7 +24,11 @@ const Installments = () => {
   const handleSearch = useCallback(
     (search: string) => {
       setData((prev) => ({ ...prev, search }));
-      fetchInstallments({ page: data.page, search: search, setData: setData });
+      handleFetchInstallments({
+        page: data.page,
+        search: search,
+        setData: setData,
+      });
     },
     [data.page]
   );
@@ -28,13 +36,13 @@ const Installments = () => {
   const handlePagination = useCallback(
     (page: number) => {
       setData((prev) => ({ ...prev, page }));
-      fetchInstallments({ page, search: data.search, setData: setData });
+      handleFetchInstallments({ page, search: data.search, setData: setData });
     },
     [data.search]
   );
 
   const handleRefresh = useCallback(() => {
-    fetchInstallments({ page: 1, search: data.search, setData: setData });
+    handleFetchInstallments({ page: 1, search: data.search, setData: setData });
   }, [data.search]);
 
   const handleNavigate = () => router.push("/installments/create");

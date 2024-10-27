@@ -8,14 +8,15 @@ import {
   mobileValidation,
   addressValidation,
   userIdValidation,
-  nameValidation,
   descriptionValidation,
   worthValidation,
   advanceValidation,
+  noOfInstallmentsValidation,
   referenceOneValidation,
   referenceTwoValidation,
   dealIdValidation,
   amountValidation,
+  dealNameValidation,
 } from "./common";
 import { passwordRegex } from "./regex";
 
@@ -58,10 +59,11 @@ export const createUserSchema = z.object({
 export const createDealSchema = z
   .object({
     userId: userIdValidation,
-    name: nameValidation,
+    name: dealNameValidation,
     description: descriptionValidation,
     worth: worthValidation,
     advance: advanceValidation,
+    noOfInstallments: noOfInstallmentsValidation,
     referenceOne: referenceOneValidation,
     referenceTwo: referenceTwoValidation,
   })

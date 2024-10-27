@@ -1,11 +1,22 @@
+"use client";
 import React from "react";
 import Button from "../button";
-import { handleLogout } from "@/app/lib/actions";
+import { handleLogout } from "@/lib/actions/auth.actions";
 
 const Logout = () => {
   return (
     <>
-      <Button onClick={handleLogout}>{"Logout"}</Button>
+      <Button
+        onClick={(e) => {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          handleLogout();
+        }}
+      >
+        {"Logout"}
+      </Button>
     </>
   );
 };

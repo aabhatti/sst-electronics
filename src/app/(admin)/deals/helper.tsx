@@ -1,11 +1,12 @@
-import { parseUrl } from "../../../config/helper";
-import { OFFSET, METHODES, HTTP_STATUS_CODE } from "../../../utils/constants";
-import { AdminUrls } from "../../../utils/routes";
-import { ExecuteHttpRequest } from "../../../config/ExecuteHttpRequest";
+import { OFFSET } from "../../../utils/constants";
 import { ICreateDealInput } from "@/utils/interfaces";
+import { createDeal, fetchDeals } from "@/lib/actions/deals.actions";
+import { HttpStatusCode } from "../../../../constants";
+import { error, success } from "@/components/shared/alert";
+import { DayMonthYearDateFormate } from "../../../../utils";
+import Link from "next/link";
 
 interface Data {}
-
 interface StateData {
   list: Data[];
   loading: boolean;
@@ -43,33 +44,85 @@ export const initialUsersValue = (): StateData => {
 const formatDataObj = (row: any) => {
   return {
     id: row.id,
-    name: row.name,
-    userName: row.userName,
-    due: row.due,
-    worth: row.worth,
-    advance: row.advance,
-    description: row.description,
-    createdAt: row.createdAt,
-    updatedAt: row.updatedAt,
+    date: row.date ? row.date : DayMonthYearDateFormate(row.createdAt),
+    deal: (
+      <>
+        <p className="w-5 text-sm">{row.id}</p>
+        <h2 className="font-semibold text-md text-primary">{row.name}</h2>
+        {row.description && (
+          <p className="text-sm text-basePrimary">{`(${row.description})`}</p>
+        )}
+      </>
+    ),
+    userName: (
+      <div className="flex items-center justify-start">
+        <div className="cursor-pointer">
+          <Link
+            href={`/details/${row.userId}`}
+            className="text-primary text-md"
+          >
+            {row.userName}
+          </Link>
+        </div>
+      </div>
+    ),
     references: (
-      <div className="flex flex-col">
-        <div className="flex flex-col">
+      <div className="flex items-center justify-start">
+        <div className="flex flex-col text-xs">
           <span>{row.referenceOne.name}</span>
-          <span>{row.referenceOne.cnic}</span>
+          <span>CNIC: {row.referenceOne.cnic || "N/A"}</span>
+          <span>Mobile: {row.referenceOne.mobile || "N/A"}</span>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col text-xs border-s border-primary ml-2 pl-2">
           <span>{row.referenceTwo.name}</span>
-          <span>{row.referenceTwo.cnic}</span>
+          <span>CNIC: {row.referenceTwo.cnic || "N/A"}</span>
+          <span>Mobile: {row.referenceTwo.mobile || "N/A"}</span>
         </div>
+      </div>
+    ),
+    total: (
+      <div className="flex flex-col">
+        <span className="text-md">
+          Amount: <span className="font-semibold">{`Rs ${row.worth}/-`}</span>
+        </span>
+        <span className="text-md">
+          Installments:
+          <span className="font-semibold">{row.noOfInstallments}</span>
+        </span>
+      </div>
+    ),
+    paid: (
+      <div className="flex flex-col">
+        <span className="text-md">
+          Amount:
+          <span className="font-semibold">{`Rs ${row.paid}/-`}</span>
+        </span>
+        <span className="text-md">
+          Installments:{" "}
+          <span className="font-semibold"> {row.paidInstallments}</span>
+        </span>
+      </div>
+    ),
+    due: (
+      <div className="flex flex-col">
+        <span className="text-md">
+          Amount: <span className="font-semibold"> {`Rs ${row.due}/-`}</span>
+        </span>
+        <span className="text-md">
+          Installments:{" "}
+          <span className="font-semibold">
+            {Number(row.noOfInstallments) - Number(row.paidInstallments)}
+          </span>
+        </span>
       </div>
     ),
   };
 };
-const formateDeals = (data: any) =>
+const formateData = (data: any) =>
   data?.length > 0 ? data.map((row: any) => formatDataObj(row)) : [];
 
 // The fetchUsers function
-export const fetchDeals = async ({
+export const handleFetchDeals = async ({
   page,
   search,
   setData,
@@ -77,15 +130,14 @@ export const fetchDeals = async ({
   try {
     setData((prev) => ({ ...prev, loading: true }));
 
-    const url = parseUrl(AdminUrls.fetchAllDeals(page, OFFSET, search));
-    const resp = await ExecuteHttpRequest(METHODES.GET, url);
+    const resp = await fetchDeals({ page, offset: OFFSET, search });
 
-    if (resp.status === HTTP_STATUS_CODE.OK) {
+    if (resp.status === HttpStatusCode.OK) {
       setData((prev) => ({
         ...prev,
         total: resp?.data?.count || 0,
         loading: false,
-        list: formateDeals(resp?.data?.list || []),
+        list: formateData(resp?.data?.list || []),
         page,
       }));
     } else {
@@ -108,32 +160,33 @@ export const handleCreateDeal = async ({
   navigate,
 }: ICreateDealParams): Promise<void> => {
   try {
-    const resp = await ExecuteHttpRequest(
-      METHODES.POST,
-      AdminUrls.createDeal,
-      data
-    );
-    console.log("resp>>>", resp);
-    if (resp.status === 200) {
+    const resp = await createDeal(data);
+    if (resp?.code === HttpStatusCode.CREATED) {
+      if (resp.message) success(resp.message.toString());
       navigate && navigate();
     } else {
-      // show errror
+      if (resp?.message) error(resp.message.toString());
     }
   } catch (err) {
-    console.log("err>>>>", err);
+    if (err instanceof Error) {
+      error(err?.message);
+    } else {
+      error("An unknown error occurred.");
+    }
   }
 };
 
 export const headerValues = [
-  { type: "string", name: "ID", value: "id" },
-  { type: "string", name: "Name", value: "name" },
-  { type: "string", name: "User Name", value: "userName" },
-  { type: "string", name: "Description", value: "description" },
-  { type: "component", name: "References", value: "references" },
-  { type: "string", name: "Worth", value: "worth" },
-  { type: "string", name: "Advance", value: "advance" },
-  { type: "string", name: "Due", value: "due" },
-  { type: "date", name: "Created At", value: "createdAt" },
-  { type: "date", name: "Updated At", value: "updatedAt" },
-  //   { type: "string", name: "Action", value: "action" },
+  { type: "string", name: "Date", value: "date", bg: "primary-light" },
+  { type: "string", name: "Deal", value: "deal", bg: "primary-light" },
+  { type: "string", name: "User Name", value: "userName", bg: "primary-light" },
+  {
+    type: "component",
+    name: "References",
+    value: "references",
+    bg: "info-light",
+  },
+  { type: "string", name: "Total", value: "total", bg: "info-light" },
+  { type: "string", name: "Paid", value: "paid", bg: "success-light" },
+  { type: "string", name: "Due", value: "due", bg: "danger-light" },
 ];
