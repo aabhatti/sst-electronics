@@ -21,12 +21,9 @@ export const authConfig = {
       console.log("auth>>>>>> and >>>>>>>>", auth, nextUrl);
       console.log("allowedAdmins>>", allowedAdmins);
 
-      const admins = allowedAdmins ? allowedAdmins.split(",") : [];
-      console.log("admins>>", admins);
-
       const isLoggedIn = !!auth?.user?.id || !!auth?.user?.email;
       const isAdmin = auth?.user?.email
-        ? admins?.includes(auth?.user?.email)
+        ? allowedAdmins?.includes(auth?.user?.email)
         : false;
       const isApiAuthRoutes = nextUrl.pathname.startsWith(apiAuthPrefix);
       const isPublicRoute = publicRoutes.includes(nextUrl.pathname);

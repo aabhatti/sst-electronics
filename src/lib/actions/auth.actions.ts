@@ -24,7 +24,11 @@ export async function authenticate(formData: ILoginInput) {
       }
     }
     console.log("errorMessage in authenticate>>>", errorMessage);
-    throw errorMessage;
+    throw {
+      status: 500,
+      error: errorMessage,
+      message: errorMessage,
+    };
   }
 }
 
