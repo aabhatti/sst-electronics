@@ -7,3 +7,7 @@ export const success = (value: string, option: ToastOptions = {}): void => {
 export const error = (value: string, option: ToastOptions = {}): void => {
   toast.error(value, option);
 };
+
+export const showError = (value: string, option: ToastOptions = {}): void => {
+  toast.error(value, option);
+};

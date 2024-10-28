@@ -24,7 +24,7 @@ export async function authenticate(formData: ILoginInput) {
       }
     }
     console.log("errorMessage in authenticate>>>", errorMessage);
-    throw new Error(errorMessage);
+    throw errorMessage;
   }
 }
 

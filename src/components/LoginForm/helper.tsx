@@ -1,6 +1,6 @@
 import { authenticate } from "@/lib/actions/auth.actions";
 import { ILoginInput } from "@/utils/interfaces";
-import { error, success } from "../shared/alert";
+import { showError, error, success } from "../shared/alert";
 
 type RedirectFunction = () => void;
 export const handleLogin = async (
@@ -10,9 +10,9 @@ export const handleLogin = async (
   try {
     const resp = await authenticate(data);
     if (resp) redirect();
-    console.log("resp>>>", resp);
+    console.log("resp in handleLogin from authenticate>>>", resp);
   } catch (err: any) {
-    error("err in handleLogin");
+    showError("err in handleLogin");
 
     console.log("err in handleLogin>>>", err, err.message);
 
