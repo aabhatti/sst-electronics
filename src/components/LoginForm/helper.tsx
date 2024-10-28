@@ -9,8 +9,10 @@ export const handleLogin = async (
 ) => {
   try {
     const resp = await authenticate(data);
-    if (resp) redirect();
     console.log("resp in handleLogin from authenticate>>>", resp);
+
+    if (!(resp && resp.error)) redirect();
+    else error(resp.error);
   } catch (err: any) {
     showError("err in handleLogin");
 
