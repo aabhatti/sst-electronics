@@ -22,6 +22,12 @@ interface IUser {
   email?: string | undefined;
 }
 
+interface ErrorResponse {
+  error?: string;
+  status?: number;
+  message?: string;
+}
+
 export const {
   handlers: { GET, POST },
   signIn,
@@ -65,10 +71,11 @@ export const {
           //   userRepository: new UserRepository(),
           // });
 
-          const resp = await login(data);
+          let resp = await login(data);
           console.log("resp after login>>>", resp);
           user = resp ?? null;
           if (!(user && user.status === 200)) {
+            // return resp;
             throw new Error(resp.message?.toString() || "User not found.");
           }
 
@@ -78,6 +85,7 @@ export const {
             email: credentials?.email?.toString() || "",
           };
         } catch (err: any) {
+          console.log("err in authorize sigin>>>", err);
           throw new Error(err?.message?.toString() || "internal server error");
         }
       },

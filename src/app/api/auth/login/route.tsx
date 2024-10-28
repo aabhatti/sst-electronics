@@ -31,7 +31,10 @@ export async function POST(req: NextRequest) {
     // });
     return NextResponse.json({ ...resp }, { status: HttpStatusCode.OK });
   } catch (err: any) {
-    console.log("err", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    console.log("err in login api catch>>", err);
+    return NextResponse.json(
+      { error: err.message },
+      { status: err.statusCode || 500 }
+    );
   }
 }

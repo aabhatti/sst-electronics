@@ -35,6 +35,7 @@ export async function loginWithGoogle() {
     });
     console.log("resp in loginWithGoogle>>>>>", resp);
   } catch (error) {
+    console.log("error in loginWithGoogle signin>>>>>", error);
     if (error instanceof AuthError) {
       console.log("error in loginWithGoogle>>>>>", error);
       switch (error.type) {

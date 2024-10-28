@@ -9,17 +9,8 @@ const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
 const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
-const allowedAdmins = process.env.ADMINS?.split(",");
+const allowedAdmins = process.env.ADMINS;
 
-console.log(
-  "serverUrl,googleClientId,googleClientSecret,githubClientId,githubClientSecret,allowedAdmins",
-  serverUrl,
-  googleClientId,
-  googleClientSecret,
-  githubClientId,
-  githubClientSecret,
-  allowedAdmins
-);
 export {
   serverUrl,
   googleClientId,
