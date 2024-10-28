@@ -15,7 +15,7 @@ export async function authenticate(formData: ILoginInput) {
     });
     // if (resp) redirect(DEFAULT_LOGGED_IN_REDIRECT);
   } catch (error: any) {
-    console.log("error<>", error);
+    console.log("error in authenticate>>", error);
     const errorMessage =
       error?.cause?.err?.message || error?.message || "Something went wrong.";
     if (error instanceof AuthError) {
@@ -23,6 +23,7 @@ export async function authenticate(formData: ILoginInput) {
         throw new Error("Invalid credentials.");
       }
     }
+    console.log("errorMessage in authenticate>>>", errorMessage);
     throw new Error(errorMessage);
   }
 }
@@ -91,6 +92,7 @@ export async function login(formData: ILoginInput) {
     const config = configMap[apiNames.login];
     return await ExecuteHttpRequest(config, formData, true);
   } catch (error: any) {
+    console.log("error in login catch>>");
     throw error;
   }
 }

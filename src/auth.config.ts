@@ -19,6 +19,7 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       console.log("auth>>>>>> and >>>>>>>>", auth, nextUrl);
+      console.log("allowedAdmins>>", allowedAdmins);
 
       const isLoggedIn = !!auth?.user?.id || !!auth?.user?.email;
       const isAdmin = auth?.user?.email
