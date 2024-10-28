@@ -7,8 +7,8 @@ import {
   userRoutes,
   adminRoutes,
 } from "./utils/routes";
+import { allowedAdmins } from "./config";
 
-const allowedAdmins = process.env.ADMINS?.split(",");
 export const authConfig = {
   // pages: {
   //   signIn: "/login",
