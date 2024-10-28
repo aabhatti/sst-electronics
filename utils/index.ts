@@ -29,10 +29,20 @@ const MonthYearDateFormate = (date: Date) => {
   return `${month}-${year}`;
 };
 
+const isArray = (value: any) => {
+  return value && typeof value === "object";
+};
+
+const isString = (value: any) => {
+  return typeof value === "string";
+};
+
 export {
   dbId,
   getDateNow,
   addMonthsToDate,
   MonthYearDateFormate,
   DayMonthYearDateFormate,
+  isArray,
+  isString,
 };

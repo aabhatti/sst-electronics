@@ -85,3 +85,12 @@ export async function register(formData: IRegisterInput) {
     throw error;
   }
 }
+
+export async function login(formData: ILoginInput) {
+  try {
+    const config = configMap[apiNames.login];
+    return await ExecuteHttpRequest(config, formData, true);
+  } catch (error: any) {
+    throw error;
+  }
+}

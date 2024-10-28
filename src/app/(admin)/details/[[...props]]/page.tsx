@@ -1,12 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import {
-  initialUsersValue,
-  handleFetchUserDetails,
-  headerValues,
-} from "./helper";
-import Table from "@/components/shared/table";
-import { useRouter, useSearchParams } from "next/navigation";
+import { initialUsersValue, handleFetchUserDetails } from "./helper";
 import UserCard from "@/components/admin/userDetails/UserCard";
 import DealCard from "@/components/admin/userDetails/DealCard";
 import { LuRefreshCw } from "react-icons/lu";

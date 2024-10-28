@@ -12,6 +12,7 @@ import {
   googleClientId,
   googleClientSecret,
 } from "./config";
+import { login } from "./lib/actions/auth.actions";
 
 interface IUser {
   id?: string;
@@ -60,13 +61,15 @@ export const {
         try {
           let user = null;
           const data = await loginSchema.parseAsync(credentials);
-          const resp = await loginUser(data, {
-            userRepository: new UserRepository(),
-          });
+          // const resp = await loginUser(data, {
+          //   userRepository: new UserRepository(),
+          // });
 
+          const resp = await login(data);
+          console.log("resp after login>>>", resp);
           user = resp ?? null;
-          if (!user) {
-            throw new Error("User not found.");
+          if (!(user && user.status === 200)) {
+            throw new Error(resp.message?.toString() || "User not found.");
           }
 
           // return user object with their profile data

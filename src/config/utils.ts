@@ -1,4 +1,3 @@
-import { isArray, isString } from "lodash";
 import {
   getLocalStorageItemExect,
   clearLocalStorageItems,
@@ -9,6 +8,7 @@ import {
   INVALID_CREDIENTIALS,
   SOMETHING_WENT_WRONG,
 } from "./constants";
+import { isArray, isString } from "../../utils";
 
 interface AuthorizationOptions {
   headers?: Record<string, string>;
