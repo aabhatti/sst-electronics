@@ -19,7 +19,6 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       console.log("auth>>>>>> and >>>>>>>>", auth, nextUrl);
-      console.log("allowedAdmins>>", allowedAdmins);
 
       const isLoggedIn = !!auth?.user?.id || !!auth?.user?.email;
       const isAdmin = auth?.user?.email
@@ -29,7 +28,11 @@ export const authConfig = {
       const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
       const isAuthRoute = auhRoutes.includes(nextUrl.pathname);
       const isUserRoute = userRoutes.includes(nextUrl.pathname);
-      const isAdminRoute = adminRoutes.includes(nextUrl.pathname);
+
+      const isAdminRoute = adminRoutes.some((route) =>
+        nextUrl.pathname.includes(route)
+      );
+      // const isAdminRoute = true;
       // if API route then allowed
       if (isApiAuthRoutes) return true;
       // if not logedin and auth route then allowed

@@ -1,20 +1,16 @@
-import { ClientSession, ObjectId } from "mongoose";
-import isEmpty from "lodash/isEmpty";
 import { UserRepository } from "../../../repositories/UserRepository";
-import { IUser, User } from "../../../models/User";
-// import { Conflict, InternalServerError } from "../../../errors";
+import { IUser } from "../../../models/User";
 import {
   UserMessages,
   HttpStatusCode,
-  Roles,
   OFFSET_LIMIT,
 } from "../../../../constants";
 import { getPaginationWithTotalCountFacet } from "../../../../utils/facet";
-import { nameAddField } from "../../../../utils/addFields";
 import {
   getDatesSearchCondition,
   getUserSearchCondition,
 } from "../../../../utils/searches";
+import { userDealLookup } from "../../../../utils/lookUps";
 import { userProject } from "../../../../utils/projects";
 
 interface FetchUsersDeps {
@@ -61,9 +57,10 @@ async function fetchUsers(
   condition = { $match: condition };
 
   const facet = getPaginationWithTotalCountFacet({ pageLimit, limit });
-  const pipeline = [nameAddField, condition, userProject, facet];
+  const pipeline = [condition, userDealLookup, userProject, facet];
 
   const users = await userRepository.findByAggregation(pipeline);
+
   return {
     code: HttpStatusCode.OK,
     message: UserMessages.USERS_FETCHED_SUCCESS,

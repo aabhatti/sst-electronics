@@ -9,6 +9,13 @@ import Link from "next/link";
 import { createUser, fetchUsers } from "@/lib/actions/users.actions";
 import { error, success } from "@/components/shared/alert";
 import { HttpStatusCode } from "../../../../constants";
+import {
+  FaEnvelope,
+  FaPhoneAlt,
+  FaAddressCard,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
+import { formatDate } from "@/utils/parser";
 
 interface ICreateUsersParams {
   data: ICreateUserInput;
@@ -30,23 +37,90 @@ export const initialUsersValue = (): UsersState => {
 const formatDataObj = (row: any) => {
   return {
     id: row.id,
+    date: (
+      <div className="flex flex-col items-center justify-center">
+        <p className="text-xs">Created At</p>
+        <h2 className="text-sm">{formatDate(row.createdAt)}</h2>
+        <p className="text-xs">Updated At</p>
+        <h2 className="text-sm">{formatDate(row.updatedAt)}</h2>
+      </div>
+    ),
     name: (
-      <div className="flex items-center justify-center">
-        <div className="p-1 cursor-pointer">
+      <div className="flex items-center justify-start">
+        <div className="cursor-pointer text-md">
           <Link href={`/details/${row.id}`} className="text-primary">
             {row.name}
           </Link>
         </div>
       </div>
     ),
-    // name: row.name,
-    email: row.email,
-    mobile: row.mobile,
-    cnic: row.cnic,
-    address: row.address,
-    status: row.status,
-    createdAt: row.createdAt,
-    updatedAt: row.updatedAt,
+    info: (
+      <div className="flex flex-col">
+        <p className="w-5 text-sm">{row.id}</p>
+        <h2 className="flex items-center text-sm">
+          <FaAddressCard className="font-bold mr-1 min-w=[16px]" />
+          {row.cnic || "N/A"}
+        </h2>
+
+        <h2 className="flex items-center text-sm">
+          <FaEnvelope className="font-bold mr-1 min-w=[16px]" />
+          {row.email ? <a href={`mailto:${row.email}`}>{row.email}</a> : "N/A"}
+        </h2>
+        <h2 className="flex items-center text-sm">
+          <FaPhoneAlt className="font-bold mr-1 min-w=[16px]" />
+          {row.mobile ? <a href={`tel:${row.mobile}`}>{row.mobile}</a> : "N/A"}
+        </h2>
+        <h2 className="flex items-start text-sm">
+          <FaMapMarkerAlt className="font-bold mr-1 min-w=[16px]" />
+          {row.address || "N/A"}
+        </h2>
+      </div>
+    ),
+
+    address: row.address || "N/A",
+    status: row.status || "N/A",
+    total: (
+      <div className="flex flex-col">
+        <span className="text-md">
+          Amount:{" "}
+          <span className="font-semibold">{`Rs ${row.totalWorth}/-`}</span>
+        </span>
+        <span className="text-md">
+          Installments:
+          <span className="font-semibold">{row.totalInstallments}</span>
+        </span>
+        <span className="text-md">
+          No of Deals:
+          <span className="font-semibold">{row.noOfDeals}</span>
+        </span>
+      </div>
+    ),
+    paid: (
+      <div className="flex flex-col">
+        <span className="text-md">
+          Amount:
+          <span className="font-semibold">{`Rs ${row.totalPaid}/-`}</span>
+        </span>
+        <span className="text-md">
+          Installments:{" "}
+          <span className="font-semibold"> {row.totalPaidInstallments}</span>
+        </span>
+      </div>
+    ),
+    due: (
+      <div className="flex flex-col">
+        <span className="text-md">
+          Amount:{" "}
+          <span className="font-semibold"> {`Rs ${row.totalDue}/-`}</span>
+        </span>
+        <span className="text-md">
+          Installments:{" "}
+          <span className="font-semibold">
+            {Number(row.totalInstallments) - Number(row.totalPaidInstallments)}
+          </span>
+        </span>
+      </div>
+    ),
     action: (
       <div className="flex items-center justify-center">
         <div className="p-1 cursor-pointer">
@@ -116,14 +190,18 @@ export const handleCreateUser = async ({
 };
 
 export const headerUsersValues = [
-  { type: "string", name: "User ID", value: "id" },
-  { type: "string", name: "Name", value: "name" },
-  { type: "string", name: "Email", value: "email" },
-  { type: "string", name: "Mobile", value: "mobile" },
-  { type: "string", name: "CNIC", value: "cnic" },
-  { type: "string", name: "Address", value: "address" },
-  { type: "string", name: "Status", value: "status" },
-  { type: "date", name: "Created At", value: "createdAt" },
-  { type: "date", name: "Updated At", value: "updatedAt" },
-  { type: "string", name: "Action", value: "action" },
+  {
+    type: "string",
+    name: "Date",
+    value: "date",
+    bg: "primary-light",
+    className: "text-center",
+  },
+  { type: "string", name: "Name", value: "name", bg: "primary-light" },
+  { type: "string", name: "Info", value: "info", bg: "primary-light" },
+  // { type: "string", name: "Status", value: "status", bg: "primary-light" },
+  { type: "string", name: "Total", value: "total", bg: "info-light" },
+  { type: "string", name: "Paid", value: "paid", bg: "success-light" },
+  { type: "string", name: "Due", value: "due", bg: "danger-light" },
+  { type: "string", name: "Action", value: "action", bg: "primary-light" },
 ];

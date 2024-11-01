@@ -1,4 +1,3 @@
-// import type { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import { UserRepository } from "../../../../repositories/UserRepository";
 import { fetchUsers } from "../../../../usecases/admin/users/fetchUsers";

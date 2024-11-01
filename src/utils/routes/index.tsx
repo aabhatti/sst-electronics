@@ -23,7 +23,13 @@ export const DEFAULT_LOGGED_IN_REDIRECT = "/dashboard";
  * These routes will redirect logged in admins to the admin routes
  * @type {string}
  */
-export const adminRoutes = ["/dashboard", "/users", "/deals", "/installments"];
+export const adminRoutes = [
+  "/dashboard",
+  "/users",
+  "/deals",
+  "/installments",
+  "/details",
+];
 
 /**
  * Any array routes that are used for user

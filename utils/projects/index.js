@@ -13,6 +13,13 @@ const userProject = {
     address: 1,
     createdAt: 1,
     updatedAt: 1,
+    deals: 1,
+    totalWorth: { $sum: "$deals.worth" },
+    totalPaid: { $sum: "$deals.paid" },
+    totalDue: { $sum: "$deals.due" },
+    totalInstallments: { $sum: "$deals.noOfInstallments" },
+    totalPaidInstallments: { $sum: "$deals.paidInstallments" },
+    noOfDeals: { $size: "$deals" },
   },
 };
 

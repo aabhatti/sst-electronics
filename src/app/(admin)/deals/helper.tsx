@@ -73,7 +73,7 @@ const formatDataObj = (row: any) => {
           <span>CNIC: {row.referenceOne.cnic || "N/A"}</span>
           <span>Mobile: {row.referenceOne.mobile || "N/A"}</span>
         </div>
-        <div className="flex flex-col text-xs border-s border-primary ml-2 pl-2">
+        <div className="flex flex-col text-xs border-s ml-2 pl-2">
           <span>{row.referenceTwo.name}</span>
           <span>CNIC: {row.referenceTwo.cnic || "N/A"}</span>
           <span>Mobile: {row.referenceTwo.mobile || "N/A"}</span>
@@ -184,7 +184,8 @@ export const headerValues = [
     type: "component",
     name: "References",
     value: "references",
-    bg: "info-light",
+    // bg: "info-light",
+    bg: "primary-light",
   },
   { type: "string", name: "Total", value: "total", bg: "info-light" },
   { type: "string", name: "Paid", value: "paid", bg: "success-light" },

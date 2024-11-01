@@ -47,7 +47,10 @@ const TableBody: React.FC<TableBodyProps> = ({
         <thead className="sticky top-0 z-index-3 bg-lightBasePrimary">
           <tr>
             {header.map((head, i) => (
-              <th className="bg-lightBasePrimary" key={i}>
+              <th
+                className={`bg-lightBasePrimary ${head?.className || ""}`}
+                key={i}
+              >
                 {" "}
                 {head?.name}
               </th>

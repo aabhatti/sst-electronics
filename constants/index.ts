@@ -83,6 +83,7 @@ const GenericMessages = {
   SERVER_ERROR_DUE_TO_MANY_REQUESTS:
     "You sent too many requests. Please wait a while then try again",
   TOKEN_NOT_EXISTS: "Token doesn't exist",
+  LOGIN_SUCCESSFULLY: "Login successfully",
 };
 
 const GENERIC_CONSTANTS = {

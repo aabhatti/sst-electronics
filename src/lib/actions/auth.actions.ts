@@ -5,27 +5,37 @@ import { AuthError } from "next-auth";
 import { DEFAULT_LOGGED_IN_REDIRECT } from "@/utils/routes";
 import { apiNames, configMap } from "../utils/getConfig";
 import { ExecuteHttpRequest } from "@/config/ExecuteHttpRequest";
-// import { redirect } from "next/navigation";
+import { HttpStatusCode, GenericMessages } from "../../../constants";
 
 export async function authenticate(formData: ILoginInput) {
   try {
-    return await signIn("credentials", {
+    const resp = await signIn("credentials", {
       ...formData,
       redirect: false,
     });
-    // if (resp) redirect(DEFAULT_LOGGED_IN_REDIRECT);
+    if (resp) {
+      return {
+        status: HttpStatusCode.OK,
+        message: GenericMessages.LOGIN_SUCCESSFULLY,
+      };
+    } else {
+      return {
+        status: HttpStatusCode.BAD_REQUEST,
+        error: GenericMessages.INTERNAL_SERVER_ERROR,
+      };
+    }
   } catch (error: any) {
-    console.log("error in authenticate>>", error);
-    const errorMessage =
+    console.log("error in authenticate signIn>", error);
+
+    let errorMessage =
       error?.cause?.err?.message || error?.message || "Something went wrong.";
     if (error instanceof AuthError) {
       if (error.type === "CredentialsSignin") {
-        throw new Error("Invalid credentials.");
+        errorMessage = "Invalid credentials.";
       }
     }
-    console.log("errorMessage in authenticate>>>", errorMessage);
     return {
-      status: 500,
+      status: HttpStatusCode.BAD_REQUEST,
       error: errorMessage,
       message: errorMessage,
     };
@@ -34,14 +44,12 @@ export async function authenticate(formData: ILoginInput) {
 
 export async function loginWithGoogle() {
   try {
-    const resp = await signIn("google", {
+    await signIn("google", {
       redirectTo: DEFAULT_LOGGED_IN_REDIRECT,
     });
-    console.log("resp in loginWithGoogle>>>>>", resp);
   } catch (error) {
-    console.log("error in loginWithGoogle signin>>>>>", error);
+    console.log("error in loginWithGoogle>", error);
     if (error instanceof AuthError) {
-      console.log("error in loginWithGoogle>>>>>", error);
       switch (error.type) {
         case "CredentialsSignin":
           return "Invalid credentials.";
@@ -55,13 +63,12 @@ export async function loginWithGoogle() {
 
 export async function loginWithGithub() {
   try {
-    const resp = await signIn("github", {
+    await signIn("github", {
       redirectTo: DEFAULT_LOGGED_IN_REDIRECT,
     });
-    console.log("resp in loginWithGithub>>>>>", resp);
   } catch (error) {
     if (error instanceof AuthError) {
-      console.log("error in loginWithGithub>>>>>", error);
+      console.log("error in loginWithGithub>", error);
       switch (error.type) {
         case "CredentialsSignin":
           return "Invalid credentials.";

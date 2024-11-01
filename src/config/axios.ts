@@ -5,9 +5,9 @@ import axios, {
   AxiosRequestHeaders,
 } from "axios";
 import { serverUrl } from "./index";
-import { Logout } from "../utils/actions";
 import { HTTP_STATUS_CODE, ENCRYPTED_KEYS } from "../utils/constants";
 import { decryptData, encryptData } from "../../utils/encryptDecrypt";
+import { handleLogout } from "@/lib/actions/auth.actions";
 
 const instance = axios.create({
   baseURL: serverUrl,
@@ -20,7 +20,8 @@ instance.interceptors.response.use(
   },
   async function (error: AxiosError): Promise<any> {
     if (error?.response?.status === HTTP_STATUS_CODE.Expectation_Failed) {
-      Logout();
+      // Logout();
+      handleLogout();
     }
 
     const originalRequest = error.config as AxiosRequestConfig & {
@@ -57,12 +58,12 @@ instance.interceptors.response.use(
               // Retry the original request
               return instance(originalRequest);
             } else {
-              Logout();
+              handleLogout();
             }
           })
           .catch((refreshError) => {
             console.log("refreshError>>", refreshError);
-            Logout();
+            handleLogout();
           })
           .finally(() => {
             refreshPromise = null;
@@ -83,7 +84,7 @@ instance.interceptors.response.use(
           })
           .catch((err) => {
             console.log("refreshPromise err>>", err);
-            Logout();
+            handleLogout();
             return Promise.reject(err);
           });
       }
