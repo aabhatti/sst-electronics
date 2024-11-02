@@ -12,16 +12,14 @@ import {
   GenericMessages,
   HttpStatusCode,
 } from "../../../../constants";
-import {
-  addMonthsToDate,
-  DayMonthYearDateFormate,
-  MonthYearDateFormate,
-} from "../../../../utils";
+import { DayMonthYearDateFormate } from "../../../../utils";
+import { PdfService } from "@/services/PdfService";
 
 interface CreateDeps {
   dealRepository: DealRepository;
   userRepository: UserRepository;
   installmentRepository: InstallmentRepository;
+  pdfService: PdfService;
 }
 
 interface FetchDealResponse {
@@ -37,7 +35,12 @@ interface IDealBody extends Omit<IDeal, "paid due"> {
 
 async function createDeal(
   body: IDealBody,
-  { userRepository, dealRepository, installmentRepository }: CreateDeps,
+  {
+    userRepository,
+    dealRepository,
+    installmentRepository,
+    pdfService,
+  }: CreateDeps,
   session?: ClientSession | undefined
 ): Promise<FetchDealResponse> {
   let {
@@ -106,10 +109,43 @@ async function createDeal(
       updatedBy: userId ? new Types.ObjectId(userId) : null,
     });
 
-    await installmentRepository.save(createInstallmet, session);
+    const installment = await installmentRepository.save(
+      createInstallmet,
+      session
+    );
     deal.paidInstallments = 1;
     deal.due = due;
-    await dealRepository.save(deal, session);
+    deal = await dealRepository.save(deal, session);
+
+    const no = deal?.paidInstallments?.toString() || "0";
+    let fileName = `${no}-${deal?.name || ""}.pdf`;
+    fileName = fileName.replace(" ", "-");
+    const receipt = await pdfService.generateInstallmentReceiptPDF({
+      fileName,
+      no,
+      amount: installment?.amount || 0,
+      methode: "",
+      date: date,
+      deal: deal?.name,
+      userName: user?.name,
+      cnic: user?.cnic,
+      mobile: user?.mobile,
+      email: user?.email,
+
+      paidInstallments: deal?.paidInstallments,
+      dueInstallments:
+        Number(deal?.noOfInstallments || 0) -
+        Number(deal?.paidInstallments || 0),
+      totalAmount: deal?.worth,
+      paidAmount: deal?.paid,
+      dueAmount: deal?.due,
+      receivedBy: "Admin",
+      signature: "_________________________",
+    });
+    if (receipt && receipt.filepath && installment) {
+      installment.receipt = receipt.filepath;
+      await installmentRepository.save(installment, session);
+    }
   }
   if (session) {
     await session.commitTransaction();

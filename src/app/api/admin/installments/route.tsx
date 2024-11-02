@@ -5,6 +5,7 @@ import { UserRepository } from "../../../../repositories/UserRepository";
 import { connection } from "../../../../database/dbConnection";
 import { createInstallment } from "../../../../usecases/admin/installments/createInstallment";
 import { fetchInstallments } from "../../../../usecases/admin/installments/fetchInstallments";
+import { PdfService } from "@/services/PdfService";
 
 connection();
 export async function GET(req: NextRequest) {
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
       userRepository: new UserRepository(),
       dealRepository: new DealRepository(),
       installmentRepository: new InstallmentRepository(),
+      pdfService: new PdfService(),
     });
 
     return NextResponse.json({ ...resp }, { status: 200 });

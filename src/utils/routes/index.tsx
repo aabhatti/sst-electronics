@@ -29,6 +29,8 @@ export const adminRoutes = [
   "/deals",
   "/installments",
   "/details",
+  "/public",
+  "/receipts",
 ];
 
 /**
