@@ -95,14 +95,19 @@ const formatDataObj = (row: any) => {
     ),
     dealName: row.dealName,
     receipt: row.receipt ? (
-      <a
-        href={row.receipt.replace("/public", "")}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-primary"
-      >
-        Receipt.pdf
-      </a>
+      <div className="cursor-pointer text-md">
+        <Link
+          href={{
+            pathname: "/installments/receipt",
+            query: {
+              data: row.receipt,
+            },
+          }}
+          className="text-primary"
+        >
+          {"Receipt"}
+        </Link>
+      </div>
     ) : (
       "N/A"
     ),

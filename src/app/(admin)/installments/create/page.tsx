@@ -1,7 +1,7 @@
 import CreateInstallmentForm from "@/components/admin/installments/CreateInstallmentForm";
 import Link from "next/link";
 
-const CreateUserPage = async () => {
+const CreateInstallmentPage = async () => {
   return (
     <>
       <h2 className="text-lg font-bold text-primary text-center border border-primary rounded-lg mb-1">
@@ -19,4 +19,4 @@ const CreateUserPage = async () => {
   );
 };
 
-export default CreateUserPage;
+export default CreateInstallmentPage;

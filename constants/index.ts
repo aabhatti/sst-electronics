@@ -198,6 +198,8 @@ const DealMessages = {
 };
 
 const InstallmentMessages = {
+  FAILED_TO_CREATE_INSTALLMENT:
+    "Failed to create installment with provided amount",
   FAILED_TO_FIND_INSTALLMENT: "Failed to find installment",
   FAILED_TO_SAVE_INSTALLMENT: "Failed to save installment",
   CREATE_SUCCESS: "Installment created successfully",

@@ -3,7 +3,7 @@ import React from "react";
 import TextField from "@/components/shared/inputs/TextField";
 import Button from "@/components/shared/button";
 import { TYPE, LABELS, PLACEHOLDERS, NAMES, GENERIC } from "@/utils/constants";
-import {
+import type {
   FieldErrors,
   UseFormWatch,
   UseFormTrigger,
@@ -95,7 +95,7 @@ const FormBody: React.FC<FormBodyProps> = ({
       <div className="lg:col-span-3">
         <Button
           type={"submit"}
-          disabled={loading}
+          disabled={isSubmitting || loading}
           loading={isSubmitting || loading}
           className="w-full mb-0"
         >

@@ -180,7 +180,7 @@ const FormBody: React.FC<FormBodyProps> = ({
       <div className="lg:col-span-6">
         <Button
           type={"submit"}
-          disabled={loading}
+          disabled={isSubmitting || loading}
           loading={isSubmitting || loading}
           className="w-full mb-0"
         >

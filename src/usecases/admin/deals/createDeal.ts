@@ -14,6 +14,7 @@ import {
 } from "../../../../constants";
 import { DayMonthYearDateFormate } from "../../../../utils";
 import { PdfService } from "@/services/PdfService";
+import { encryptData } from "../../../../utils/encryptDecrypt";
 
 interface CreateDeps {
   dealRepository: DealRepository;
@@ -120,7 +121,7 @@ async function createDeal(
     const no = deal?.paidInstallments?.toString() || "0";
     let fileName = `${no}-${deal?.name || ""}.pdf`;
     fileName = fileName.replace(" ", "-");
-    const receipt = await pdfService.generateInstallmentReceiptPDF({
+    const receipt = encryptData({
       fileName,
       no,
       amount: installment?.amount || 0,
@@ -142,8 +143,8 @@ async function createDeal(
       receivedBy: "Admin",
       signature: "_________________________",
     });
-    if (receipt && receipt.filepath && installment) {
-      installment.receipt = receipt.filepath;
+    if (receipt && installment) {
+      installment.receipt = receipt;
       await installmentRepository.save(installment, session);
     }
   }

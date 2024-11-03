@@ -13,6 +13,8 @@ import {
 } from "../../../../constants";
 import { DayMonthYearDateFormate } from "../../../../utils";
 import { PdfService } from "@/services/PdfService";
+import { constrainedMemory } from "node:process";
+import { encryptData } from "../../../../utils/encryptDecrypt";
 
 interface CreateDeps {
   dealRepository: DealRepository;
@@ -55,6 +57,10 @@ async function createInstallment(
     throw new NotFound(DealMessages.FAILED_TO_FIND_DEAL);
   }
 
+  if (Number(deal.due) - Number(amount) < 0) {
+    throw new NotFound(InstallmentMessages.FAILED_TO_CREATE_INSTALLMENT);
+  }
+
   const date = DayMonthYearDateFormate(new Date());
   let createInstallment = new Installment({
     userName: user?.name || "",
@@ -93,7 +99,7 @@ async function createInstallment(
   const no = deal?.paidInstallments?.toString() || "0";
   let fileName = `${no}-${deal?.name || ""}.pdf`;
   fileName = fileName.replace(" ", "-");
-  const receipt = await pdfService.generateInstallmentReceiptPDF({
+  const receipt = encryptData({
     fileName,
     no,
     amount: installment?.amount || 0,
@@ -112,10 +118,11 @@ async function createInstallment(
     paidAmount: deal?.paid,
     dueAmount: deal?.due,
     receivedBy: "Admin",
-    signature: "____________________",
+    signature: "____________________________",
   });
-  if (receipt && receipt.filepath && installment) {
-    installment.receipt = receipt.filepath;
+  // const receipt = await pdfService.generateInstallmentReceiptPDF();
+  if (receipt && installment) {
+    installment.receipt = receipt;
     await installmentRepository.save(installment, session);
   }
 

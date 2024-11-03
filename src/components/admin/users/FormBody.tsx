@@ -104,7 +104,7 @@ const FormBody: React.FC<FormBodyProps> = ({
 
       <Button
         type={"submit"}
-        disabled={loading}
+        disabled={isSubmitting || loading}
         loading={isSubmitting || loading}
         className="w-full mb-0"
       >

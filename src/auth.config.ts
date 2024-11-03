@@ -51,8 +51,6 @@ export const authConfig = {
       if (isLoggedIn && !isAdmin && isUserRoute) return true;
       // if not execute any case then redirect to login route
       return Response.redirect(new URL(auhRoutes[0], nextUrl));
-
-      // return Response.redirect(new URL(auhRoutes[0], nextUrl));
     },
   },
   providers: [], // Add providers with an empty array for now

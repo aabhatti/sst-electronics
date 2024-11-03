@@ -31,6 +31,7 @@ export const adminRoutes = [
   "/details",
   "/public",
   "/receipts",
+  "/images",
 ];
 
 /**
