@@ -62,7 +62,7 @@ const InstallmentReceipt: React.FC<InstallmentReceiptProps> = ({
       <GeneratePdf html={ref} fileName={data?.fileName || "Receipt.pdf"} />
       <div className="container" ref={ref}>
         <div className="receipt-header">
-          <Image src={"/logo.jpg"} alt={"SST"} width={200} height={50} />
+          <Image src={"/images/logo.jpg"} alt={"SST"} width={200} height={50} />
           <h3 className="receipt-title">Installment Receipt</h3>
           <p className="brand-info">
             <span>sst.electronics.center@gmail.com</span>

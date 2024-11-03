@@ -18,13 +18,6 @@ const Sidebar: React.FC = async () => {
           />
         </span>
         {/* <h2 className="logo-text flex flex-1 items-center">
-          <Image
-            src={"/images/logo.jpg"}
-            alt={"SST"}
-            width={150}
-            height={70}
-            className="main-logo"
-          />
         </h2> */}
       </div>
 
