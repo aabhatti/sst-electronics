@@ -1,4 +1,4 @@
-import CreateUserForm from "@/components/CreateUserForm";
+import CreateUpdateUserForm from "@/components/CreateUpdateUserForm";
 import Link from "next/link";
 
 const UpdateUserPage = async ({ params }: { params: { id: string } }) => {
@@ -8,7 +8,7 @@ const UpdateUserPage = async ({ params }: { params: { id: string } }) => {
         Edit User
       </h2>
       <div className="flex flex-col h-fit overflow-auto">
-        <CreateUserForm id={params?.id || ""} />
+        <CreateUpdateUserForm id={params?.id || ""} />
       </div>
       <p className="text-base text-primary text-center m-0 mt-1">
         <Link href={"/users"} className="ml-1 border-b border-primary">
