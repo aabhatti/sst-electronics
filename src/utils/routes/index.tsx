@@ -78,6 +78,8 @@ export const AdminUrls = {
   queryUsers: (query: string) => "/admin/users/" + query,
 
   createUser: "/admin/users",
+  updateUser: "/admin/users",
+  fetchUserById: (id: string) => `/admin/users/${id}`,
   createDeal: "/admin/deals",
   createInstallment: "/admin/installments",
 };

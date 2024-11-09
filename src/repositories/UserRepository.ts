@@ -50,7 +50,22 @@ const UserRecord: Model<IUserDocument> =
   mongoose?.models?.User || mongoose.model<IUserDocument>("User", UserSchema);
 
 class UserRepository {
-  async findById(id: string | null): Promise<User | null> {
+  async findById(
+    id: string | null,
+    select: string = "-password -salt -refreshToken"
+  ): Promise<User | null> {
+    try {
+      const record = await UserRecord.findById(id).select(select).exec();
+      if (record) {
+        return new User(record);
+      }
+      return null;
+    } catch (err) {
+      throw new InternalServerError(UserMessages.FAILED_TO_FIND_USER);
+    }
+  }
+
+  async findOne(id: string | null): Promise<User | null> {
     try {
       const record = await UserRecord.findById(id).exec();
       if (record) {

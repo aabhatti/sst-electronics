@@ -2,11 +2,16 @@ import { OFFSET } from "../../../utils/constants";
 import {
   IHandleFetchUsersParams,
   ICreateUserInput,
+  IUpdateUserInput,
   UsersState,
 } from "@/utils/interfaces";
 import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
-import { createUser, fetchUsers } from "@/lib/actions/users.actions";
+import {
+  createUser,
+  updateUser,
+  fetchUsers,
+} from "@/lib/actions/users.actions";
 import { error, success } from "@/components/shared/alert";
 import { HttpStatusCode } from "../../../../constants";
 import {
@@ -19,6 +24,11 @@ import { formatDate } from "@/utils/parser";
 
 interface ICreateUsersParams {
   data: ICreateUserInput;
+  navigate: () => void;
+}
+
+interface IUpdateUserParams {
+  data: IUpdateUserInput;
   navigate: () => void;
 }
 
@@ -124,7 +134,7 @@ const formatDataObj = (row: any) => {
     action: (
       <div className="flex items-center justify-center">
         <div className="p-1 cursor-pointer">
-          <Link href={`/users/${row.id}`} className="text-primary">
+          <Link href={`/users/edit/${row.id}`} className="text-primary">
             <FaEdit />
           </Link>
         </div>
@@ -167,7 +177,7 @@ export const handleFetchUsers = async ({
   }
 };
 
-// The fetchUsers function
+// The create user handler
 export const handleCreateUser = async ({
   data,
   navigate,
@@ -175,6 +185,28 @@ export const handleCreateUser = async ({
   try {
     const resp = await createUser(data);
     if (resp?.code === HttpStatusCode.CREATED) {
+      if (resp.message) success(resp.message.toString());
+      navigate && navigate();
+    } else {
+      if (resp?.message) error(resp.message.toString());
+    }
+  } catch (err) {
+    if (err instanceof Error) {
+      error(err?.message);
+    } else {
+      error("An unknown error occurred.");
+    }
+  }
+};
+
+// The update user handler function
+export const handleUpdateUser = async ({
+  data,
+  navigate,
+}: IUpdateUserParams): Promise<void> => {
+  try {
+    const resp = await updateUser(data);
+    if (resp?.code === HttpStatusCode.OK) {
       if (resp.message) success(resp.message.toString());
       navigate && navigate();
     } else {

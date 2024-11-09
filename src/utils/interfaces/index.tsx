@@ -20,6 +20,10 @@ interface ICreateUserInput {
   address: string;
 }
 
+interface IUpdateUserInput extends ICreateUserInput {
+  id: string;
+}
+
 interface ICreateDealInput {
   userId: string;
   name: string;
@@ -68,6 +72,7 @@ export type {
   ILoginInput,
   IRegisterInput,
   ICreateUserInput,
+  IUpdateUserInput,
   ICreateDealInput,
   ICreateInstallmentInput,
   IHandleFetchUsersParams,

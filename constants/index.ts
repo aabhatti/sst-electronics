@@ -188,6 +188,7 @@ const UserMessages = {
   USERS_FETCHED_SUCCESS: "Users fetched successfully",
   USER_DETAILS_FETCHED_SUCCESS: "User details fetched successfully",
   REFERENCES_NOT_SAME: "References could not be same",
+  USER_UPDATED_SUCCESS: "User updated successfully",
 };
 
 const DealMessages = {

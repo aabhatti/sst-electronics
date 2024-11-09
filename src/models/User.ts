@@ -27,7 +27,7 @@ const UserSchema = z.object({
   salt: z.string().optional(),
   password: z.string().optional(),
   status: z.string().optional().default(""),
-  refreshToken: z.string().optional().default(""),
+  refreshToken: z.string().optional(),
   createdAt: z.instanceof(Date).nullable().optional(),
   updatedAt: z.instanceof(Date).nullable().optional(),
 });

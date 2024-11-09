@@ -18,6 +18,7 @@ import {
 import { ICreateUserInput } from "../../utils/interfaces";
 
 interface FormBodyProps {
+  isExists: boolean;
   errors: FieldErrors<ICreateUserInput>;
   isSubmitting: boolean;
   watch: UseFormWatch<ICreateUserInput>;
@@ -27,6 +28,7 @@ interface FormBodyProps {
 }
 
 const FormBody: React.FC<FormBodyProps> = ({
+  isExists,
   errors,
   isSubmitting,
   watch,
@@ -69,6 +71,7 @@ const FormBody: React.FC<FormBodyProps> = ({
       </div>
       <div>
         <TextField
+          disabled={isExists}
           type={TYPE.TEXT}
           name={EMAIL}
           label={LABELS.EMAIL}

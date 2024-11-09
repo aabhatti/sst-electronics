@@ -1,5 +1,9 @@
 "use server";
-import { ICreateUserInput, IFetchUsersParams } from "@/utils/interfaces";
+import {
+  ICreateUserInput,
+  IUpdateUserInput,
+  IFetchUsersParams,
+} from "@/utils/interfaces";
 import { AdminUrls } from "@/utils/routes";
 import { ExecuteHttpRequest } from "@/config/ExecuteHttpRequest";
 import { METHODES } from "@/utils/constants";
@@ -18,6 +22,30 @@ export async function createUser(data: ICreateUserInput) {
     return await ExecuteHttpRequest(
       { method: METHODES.POST, url: AdminUrls.createUser },
       data,
+      true
+    );
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function updateUser(data: IUpdateUserInput) {
+  try {
+    return await ExecuteHttpRequest(
+      { method: METHODES.PUT, url: AdminUrls.updateUser },
+      data,
+      true
+    );
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function fetchUserById(id: string) {
+  try {
+    return await ExecuteHttpRequest(
+      { method: METHODES.GET, url: AdminUrls.fetchUserById(id) },
+      null,
       true
     );
   } catch (error: any) {
