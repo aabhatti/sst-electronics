@@ -25,6 +25,7 @@ interface IUpdateUserInput extends ICreateUserInput {
 }
 
 interface ICreateDealInput {
+  user: User[] | [];
   userId: string;
   name: string;
   description: string;
@@ -32,10 +33,16 @@ interface ICreateDealInput {
   advance: number;
   noOfInstallments: number;
   referenceOne: string;
+  referenceOneUser: User[] | [];
   referenceTwo: string;
+  referenceTwoUser: User[] | [];
 }
 
+interface Deal {}
+
 interface ICreateInstallmentInput {
+  user: User[] | [];
+  deal: any;
   userId: string;
   dealId: string;
   amount: number;

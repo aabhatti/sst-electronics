@@ -15,6 +15,7 @@ const CreateInstallmentForm: React.FC = ({}) => {
   const [loading, setLoading] = useState(false);
 
   const {
+    reset,
     handleSubmit,
     watch,
     trigger,
@@ -28,7 +29,7 @@ const CreateInstallmentForm: React.FC = ({}) => {
   const handleNavigate = () => router.push("/installments");
 
   const onSubmit: SubmitHandler<ICreateInstallmentInput> = async (data) => {
-    await handleCreateInstallment({ data, navigate: handleNavigate });
+    await handleCreateInstallment({ data, navigate: handleNavigate, reset });
   };
 
   return (

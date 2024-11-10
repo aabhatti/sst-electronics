@@ -85,11 +85,19 @@ class DealRepository {
     }
   }
 
-  async find(condition: object = {}): Promise<Deal[] | []> {
+  async find(
+    condition: object = {},
+    select: string = "-__v"
+  ): Promise<Deal[] | []> {
     try {
-      const records = await DealRecord.find(condition).exec();
+      const records = await DealRecord.find(condition)
+        .select(select)
+        .lean()
+        .exec();
       if (records) {
-        return records.map((record) => new Deal(record));
+        return records.map(
+          (record) => new Deal({ ...record, id: record._id.toString() })
+        );
       }
       return [];
     } catch (err) {

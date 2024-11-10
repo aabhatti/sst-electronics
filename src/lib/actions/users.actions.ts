@@ -53,6 +53,18 @@ export async function fetchUserById(id: string) {
   }
 }
 
+export async function queryFetchUsers(query: string) {
+  try {
+    return await ExecuteHttpRequest(
+      { method: METHODES.GET, url: AdminUrls.queryUsers(query) },
+      null,
+      true
+    );
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
 export async function fetchUserDetails(id: string) {
   try {
     const url = AdminUrls.fetchUserDetails(id);

@@ -70,12 +70,13 @@ export const AdminUrls = {
       search ? encodeURIComponent(search) : ""
     }`;
   },
+  fetchDealsByUserId: (userId: string) => `/admin/deals/userId/${userId}`,
   fetchAllInstallments: (page: number, offset: number, search: string) => {
     return `/admin/installments?page=${page}&offset=${offset}&searched=${
       search ? encodeURIComponent(search) : ""
     }`;
   },
-  queryUsers: (query: string) => "/admin/users/" + query,
+  queryUsers: (query: string) => "/admin/users/all/" + query,
 
   createUser: "/admin/users",
   updateUser: "/admin/users",

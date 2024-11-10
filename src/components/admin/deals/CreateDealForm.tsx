@@ -15,6 +15,7 @@ const CreateDealForm: React.FC = ({}) => {
   const [loading, setLoading] = useState(false);
 
   const {
+    reset,
     handleSubmit,
     watch,
     trigger,
@@ -28,7 +29,7 @@ const CreateDealForm: React.FC = ({}) => {
   const handleNavigate = () => router.push("/deals");
 
   const onSubmit: SubmitHandler<ICreateDealInput> = async (data) => {
-    await handleCreateDeal({ data, navigate: handleNavigate });
+    await handleCreateDeal({ data, navigate: handleNavigate, reset });
   };
 
   return (

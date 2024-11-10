@@ -7,7 +7,7 @@ const CreateInstallmentPage = async () => {
       <h2 className="text-lg font-bold text-primary text-center border border-primary rounded-lg mb-1">
         Create Installment
       </h2>
-      <div className="flex flex-col h-fit overflow-auto">
+      <div className="flex flex-col h-fit overflow-auto flex-1">
         <CreateInstallmentForm />
       </div>
       <p className="text-base text-primary text-center m-0 mt-1">

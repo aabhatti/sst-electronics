@@ -16,17 +16,17 @@ const ObjectId = mongoose.Types.ObjectId;
 
 const UserSchema = z.object({
   id: dbId.optional(),
-  firstName: z.string().optional().default(""),
-  lastName: z.string().optional().default(""),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
   name: z.string().optional().default(""),
   email: z.string().email(),
   cnic: z.string().optional().default(""),
-  mobile: z.string().optional().default(""),
-  address: z.string().optional().default(""),
-  emailToken: z.string().optional().default(""),
+  mobile: z.string().optional(),
+  address: z.string().optional(),
+  emailToken: z.string().optional(),
   salt: z.string().optional(),
   password: z.string().optional(),
-  status: z.string().optional().default(""),
+  status: z.string().optional(),
   refreshToken: z.string().optional(),
   createdAt: z.instanceof(Date).nullable().optional(),
   updatedAt: z.instanceof(Date).nullable().optional(),
@@ -34,8 +34,8 @@ const UserSchema = z.object({
 
 interface IUser {
   id?: string | Types.ObjectId | null | undefined;
-  firstName: string;
-  lastName: string;
+  firstName?: string | undefined;
+  lastName?: string | undefined;
   name: string;
   email: string;
   cnic?: string | undefined;
@@ -44,7 +44,7 @@ interface IUser {
   emailToken?: string | undefined;
   salt?: string;
   password?: string;
-  status?: string;
+  status?: string | undefined;
   refreshToken?: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
@@ -52,8 +52,8 @@ interface IUser {
 
 class User {
   id: string | Types.ObjectId | null | undefined;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   name: string;
   email: string;
   cnic?: string;
@@ -62,7 +62,7 @@ class User {
   emailToken?: string;
   #password?: string | undefined;
   #salt?: string | undefined;
-  status: string;
+  status?: string | undefined;
   refreshToken?: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
@@ -75,9 +75,9 @@ class User {
     this.name = parsed.name;
     this.email = parsed.email;
     this.cnic = parsed.cnic || "";
-    this.mobile = parsed.mobile || "";
-    this.address = parsed.address || "";
-    this.emailToken = parsed.emailToken || "";
+    this.mobile = parsed.mobile;
+    this.address = parsed.address;
+    this.emailToken = parsed.emailToken;
     this.#password = parsed.password;
     this.#salt = parsed.salt;
     this.status = parsed.status;

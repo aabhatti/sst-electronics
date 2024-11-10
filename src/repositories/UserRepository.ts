@@ -77,11 +77,19 @@ class UserRepository {
     }
   }
 
-  async find(condition: object = {}): Promise<User[] | []> {
+  async find(
+    condition: object = {},
+    select: string = "-password -salt -refreshToken"
+  ): Promise<User[] | []> {
     try {
-      const records = await UserRecord.find(condition).exec();
+      const records = await UserRecord.find(condition)
+        .select(select)
+        .lean()
+        .exec();
       if (records) {
-        return records.map((record) => new User(record));
+        return records.map(
+          (record) => new User({ ...record, id: record._id.toString() })
+        );
       }
       return [];
     } catch (err) {

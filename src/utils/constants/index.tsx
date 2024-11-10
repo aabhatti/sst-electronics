@@ -103,6 +103,8 @@ export const ERRORS = {
 
   DEAL_REQUIRED: "Deal is required",
   AMOUNT_BETWEEN_1_10000000: "Amount must be between 1 and 10000000",
+
+  CUSTOMER_NOT_REFERENCE_HIMSELF: "Customer should not be reference of himself",
 };
 
 export const GENERIC = {
@@ -120,6 +122,7 @@ export const GENERIC = {
   LOADING: "Loading...",
   CLICK: "click",
   BUTTON: "button",
+  NO_OPTIONS: "No options",
 };
 
 export const TYPE = {
@@ -175,7 +178,7 @@ export const LABELS = {
   ADDRESS: "Address",
 
   // create deal form LABELS
-  USER_ID: "Select user",
+  USER_ID: "Select User",
   DESCRIPTION: "Description*",
   WORTH: "Worth*",
   ADVANCE: "Advance*",
@@ -250,6 +253,8 @@ export enum NAMES {
   ADDRESS = "address",
   PASSWORD = "password",
   CONFIRM_PASSWORD = "confirmPassword",
+
+  USER = "user",
   USER_ID = "userId",
   NAME = "name",
   DESCRIPTION = "description",
@@ -257,8 +262,11 @@ export enum NAMES {
   ADVANCE = "advance",
   NO_OF_INSTALLMENTS = "noOfInstallments",
   REFERENCE_ONE = "referenceOne",
+  REFERENCE_ONE_USER = "referenceOneUser",
   REFERENCE_TWO = "referenceTwo",
+  REFERENCE_TWO_USER = "referenceTwoUser",
 
+  DEAL = "deal",
   DEAL_ID = "dealId",
   AMOUNT = "amount",
 }

@@ -31,3 +31,12 @@ export async function createDeal(data: ICreateDealInput) {
     throw new Error(error);
   }
 }
+
+export async function fetchDealsByUserId(userId: string) {
+  try {
+    const url = AdminUrls.fetchDealsByUserId(userId);
+    return await ExecuteHttpRequest({ method: METHODES.GET, url }, true);
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}

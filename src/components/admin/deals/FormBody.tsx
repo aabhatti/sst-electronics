@@ -10,6 +10,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import { ICreateDealInput } from "@/utils/interfaces";
+import UserAutoComplete from "@/components/shared/userAutocomplete";
 // import UserAutoComplete from "@/components/shared/userAutocomplete";
 
 interface FormBodyProps {
@@ -30,6 +31,7 @@ const FormBody: React.FC<FormBodyProps> = ({
   loading,
 }) => {
   const {
+    USER,
     USER_ID,
     NAME,
     DESCRIPTION,
@@ -37,36 +39,27 @@ const FormBody: React.FC<FormBodyProps> = ({
     ADVANCE,
     NO_OF_INSTALLMENTS,
     REFERENCE_ONE,
+    REFERENCE_ONE_USER,
     REFERENCE_TWO,
+    REFERENCE_TWO_USER,
   } = NAMES;
   return (
     <div className="mt-5 grid lg:grid-cols-6 sm:grid-cols-1 gap-4">
       <div className="lg:col-span-3">
-        <TextField
-          type={TYPE.TEXT}
+        <UserAutoComplete
+          // required={true}
           name={USER_ID}
           label={LABELS.USER_ID}
-          placeholder={PLACEHOLDERS.USER_ID}
-          value={watch(USER_ID)}
+          value={watch(USER)}
           error={errors?.[USER_ID]?.message}
           onBlur={() => trigger(USER_ID)}
-          onChange={(e) => {
-            setValue(USER_ID, e.target.value);
+          onChange={(val) => {
+            const userId = (val && val[0] && val[0].id) || "";
+            setValue(USER, val || []);
+            setValue(USER_ID, userId);
             trigger(USER_ID);
           }}
         />
-        {/* <UserAutoComplete
-          name={USER_ID}
-          label={LABELS.USER_ID}
-          // placeholder={PLACEHOLDERS.USER_ID}
-          value={watch(USER_ID)}
-          error={errors?.[USER_ID]?.message}
-          onBlur={() => trigger(USER_ID)}
-          onChange={(e) => {
-            setValue(USER_ID, e.target.value);
-            trigger(USER_ID);
-          }}
-        /> */}
       </div>
       <div className="lg:col-span-3">
         <TextField
@@ -147,32 +140,33 @@ const FormBody: React.FC<FormBodyProps> = ({
         />
       </div>
       <div className="lg:col-span-3">
-        <TextField
-          type={TYPE.TEXT}
+        <UserAutoComplete
           name={REFERENCE_ONE}
           label={LABELS.REFERENCE_ONE}
-          placeholder={PLACEHOLDERS.REFERENCE_ONE}
-          value={watch(REFERENCE_ONE)}
+          value={watch(REFERENCE_ONE_USER)}
           error={errors?.[REFERENCE_ONE]?.message}
           onBlur={() => trigger(REFERENCE_ONE)}
-          onChange={(e) => {
-            setValue(REFERENCE_ONE, e.target.value);
+          onChange={(val) => {
+            const userId = (val && val[0] && val[0].id) || "";
+            setValue(REFERENCE_ONE_USER, val || []);
+            setValue(REFERENCE_ONE, userId);
             trigger(REFERENCE_ONE);
           }}
         />
       </div>
 
       <div className="lg:col-span-3">
-        <TextField
-          type={TYPE.TEXT}
+        <UserAutoComplete
           name={REFERENCE_TWO}
           label={LABELS.REFERENCE_TWO}
-          placeholder={PLACEHOLDERS.REFERENCE_TWO}
-          value={watch(REFERENCE_TWO)}
+          // value={watch(REFERENCE_ONE_USER)}
+          value={watch(REFERENCE_TWO_USER)}
           error={errors?.[REFERENCE_TWO]?.message}
           onBlur={() => trigger(REFERENCE_TWO)}
-          onChange={(e) => {
-            setValue(REFERENCE_TWO, e.target.value);
+          onChange={(val) => {
+            const userId = (val && val[0] && val[0].id) || "";
+            setValue(REFERENCE_TWO_USER, val || []);
+            setValue(REFERENCE_TWO, userId);
             trigger(REFERENCE_TWO);
           }}
         />

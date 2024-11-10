@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { ERRORS, GENERIC } from "../constants";
+import { ERRORS, GENERIC, NAMES } from "../constants";
 import {
   emailValidation,
   firstNameValidation,
@@ -75,6 +75,20 @@ export const createDealSchema = z
         path: [GENERIC.ADVANCE],
       });
     }
+    if (value.userId === value.referenceOne) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: ERRORS.CUSTOMER_NOT_REFERENCE_HIMSELF,
+        path: [NAMES.REFERENCE_ONE],
+      });
+    }
+    if (value.userId === value.referenceTwo) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: ERRORS.CUSTOMER_NOT_REFERENCE_HIMSELF,
+        path: [NAMES.REFERENCE_TWO],
+      });
+    }
   });
 
 export const createInstallmentSchema = z.object({
@@ -82,14 +96,5 @@ export const createInstallmentSchema = z.object({
   dealId: dealIdValidation,
   amount: amountValidation,
 });
-// .superRefine((value, ctx) => {
-//   if (Number(value.advance) > Number(value.worth)) {
-//     ctx.addIssue({
-//       code: z.ZodIssueCode.custom,
-//       message: ERRORS.ADVANCE_GREATER_REQUIRED,
-//       path: [GENERIC.ADVANCE],
-//     });
-//   }
-// });
 
 export { loginSchema };

@@ -30,6 +30,7 @@ interface FetchParams {
 interface ICreateParams {
   data: ICreateInstallmentInput;
   navigate: () => void;
+  reset: () => void;
 }
 
 // The initial state function
@@ -122,10 +123,12 @@ const formatDataObj = (row: any) => {
 export const handleCreateInstallment = async ({
   data,
   navigate,
+  reset,
 }: ICreateParams): Promise<void> => {
   try {
     const resp = await createInstallment(data);
     if (resp?.code === HttpStatusCode.CREATED) {
+      reset();
       if (resp.message) success(resp.message.toString());
       navigate && navigate();
     } else {

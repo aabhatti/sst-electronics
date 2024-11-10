@@ -27,6 +27,7 @@ interface FetchParams {
 interface ICreateDealParams {
   data: ICreateDealInput;
   navigate: () => void;
+  reset: () => void;
 }
 
 // The initial state function
@@ -158,10 +159,12 @@ export const handleFetchDeals = async ({
 export const handleCreateDeal = async ({
   data,
   navigate,
+  reset,
 }: ICreateDealParams): Promise<void> => {
   try {
     const resp = await createDeal(data);
     if (resp?.code === HttpStatusCode.CREATED) {
+      reset();
       if (resp.message) success(resp.message.toString());
       navigate && navigate();
     } else {

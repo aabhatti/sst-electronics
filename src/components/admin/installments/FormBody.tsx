@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@/components/shared/inputs/TextField";
 import Button from "@/components/shared/button";
 import { TYPE, LABELS, PLACEHOLDERS, NAMES, GENERIC } from "@/utils/constants";
@@ -10,7 +10,9 @@ import type {
   UseFormSetValue,
 } from "react-hook-form";
 import { ICreateInstallmentInput } from "@/utils/interfaces";
-// import UserAutoComplete from "@/components/shared/userAutocomplete";
+import Autocomplete from "@/components/shared/autocomplete";
+import UserAutoComplete from "@/components/shared/userAutocomplete";
+import { handleFetchUserDealsByUserId, initialDealsValue } from "./helper";
 
 interface FormBodyProps {
   errors: FieldErrors<ICreateInstallmentInput>;
@@ -29,47 +31,53 @@ const FormBody: React.FC<FormBodyProps> = ({
   setValue,
   loading,
 }) => {
-  const { USER_ID, DEAL_ID, AMOUNT } = NAMES;
+  const { USER, USER_ID, DEAL, DEAL_ID, AMOUNT } = NAMES;
+  const [deals, setDeals] = useState(initialDealsValue);
+  useEffect(() => {
+    if (watch(USER_ID)) {
+      handleFetchUserDealsByUserId({
+        userId: watch(USER_ID),
+        setDeals,
+      });
+    }
+  }, [watch(USER_ID)]);
+
   return (
     <div className="mt-5 grid lg:grid-cols-3 sm:grid-cols-1 gap-4">
       <div>
-        <TextField
-          type={TYPE.TEXT}
+        <UserAutoComplete
           name={USER_ID}
           label={LABELS.USER_ID}
-          placeholder={PLACEHOLDERS.USER_ID}
-          value={watch(USER_ID)}
+          value={watch(USER)}
           error={errors?.[USER_ID]?.message}
           onBlur={() => trigger(USER_ID)}
-          onChange={(e) => {
-            setValue(USER_ID, e.target.value);
+          onChange={(val) => {
+            const userId = (val && val[0] && val[0].id) || "";
+            setValue(USER, val || []);
+            if (!userId) {
+              setValue(DEAL, []);
+              setValue(DEAL_ID, "");
+            }
+            setValue(USER_ID, userId);
             trigger(USER_ID);
           }}
         />
-        {/* <UserAutoComplete
-          name={USER_ID}
-          label={LABELS.USER_ID}
-          // placeholder={PLACEHOLDERS.USER_ID}
-          value={watch(USER_ID)}
-          error={errors?.[USER_ID]?.message}
-          onBlur={() => trigger(USER_ID)}
-          onChange={(e) => {
-            setValue(USER_ID, e.target.value);
-            trigger(USER_ID);
-          }}
-        /> */}
       </div>
       <div>
-        <TextField
-          type={TYPE.TEXT}
+        <Autocomplete
+          disabled={!watch(USER_ID)}
+          loading={deals.loading}
           name={DEAL_ID}
           label={LABELS.DEAL_ID}
           placeholder={PLACEHOLDERS.DEAL_ID}
-          value={watch(DEAL_ID)}
+          data={deals.data || []}
+          value={watch(DEAL)}
           error={errors?.[DEAL_ID]?.message}
           onBlur={() => trigger(DEAL_ID)}
-          onChange={(e) => {
-            setValue(DEAL_ID, e.target.value);
+          onChange={(d) => {
+            console.log("d>>>>", d);
+            setValue(DEAL, d);
+            setValue(DEAL_ID, (d && d[0] && d[0].id) || "");
             trigger(DEAL_ID);
           }}
         />

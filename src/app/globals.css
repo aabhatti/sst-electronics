@@ -22,6 +22,8 @@
   --color-light-info: #bee3f8;
   --color-light-warning: #feebc8;
   --color-light-primary-lighter: #e9d8fd;
+  --color-border-base: #e5e7eb;
+  --color-white: #ffffff;
 }
 
 @tailwind base;
@@ -385,4 +387,152 @@
 
 .bg-primary-light {
   background: var(--color-base-secondary);
+}
+
+/* ------------------------------------------  styles for autocomplete -------------------------------*/
+
+.autocomplete-cont label {
+  /* @apply text-base-primary text-base block w-full mb-1; */
+}
+.autocomplete-cont .autocomplete-input-cont {
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border-base);
+  border-radius: 8px;
+  width: 100%;
+  font-family: "Inter";
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+
+.autocomplete-cont .autocomplete-input-cont.open {
+  border-color: var(--color-primary);
+}
+
+.autocomplete-cont .input-cont {
+  width: 100%;
+}
+.autocomplete-cont input {
+  outline: none;
+  background: transparent;
+  color: var(--color-black);
+  font-family: "Inter";
+  font-size: 12px;
+  padding: 8px 8px;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.autocomplete-cont .autocomplete-options-cont {
+  position: relative;
+  width: 100%;
+  /* height: 1px; */
+}
+
+.autocomplete-cont .render-options-cont {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  background: var(--color-white);
+  border: 1px solid var(--color-base-secondary);
+  border-top: 0;
+  border-radius: 4px;
+  width: 100%;
+  padding: 8px 6px;
+  min-height: auto;
+  max-height: 30vh;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  flex-grow: 1;
+}
+
+.autocomplete-cont ul.options {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  z-index: 99999;
+}
+
+.autocomplete-cont ul.options > li {
+  width: 100%;
+  padding: 4px 8px;
+  margin: 1px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.autocomplete-cont ul.options > li > .option-name {
+  display: inline-block;
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.2px;
+  text-align: left;
+  color: var(--color-black);
+  margin: 2px 2px;
+}
+
+.autocomplete-cont ul.options > li:hover {
+  background: rgb(219, 220, 225, 0.5);
+  /* needs to update later */
+}
+
+.autocomplete-cont ul.options > li.selected {
+  background: rgb(219, 220, 225, 0.8);
+  /* needs to update later */
+}
+
+.autocomplete-cont ul.options > li.selected:hover {
+  background: rgb(219, 220, 225, 1);
+  /* needs to update later */
+}
+
+.autocomplete-cont .end-endornment {
+  display: flex;
+  padding: 0px 4px 0px 0px;
+}
+
+.autocomplete-cont .reset,
+.autocomplete-cont .open-close {
+  padding: 0px 4px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.autocomplete-cont .reset > .icon {
+  opacity: 0.6;
+}
+
+.autocomplete-cont .open-close > .icon {
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+  opacity: 0.6;
+}
+
+.autocomplete-cont .open .open-close > .icon {
+  transform: rotate(-180deg);
+  transition: 0.3s ease-in-out;
+}
+
+.autocomplete-cont .loading-cont {
+  padding: 0px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

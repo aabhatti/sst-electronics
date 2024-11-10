@@ -32,6 +32,8 @@ const createDealDefaultValues = {
 };
 
 const createInstallmentDefaultValues = {
+  deal: null,
+  user: [],
   userId: "",
   dealId: "",
   amount: 0,

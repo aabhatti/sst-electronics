@@ -7,7 +7,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const DealSchema = z.object({
   id: dbId.optional(),
   name: z.string(),
-  userName: z.string(),
+  userName: z.string().optional(),
   userId: z.instanceof(ObjectId).nullable().default(null),
   worth: z.number().default(0),
   paid: z.number().default(0),
@@ -25,7 +25,7 @@ const DealSchema = z.object({
 interface IDeal {
   id?: string | Types.ObjectId;
   name: String;
-  userName: String;
+  userName?: String | undefined;
   userId: Types.ObjectId | null;
   worth: Number;
   paid: Number;
@@ -42,7 +42,7 @@ interface IDeal {
 class Deal {
   id?: string | Types.ObjectId;
   name: string;
-  userName: string;
+  userName?: string;
   userId: Types.ObjectId | null;
   worth: number;
   paid: number;
