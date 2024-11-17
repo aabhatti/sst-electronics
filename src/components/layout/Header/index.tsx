@@ -25,7 +25,7 @@ const Header = () => {
         {open ? <CgMenuGridO /> : <MdArrowForward />}
       </span>
 
-      <h2>{path}</h2>
+      {/* <h2>{path}</h2> */}
       <Logout />
     </div>
   );
