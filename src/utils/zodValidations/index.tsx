@@ -17,6 +17,8 @@ import {
   dealIdValidation,
   amountValidation,
   dealNameValidation,
+  dateValidation,
+  paymentMethode,
 } from "./common";
 import { passwordRegex } from "./regex";
 
@@ -66,6 +68,8 @@ export const createDealSchema = z
     noOfInstallments: noOfInstallmentsValidation,
     referenceOne: referenceOneValidation,
     referenceTwo: referenceTwoValidation,
+    date: dateValidation,
+    paymentMethode: paymentMethode,
   })
   .superRefine((value, ctx) => {
     if (Number(value.advance) > Number(value.worth)) {
@@ -95,6 +99,8 @@ export const createInstallmentSchema = z.object({
   userId: userIdValidation,
   dealId: dealIdValidation,
   amount: amountValidation,
+  date: dateValidation,
+  paymentMethode: paymentMethode,
 });
 
 export { loginSchema };

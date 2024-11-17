@@ -70,7 +70,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   isIcon = null,
   heading = "",
   data = [],
-  value,
+  value = [],
   onTextChange = null,
   onInputChange = () => {},
   onChange = () => {},
@@ -99,8 +99,9 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
   const [obj, setObj] = useState(initialValues);
 
   useEffect(() => {
-    if (multiple) onChangeValues(data, value || [], renderKey);
-    else onChangeValue(data, value || [], renderKey);
+    if (!multiple) {
+      onChangeValue(data, value, renderKey);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, value, renderKey, multiple]);
 
@@ -195,7 +196,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     if (obj?.open)
       handleOpenClose(
         obj.open,
-        value || [],
+        value,
         data,
         multiple,
         renderKey,

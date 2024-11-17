@@ -17,6 +17,7 @@ const DealSchema = z.object({
   description: z.string().default(""),
   referenceOne: z.instanceof(ObjectId).nullable().default(null),
   referenceTwo: z.instanceof(ObjectId).nullable().default(null),
+  date: z.string().optional(),
   createdAt: z.instanceof(Date).nullable().optional(),
   updatedAt: z.instanceof(Date).nullable().optional(),
 });
@@ -35,6 +36,7 @@ interface IDeal {
   description: String;
   referenceOne: Types.ObjectId | null;
   referenceTwo: Types.ObjectId | null;
+  date: string | undefined;
   createdAt?: Date | null;
   updatedAt?: Date | null;
 }
@@ -52,6 +54,7 @@ class Deal {
   description: string;
   referenceOne: Types.ObjectId | null;
   referenceTwo: Types.ObjectId | null;
+  date: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
 
@@ -69,6 +72,7 @@ class Deal {
     this.description = parsed.description;
     this.referenceOne = parsed.referenceOne ?? null;
     this.referenceTwo = parsed.referenceTwo ?? null;
+    this.date = parsed.date || "";
     this.createdAt = parsed.createdAt ?? null;
     this.updatedAt = parsed.updatedAt ?? null;
   }

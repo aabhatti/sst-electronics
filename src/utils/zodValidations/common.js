@@ -68,7 +68,7 @@ const descriptionValidation = z
   .regex(nameRegex, {
     message: ERRORS.DESCRIPTION_REQUIRED,
   })
-  .max(30, { message: LENGTH.MAX_30 });
+  .max(200, { message: LENGTH.MAX_200 });
 
 const worthValidation = z
   .number()
@@ -96,6 +96,10 @@ const amountValidation = z
   .min(1, { message: ERRORS.AMOUNT_REQUIRED })
   .max(10000000, { message: ERRORS.AMOUNT_BETWEEN_1_10000000 });
 
+const dateValidation = z.string().optional();
+const paymentMethode = z
+  .string()
+  .min(1, { message: ERRORS.PAYMENT_METHODE_REQUIRED });
 export {
   emailValidation,
   firstNameValidation,
@@ -114,4 +118,6 @@ export {
   dealIdValidation,
   amountValidation,
   dealNameValidation,
+  dateValidation,
+  paymentMethode
 };

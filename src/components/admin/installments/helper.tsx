@@ -25,6 +25,16 @@ interface IHandleFetchUserDealsByUserId {
   setDeals: React.Dispatch<React.SetStateAction<DealsState>>;
 }
 
+export const paymentMethodeOptions = [
+  {
+    id: "cash",
+    name: "Cash",
+  },
+  {
+    id: "account",
+    name: "Account",
+  },
+];
 // The fetchUser by Id function
 export const handleFetchUserDealsByUserId = async ({
   userId,

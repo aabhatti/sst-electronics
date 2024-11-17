@@ -43,7 +43,7 @@ const FormBody: React.FC<FormBodyProps> = ({
         <TextField
           type={TYPE.TEXT}
           name={FIRST_NAME}
-          label={LABELS.FIRST_NAME}
+          label={LABELS.NAME}
           placeholder={PLACEHOLDERS.FIRST_NAME}
           value={watch(FIRST_NAME)}
           error={errors?.[FIRST_NAME]?.message}
@@ -58,7 +58,7 @@ const FormBody: React.FC<FormBodyProps> = ({
         <TextField
           type={TYPE.TEXT}
           name={LAST_NAME}
-          label={LABELS.LAST_NAME}
+          label={LABELS.FATHER_NAME}
           placeholder={PLACEHOLDERS.LAST_NAME}
           value={watch(LAST_NAME)}
           error={errors?.[LAST_NAME]?.message}

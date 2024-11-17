@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { decryptData } from "../../../../utils/encryptDecrypt";
 import Spinner from "@/components/shared/spinner";
 import Image from "next/image";
+import { capitalize } from "lodash";
 
 const GeneratePdf = dynamic(() => import("@/components/shared/generatePDF"), {
   ssr: false,
@@ -27,6 +28,8 @@ interface InstallmentReceiptData {
   receivedBy?: string;
   signature?: string;
   fileName?: string | undefined;
+  status?: string | undefined;
+  paymentMethode?: string | undefined;
 }
 
 interface InstallmentReceiptProps {
@@ -156,6 +159,31 @@ const InstallmentReceipt: React.FC<InstallmentReceiptProps> = ({
                   Total Amount Due:{" "}
                   <span className="highlight-value">
                     Rs {data.dueAmount ?? notExist}/-
+                  </span>
+                </td>
+              </tr>
+              <tr className="font-12 border-2 border-primary">
+                <td className="deal-info">
+                  Payment Methode:{" "}
+                  <span className="highlight-value">
+                    {capitalize(data.paymentMethode) ?? notExist}
+                  </span>
+                </td>
+                <td className="installment-paid-info">
+                  Payment Status:{" "}
+                  <span className="highlight-value">
+                    {data?.status?.toUpperCase() ?? notExist}
+                  </span>
+                </td>
+                <td className="installment-due-info">
+                  Due Amount per Installment:{" "}
+                  <span className="highlight-value">
+                    Rs{" "}
+                    {Number(
+                      Number(data.dueAmount || 0) /
+                        Number(data.dueInstallments || 1)
+                    ).toFixed(2)}
+                    /-
                   </span>
                 </td>
               </tr>

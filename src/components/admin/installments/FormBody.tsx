@@ -12,7 +12,11 @@ import type {
 import { ICreateInstallmentInput } from "@/utils/interfaces";
 import Autocomplete from "@/components/shared/autocomplete";
 import UserAutoComplete from "@/components/shared/userAutocomplete";
-import { handleFetchUserDealsByUserId, initialDealsValue } from "./helper";
+import {
+  handleFetchUserDealsByUserId,
+  initialDealsValue,
+  paymentMethodeOptions,
+} from "./helper";
 
 interface FormBodyProps {
   errors: FieldErrors<ICreateInstallmentInput>;
@@ -31,7 +35,16 @@ const FormBody: React.FC<FormBodyProps> = ({
   setValue,
   loading,
 }) => {
-  const { USER, USER_ID, DEAL, DEAL_ID, AMOUNT } = NAMES;
+  const {
+    USER,
+    USER_ID,
+    DEAL,
+    DEAL_ID,
+    AMOUNT,
+    DATE,
+    METHODE,
+    PAYMENT_METHODE,
+  } = NAMES;
   const [deals, setDeals] = useState(initialDealsValue);
   useEffect(() => {
     if (watch(USER_ID)) {
@@ -43,9 +56,10 @@ const FormBody: React.FC<FormBodyProps> = ({
   }, [watch(USER_ID)]);
 
   return (
-    <div className="mt-5 grid lg:grid-cols-3 sm:grid-cols-1 gap-4">
-      <div>
+    <div className="mt-5 grid lg:grid-cols-6 sm:grid-cols-1 gap-4">
+      <div className="lg:col-span-3">
         <UserAutoComplete
+          required={true}
           name={USER_ID}
           label={LABELS.USER_ID}
           value={watch(USER)}
@@ -63,7 +77,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div>
+      <div className="lg:col-span-3">
         <Autocomplete
           disabled={!watch(USER_ID)}
           loading={deals.loading}
@@ -75,7 +89,6 @@ const FormBody: React.FC<FormBodyProps> = ({
           error={errors?.[DEAL_ID]?.message}
           onBlur={() => trigger(DEAL_ID)}
           onChange={(d) => {
-            console.log("d>>>>", d);
             setValue(DEAL, d);
             setValue(DEAL_ID, (d && d[0] && d[0].id) || "");
             trigger(DEAL_ID);
@@ -83,8 +96,9 @@ const FormBody: React.FC<FormBodyProps> = ({
         />
       </div>
 
-      <div>
+      <div className="lg:col-span-2">
         <TextField
+          required={true}
           type={TYPE.NUMBER}
           name={AMOUNT}
           label={LABELS.AMOUNT}
@@ -99,8 +113,41 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
+      <div className="lg:col-span-2">
+        <TextField
+          type={TYPE.DATE}
+          name={DATE}
+          label={LABELS.DATE}
+          placeholder={PLACEHOLDERS.DATE}
+          value={watch(DATE)}
+          error={errors?.[DATE]?.message}
+          onBlur={() => trigger(DATE)}
+          min={0}
+          onChange={(e) => {
+            setValue(DATE, e.target.value);
+            trigger(DATE);
+          }}
+        />
+      </div>
+      <div className="lg:col-span-2">
+        <Autocomplete
+          required={true}
+          name={PAYMENT_METHODE}
+          label={LABELS.PAYMENT_METHODE}
+          placeholder={PLACEHOLDERS.PAYMENT_METHODE}
+          data={paymentMethodeOptions}
+          value={watch(METHODE)}
+          error={errors?.[PAYMENT_METHODE]?.message}
+          onBlur={() => trigger(PAYMENT_METHODE)}
+          onChange={(d) => {
+            setValue(METHODE, d);
+            setValue(PAYMENT_METHODE, (d && d[0] && d[0].id) || "");
+            trigger(PAYMENT_METHODE);
+          }}
+        />
+      </div>
 
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-6">
         <Button
           type={"submit"}
           disabled={isSubmitting || loading}

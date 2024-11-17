@@ -11,7 +11,8 @@ import {
 } from "react-hook-form";
 import { ICreateDealInput } from "@/utils/interfaces";
 import UserAutoComplete from "@/components/shared/userAutocomplete";
-// import UserAutoComplete from "@/components/shared/userAutocomplete";
+import Autocomplete from "@/components/shared/autocomplete";
+import { paymentMethodeOptions } from "../installments/helper";
 
 interface FormBodyProps {
   errors: FieldErrors<ICreateDealInput>;
@@ -42,10 +43,13 @@ const FormBody: React.FC<FormBodyProps> = ({
     REFERENCE_ONE_USER,
     REFERENCE_TWO,
     REFERENCE_TWO_USER,
+    DATE,
+    PAYMENT_METHODE,
+    METHODE,
   } = NAMES;
   return (
-    <div className="mt-5 grid lg:grid-cols-6 sm:grid-cols-1 gap-4">
-      <div className="lg:col-span-3">
+    <div className="mt-5 grid lg:grid-cols-12 sm:grid-cols-1 gap-4">
+      <div className="lg:col-span-6">
         <UserAutoComplete
           // required={true}
           name={USER_ID}
@@ -61,7 +65,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-6">
         <TextField
           type={TYPE.TEXT}
           name={NAME}
@@ -76,7 +80,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div className="lg:col-span-6">
+      <div className="lg:col-span-8">
         <TextField
           type={TYPE.TEXT}
           name={DESCRIPTION}
@@ -91,7 +95,23 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div className="lg:col-span-2">
+      <div className="lg:col-span-4">
+        <TextField
+          type={TYPE.DATE}
+          name={DATE}
+          label={LABELS.DATE}
+          placeholder={PLACEHOLDERS.DATE}
+          value={watch(DATE)}
+          error={errors?.[DATE]?.message}
+          onBlur={() => trigger(DATE)}
+          min={0}
+          onChange={(e) => {
+            setValue(DATE, e.target.value);
+            trigger(DATE);
+          }}
+        />
+      </div>
+      <div className="lg:col-span-3">
         <TextField
           type={TYPE.NUMBER}
           name={WORTH}
@@ -107,7 +127,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div className="lg:col-span-2">
+      <div className="lg:col-span-3">
         <TextField
           type={TYPE.NUMBER}
           name={ADVANCE}
@@ -123,7 +143,25 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div className="lg:col-span-2">
+
+      <div className="lg:col-span-3">
+        <Autocomplete
+          required={true}
+          name={PAYMENT_METHODE}
+          label={LABELS.PAYMENT_METHODE}
+          placeholder={PLACEHOLDERS.PAYMENT_METHODE}
+          data={paymentMethodeOptions}
+          value={watch(METHODE)}
+          error={errors?.[PAYMENT_METHODE]?.message}
+          onBlur={() => trigger(PAYMENT_METHODE)}
+          onChange={(d) => {
+            setValue(METHODE, d);
+            setValue(PAYMENT_METHODE, (d && d[0] && d[0].id) || "");
+            trigger(PAYMENT_METHODE);
+          }}
+        />
+      </div>
+      <div className="lg:col-span-3">
         <TextField
           type={TYPE.NUMBER}
           name={NO_OF_INSTALLMENTS}
@@ -139,7 +177,7 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-6">
         <UserAutoComplete
           name={REFERENCE_ONE}
           label={LABELS.REFERENCE_ONE}
@@ -155,7 +193,7 @@ const FormBody: React.FC<FormBodyProps> = ({
         />
       </div>
 
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-6">
         <UserAutoComplete
           name={REFERENCE_TWO}
           label={LABELS.REFERENCE_TWO}
@@ -171,7 +209,8 @@ const FormBody: React.FC<FormBodyProps> = ({
           }}
         />
       </div>
-      <div className="lg:col-span-6">
+
+      <div className="lg:col-span-12">
         <Button
           type={"submit"}
           disabled={isSubmitting || loading}

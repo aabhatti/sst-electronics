@@ -22,6 +22,7 @@ export const LENGTH = {
   MAX_13: "Maximum 13 characters",
   MAX_11: "Maximum 11 characters",
   MAX_100: "Maximum 100 characters",
+  MAX_200: "Maximum 200 characters",
 };
 
 export const SERVICE_ERROR = "Something went wrong, Please try again.";
@@ -98,6 +99,7 @@ export const ERRORS = {
   ADVANCE_REQUIRED: "Advance is required",
   ADVANCE_GREATER_REQUIRED: "Advance must not be greater than Worth",
   REFERENCE_REQUIRED: "Reference is required",
+  PAYMENT_METHODE_REQUIRED: "Payment methode is required",
 
   NO_OF_INSTALLMENTS_REQUIRED: "No of installments is required",
 
@@ -140,6 +142,7 @@ export const LABELS = {
   PASSWORD: "Password*",
   CONFIRM_PASSWORD: "Confirm Password*",
   NAME: "Name*",
+  FATHER_NAME: "Father Name*",
   FIRST_NAME: "First Name*",
   LAST_NAME: "Last Name*",
   DOB: "DOB*",
@@ -187,6 +190,8 @@ export const LABELS = {
   REFERENCE_TWO: "Reference Two*",
 
   DEAL_ID: "Select Deal*",
+  DATE: "Date",
+  PAYMENT_METHODE: "Payment Methode",
 };
 
 export const PLACEHOLDERS = {
@@ -242,6 +247,8 @@ export const PLACEHOLDERS = {
   REFERENCE_TWO: "Please type 2-3 letter to select user",
 
   DEAL_ID: "Please type or select deal",
+  DATE: "Enter date",
+  PAYMENT_METHODE: "Type or Select Methode",
 };
 
 export enum NAMES {
@@ -265,7 +272,10 @@ export enum NAMES {
   REFERENCE_ONE_USER = "referenceOneUser",
   REFERENCE_TWO = "referenceTwo",
   REFERENCE_TWO_USER = "referenceTwoUser",
+  PAYMENT_METHODE = "paymentMethode",
+  METHODE = "methode",
 
+  DATE = "date",
   DEAL = "deal",
   DEAL_ID = "dealId",
   AMOUNT = "amount",

@@ -29,6 +29,8 @@ const createDealDefaultValues = {
   noOfInstallments: 12,
   referenceOne: "",
   referenceTwo: "",
+  date: "",
+  paymentMethode: "",
 };
 
 const createInstallmentDefaultValues = {
@@ -37,6 +39,8 @@ const createInstallmentDefaultValues = {
   userId: "",
   dealId: "",
   amount: 0,
+  date: "",
+  paymentMethode: "",
 };
 
 export {

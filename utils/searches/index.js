@@ -74,6 +74,7 @@ const getDealSearchCondition = (searchTerm) => {
     { userName: { $regex: searchTerm, $options: "i" } },
     { worth: { $regex: searchTerm, $options: "i" } },
     { due: { $regex: searchTerm, $options: "i" } },
+    { date: { $regex: searchTerm, $options: "i" } },
   ];
 };
 
@@ -82,6 +83,8 @@ const getInstallmentSearchCondition = (searchTerm) => {
     { userName: { $regex: searchTerm, $options: "i" } },
     { dealName: { $regex: searchTerm, $options: "i" } },
     { amount: { $regex: searchTerm, $options: "i" } },
+    { status: { $regex: searchTerm, $options: "i" } },
+    { paymentMethode: { $regex: searchTerm, $options: "i" } },
   ];
 };
 

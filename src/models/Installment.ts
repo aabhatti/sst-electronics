@@ -15,6 +15,7 @@ const InstallmentSchema = z.object({
   status: z.string().default("due"),
   date: z.string().default(""),
   receipt: z.string().default(""),
+  paymentMethode: z.string().default(""),
   createdBy: z.instanceof(ObjectId).nullable().default(null),
   updatedBy: z.instanceof(ObjectId).nullable().default(null),
   createdAt: z.instanceof(Date).nullable().optional(),
@@ -31,8 +32,9 @@ interface IInstallment {
   dealId: Types.ObjectId | null;
   amount: Number;
   status: String;
-  date: String;
+  date: string;
   receipt: String;
+  paymentMethode: String;
   createdBy: Types.ObjectId | null;
   updatedBy: Types.ObjectId | null;
   createdAt?: Date | null;
@@ -50,6 +52,7 @@ class Installment {
   status: string;
   date: string;
   receipt: string;
+  paymentMethode: string;
   createdBy: Types.ObjectId | null;
   updatedBy: Types.ObjectId | null;
   createdAt?: Date | null;
@@ -67,6 +70,7 @@ class Installment {
     this.status = parsed.status;
     this.date = parsed.date;
     this.receipt = parsed.receipt;
+    this.paymentMethode = parsed.paymentMethode;
     this.createdBy = parsed.createdBy ?? null;
     this.updatedBy = parsed.updatedBy ?? null;
     this.createdAt = parsed.createdAt ?? null;

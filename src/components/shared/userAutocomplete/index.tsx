@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
 import AutoComplete from "@/components/shared/autocomplete";
 import { initialUsersValue, queryUsers } from "./helper";
 import { debounce } from "lodash";
@@ -16,6 +16,7 @@ interface UserAutoCompleteProps {
   onBlur: () => void;
   value?: any;
   disabled?: boolean;
+  required?: boolean;
 }
 
 const UserAutoComplete: React.FC<UserAutoCompleteProps> = ({
@@ -28,6 +29,7 @@ const UserAutoComplete: React.FC<UserAutoCompleteProps> = ({
   onBlur = () => {},
   value = null,
   disabled = false,
+  required = false,
 }) => {
   const [data, setData] = useState(initialUsersValue());
 
@@ -52,6 +54,7 @@ const UserAutoComplete: React.FC<UserAutoCompleteProps> = ({
 
   return (
     <AutoComplete
+      required={required}
       loading={data?.loading}
       data={data?.list}
       name={name}
@@ -70,4 +73,4 @@ const UserAutoComplete: React.FC<UserAutoCompleteProps> = ({
   );
 };
 
-export default UserAutoComplete;
+export default memo(UserAutoComplete);

@@ -52,11 +52,11 @@ const DealCard = ({
       {deal && deal.description && (
         <p className="text-sm text-center m-0">{`(${deal.description})`}</p>
       )}
-      {deal && deal.createdAt && (
+      {deal && deal.date && (
         <p className="text-md font-semibold text-basePrimary text-center m-0">{`${MonthYearDateFormate(
-          deal.createdAt
+          deal.date
         )} to ${MonthYearDateFormate(
-          addMonthsToDate(deal.createdAt, noOfInstallments)
+          addMonthsToDate(deal.date, noOfInstallments)
         )}`}</p>
       )}
       <div className="grid lg:grid-cols-3 mt-2">

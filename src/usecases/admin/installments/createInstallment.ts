@@ -13,7 +13,6 @@ import {
 } from "../../../../constants";
 import { DayMonthYearDateFormate } from "../../../../utils";
 import { PdfService } from "@/services/PdfService";
-import { constrainedMemory } from "node:process";
 import { encryptData } from "../../../../utils/encryptDecrypt";
 
 interface CreateDeps {
@@ -42,7 +41,7 @@ async function createInstallment(
   }: CreateDeps,
   session?: ClientSession | undefined
 ): Promise<CreateInstallmentResponse> {
-  const { userId, dealId, amount } = body;
+  let { userId, dealId, amount, date, paymentMethode } = body;
 
   let user = await userRepository.findById(userId?.toString() || "");
   if (isEmpty(user)) {
@@ -61,7 +60,7 @@ async function createInstallment(
     throw new NotFound(InstallmentMessages.FAILED_TO_CREATE_INSTALLMENT);
   }
 
-  const date = DayMonthYearDateFormate(new Date());
+  date = DayMonthYearDateFormate(new Date(date || ""));
   let createInstallment = new Installment({
     userName: user?.name || "",
     userId: userId ? new Types.ObjectId(userId) : null,
@@ -70,10 +69,11 @@ async function createInstallment(
     dealId: dealId ? new Types.ObjectId(dealId) : null,
     amount: Number(amount || 0),
     status: "paid",
-    date,
     receipt: "",
+    paymentMethode: paymentMethode || "",
     createdBy: userId ? new Types.ObjectId(userId) : null,
     updatedBy: userId ? new Types.ObjectId(userId) : null,
+    date,
   });
 
   let installment = await installmentRepository.save(
@@ -111,6 +111,8 @@ async function createInstallment(
     mobile: user?.mobile,
     email: user?.email,
 
+    status: installment?.status,
+    paymentMethode: installment?.paymentMethode,
     paidInstallments: deal?.paidInstallments,
     dueInstallments:
       Number(deal?.noOfInstallments || 0) - Number(deal?.paidInstallments || 0),

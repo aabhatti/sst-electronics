@@ -18,8 +18,9 @@ interface IInstallmentDocument extends Document {
   dealId: Types.ObjectId;
   amount: Number;
   status: String;
-  date: String;
+  date: string;
   receipt: String;
+  paymentMethode: String;
   createdBy: Types.ObjectId;
   updatedBy: Types.ObjectId;
 }
@@ -43,6 +44,7 @@ const InstallmentSchema: Schema<IInstallmentDocument> = new Schema(
     status: { type: String, default: "due" },
     date: { type: String, default: "" },
     receipt: { type: String, default: "" },
+    paymentMethode: { type: String, default: "cash" },
     createdBy: {
       type: Schema.Types.ObjectId,
       default: null,

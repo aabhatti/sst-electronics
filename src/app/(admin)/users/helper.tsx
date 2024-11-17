@@ -65,8 +65,8 @@ const formatDataObj = (row: any) => {
       </div>
     ),
     info: (
-      <div className="flex flex-col">
-        <p className="w-5 text-sm">{row.id}</p>
+      <div className="flex flex-col max-w-[300px]">
+        {/* <p className="w-5 text-sm">{row.id}</p> */}
         <h2 className="flex items-center text-sm">
           <FaAddressCard className="font-bold mr-1 min-w=[16px]" />
           {row.cnic || "N/A"}

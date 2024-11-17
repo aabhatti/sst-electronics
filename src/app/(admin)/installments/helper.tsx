@@ -7,6 +7,7 @@ import {
 import { HttpStatusCode } from "../../../../constants";
 import { error, success } from "@/components/shared/alert";
 import Link from "next/link";
+import { capitalize } from "lodash";
 
 interface Data {}
 
@@ -113,6 +114,9 @@ const formatDataObj = (row: any) => {
       "N/A"
     ),
 
+    paymentMethode: row.paymentMethode
+      ? capitalize(row.paymentMethode || "")
+      : "N/A",
     status: row.status ? row.status.toUpperCase() : "N/A",
     amount: `Rs ${row.amount || 0}/-`,
     dealDues: `Rs ${row.dealDues || 0}/-`,
@@ -148,6 +152,12 @@ export const headerValues = [
   { type: "string", name: "User Name", value: "userName", bg: "primary-light" },
   { type: "string", name: "Deal", value: "dealName", bg: "primary-light" },
   { type: "string", name: "Receipt", value: "receipt", bg: "info-light" },
+  {
+    type: "string",
+    name: "Payment Methode",
+    value: "paymentMethode",
+    bg: "info-light",
+  },
   { type: "string", name: "Status", value: "status", bg: "success-light" },
   { type: "string", name: "Amount", value: "amount", bg: "success-light" },
   { type: "string", name: "Due", value: "dealDues", bg: "danger-light" },

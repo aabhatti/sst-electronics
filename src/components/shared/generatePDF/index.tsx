@@ -34,9 +34,9 @@ const GeneratePDF: React.FC<GeneratePDFProps> = ({
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      // Add the image to the PDF at the calculated size
+      // // Add the image to the PDF at the calculated size
       pdf.addImage(image, "JPEG", 0, 0, pdfWidth, pdfHeight);
-      //   pdf.addImage(image, "JPEG", 0, 0, imageWidth, imageHeight);
+      // //   pdf.addImage(image, "JPEG", 0, 0, imageWidth, imageHeight);
       pdf.save(fileName);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error";

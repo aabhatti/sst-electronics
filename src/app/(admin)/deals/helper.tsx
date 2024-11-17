@@ -48,7 +48,7 @@ const formatDataObj = (row: any) => {
     date: row.date ? row.date : DayMonthYearDateFormate(row.createdAt),
     deal: (
       <>
-        <p className="w-5 text-sm">{row.id}</p>
+        {/* <p className="w-5 text-sm">{row.id}</p> */}
         <h2 className="font-semibold text-md text-primary">{row.name}</h2>
         {row.description && (
           <p className="text-sm text-basePrimary">{`(${row.description})`}</p>

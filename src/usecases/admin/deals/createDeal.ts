@@ -32,6 +32,7 @@ interface FetchDealResponse {
 // Create a new interface excluding 'due'
 interface IDealBody extends Omit<IDeal, "paid due"> {
   advance: number;
+  paymentMethode: string;
 }
 
 async function createDeal(
@@ -53,8 +54,11 @@ async function createDeal(
     noOfInstallments,
     referenceOne,
     referenceTwo,
+    date,
+    paymentMethode,
   } = body;
 
+  date = DayMonthYearDateFormate(new Date(date || ""));
   let user, userOne, userTwo;
   user = await userRepository.findById(userId?.toString() || "");
   userOne = await userRepository.findById(referenceOne?.toString() || "");
@@ -86,6 +90,7 @@ async function createDeal(
     noOfInstallments: Number(noOfInstallments),
     referenceOne: referenceOne ? new Types.ObjectId(referenceOne) : null,
     referenceTwo: referenceTwo ? new Types.ObjectId(referenceTwo) : null,
+    date,
   });
 
   let deal = await dealRepository.save(createDeal, session);
@@ -94,7 +99,6 @@ async function createDeal(
   }
 
   if (Number(advance) > 0) {
-    const date = DayMonthYearDateFormate(new Date());
     const due = Number(deal?.due || 0) - Number(advance || 0);
     let createInstallmet = new Installment({
       userName: user?.name || "",
@@ -104,10 +108,11 @@ async function createDeal(
       dealId: deal?.id ? new Types.ObjectId(deal.id) : null,
       amount: Number(advance || 0),
       status: "paid",
-      date,
       receipt: "",
       createdBy: userId ? new Types.ObjectId(userId) : null,
       updatedBy: userId ? new Types.ObjectId(userId) : null,
+      paymentMethode: paymentMethode || "",
+      date,
     });
 
     const installment = await installmentRepository.save(

@@ -51,6 +51,7 @@ const userDetailsProject = {
           due: "$$deal.due",
           noOfInstallments: "$$deal.noOfInstallments",
           description: "$$deal.description",
+          date: "$$deal.date",
           createdAt: "$$deal.createdAt",
           updatedAt: "$$deal.updatedAt",
           installments: {
@@ -117,6 +118,7 @@ const dealProject = {
       name: 1,
       mobile: 1,
     },
+    date: 1,
     createdAt: 1,
     updatedAt: 1,
   },
@@ -135,6 +137,7 @@ const installmentProject = {
     date: 1,
     status: 1,
     receipt: 1,
+    paymentMethode: 1,
   },
 };
 

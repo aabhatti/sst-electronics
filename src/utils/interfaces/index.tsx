@@ -36,6 +36,9 @@ interface ICreateDealInput {
   referenceOneUser: User[] | [];
   referenceTwo: string;
   referenceTwoUser: User[] | [];
+  date: string | undefined;
+  methode: any;
+  paymentMethode: string;
 }
 
 interface Deal {}
@@ -46,6 +49,9 @@ interface ICreateInstallmentInput {
   userId: string;
   dealId: string;
   amount: number;
+  date: string | undefined;
+  methode: any;
+  paymentMethode: string;
 }
 
 interface User {}

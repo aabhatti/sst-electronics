@@ -16,6 +16,7 @@ interface TextFieldProps {
   loading?: boolean;
   startGroupText?: string;
   endGroupText?: string;
+  required?: boolean;
   [key: string]: any; // To allow additional props
 }
 
@@ -34,6 +35,7 @@ const TextField: React.FC<TextFieldProps> = ({
   loading = false,
   startGroupText = "",
   endGroupText = "",
+  required = false,
   ...props
 }) => {
   return (
@@ -41,6 +43,7 @@ const TextField: React.FC<TextFieldProps> = ({
       {label && (
         <label className="text-base-primary text-base block w-full mb-1">
           {label}
+          {required && <span className="required">{"*"}</span>}
         </label>
       )}
 

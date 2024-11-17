@@ -37,8 +37,7 @@ async function fetchUserDetails(
   ];
 
   let user = await userRepository.findByAggregation(pipeline);
-  // const deals = (user && user[0] && user[0].deals) || [];
-  // const installments = (user && user[0] && user[0].installments) || [];
+
   return {
     code: HttpStatusCode.OK,
     message: UserMessages.USER_DETAILS_FETCHED_SUCCESS,
