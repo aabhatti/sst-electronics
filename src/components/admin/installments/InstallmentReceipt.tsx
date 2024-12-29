@@ -67,10 +67,10 @@ const InstallmentReceipt: React.FC<InstallmentReceiptProps> = ({
         <div className="receipt-header">
           <Image src={"/images/logo.jpg"} alt={"SST"} width={200} height={50} />
           <h3 className="receipt-title">Installment Receipt</h3>
-          <p className="brand-info">
-            <span>sst.electronics.center@gmail.com</span>
+          <p className="brand-info font-bold">
+            <span>SST Electronics Center</span>
             <br />
-            <span>Badami Bagh, Lahore</span>
+            <span>sst.electronics.center@gmail.com</span>
           </p>
         </div>
 
