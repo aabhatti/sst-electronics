@@ -67,19 +67,14 @@ export const {
         try {
           let user = null;
           const data = await loginSchema.parseAsync(credentials);
-          // const resp = await loginUser(data, {
-          //   userRepository: new UserRepository(),
-          // });
-
           let resp = await login(data);
-          console.log("resp after login>>>", resp);
           user = resp ?? null;
           if (!(user && user.status === 200)) {
-            // return resp;
             throw new Error(resp.message?.toString() || "User not found.");
           }
 
           // return user object with their profile data
+          user = user.data ?? {};
           return {
             ...user,
             email: credentials?.email?.toString() || "",
@@ -91,4 +86,26 @@ export const {
       },
     }),
   ],
+  callbacks: {
+    ...authConfig.callbacks,
+    jwt: async ({ token, account, user }) => {
+      if (account && user) {
+        return {
+          ...token,
+          accessToken: user?.accessToken || "",
+          refreshToken: user?.refreshToken || "",
+          user,
+        };
+      }
+      return token;
+    },
+    session: async ({ session, token }) => {
+      console.log("token in session callbacks>>>>", token);
+      if (token) {
+        session.accessToken = token.accessToken;
+        session.refreshToken = token.refreshToken;
+      }
+      return session;
+    },
+  },
 });

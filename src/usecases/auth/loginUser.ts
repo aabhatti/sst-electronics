@@ -34,14 +34,14 @@ async function loginUser(
     throw new BadRequest(GenericMessages.INVALID_EMAIL_OR_PASSWORD);
   }
 
-  const tokens = {};
-  // const tokens = user.generateTokens({});
-  // if (tokens && tokens.refreshToken) {
-  //   user.refreshToken = tokens.refreshToken;
-  //   user = await userRepository.save(user);
-  // } else {
-  //   throw new Conflict(UserMessages.FAILED_TO_LOGIN_USER);
-  // }
+  // const tokens = {};
+  const tokens = user.generateTokens({});
+  if (tokens && tokens.refreshToken) {
+    user.refreshToken = tokens.refreshToken;
+    user = await userRepository.save(user);
+  } else {
+    throw new Conflict(UserMessages.FAILED_TO_LOGIN_USER);
+  }
 
   const userInfo = user?.toUserInfo();
 

@@ -10,13 +10,10 @@ export async function POST(req: NextRequest) {
   // login route
   try {
     const body = await req.json();
-    console.log("body >>>", body);
 
     const resp = await loginUser(body, {
       userRepository: new UserRepository(),
     });
-
-    console.log("resp >>>", resp);
 
     // cookies().set("token", resp.token, {
     //   httpOnly: true,

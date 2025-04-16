@@ -57,6 +57,8 @@ export const apiAuthPrefix = "api/auth/";
  * these url used for admin api calls
  */
 export const AdminUrls = {
+  fetchDashboardSummary: "/admin/dashboard",
+
   fetchAllUsers: (page: number, offset: number, search: string) => {
     return `/admin/users?page=${page}&offset=${offset}&searched=${
       search ? encodeURIComponent(search) : ""

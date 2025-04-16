@@ -32,9 +32,10 @@ export const authConfig = {
       const isAdminRoute = adminRoutes.some((route) =>
         nextUrl.pathname.includes(route)
       );
+
       // const isAdminRoute = true;
       // if API route then allowed
-      if (isApiAuthRoutes) return true;
+      // if (isApiAuthRoutes) return true;
       // if not logedin and auth route then allowed
       if (!isLoggedIn && isAuthRoute) return true;
       // if logedin and auth route then redirect to the default route i.e. dashboard
