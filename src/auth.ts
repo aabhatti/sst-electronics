@@ -92,8 +92,8 @@ export const {
       if (account && user) {
         return {
           ...token,
-          accessToken: user?.accessToken || "",
-          refreshToken: user?.refreshToken || "",
+          // accessToken: user?.accessToken || "",
+          // refreshToken: user?.refreshToken || "",
           user,
         };
       }
@@ -102,8 +102,8 @@ export const {
     session: async ({ session, token }) => {
       console.log("token in session callbacks>>>>", token);
       if (token) {
-        session.accessToken = token.accessToken;
-        session.refreshToken = token.refreshToken;
+        // session.accessToken = token.accessToken;
+        // session.refreshToken = token.refreshToken;
       }
       return session;
     },
