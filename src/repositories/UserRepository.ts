@@ -3,7 +3,7 @@ import mongoose, {
   Document,
   Model,
   ClientSession,
-  PipelineStage,
+  // PipelineStage,
 } from "mongoose";
 import { User } from "../models/User";
 import { InternalServerError } from "../../errors";
@@ -111,7 +111,7 @@ class UserRepository {
       throw new InternalServerError(UserMessages.FAILED_TO_FIND_USER);
     }
   }
-  async findByAggregation(aggregator: PipelineStage[]): Promise<any[]> {
+  async findByAggregation(aggregator: []): Promise<any[]> {
     try {
       return await UserRecord.aggregate(aggregator).exec();
     } catch (err) {
