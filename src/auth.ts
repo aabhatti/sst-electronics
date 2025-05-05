@@ -2,8 +2,8 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { authConfig } from "./auth.config";
 import { loginSchema } from "@/utils/zodValidations";
-import { loginUser } from "./usecases/auth/loginUser";
-import { UserRepository } from "./repositories/UserRepository";
+// import { loginUser } from "./usecases/auth/loginUser";
+// import { UserRepository } from "./repositories/UserRepository";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import {
@@ -12,13 +12,14 @@ import {
   googleClientId,
   googleClientSecret,
 } from "./config";
-import { getRefreshTokens, login } from "./lib/actions/auth.actions";
+import { login } from "./lib/actions/auth.actions";
 import { decryptData } from "../utils/encryptDecrypt";
 import { verifyAccessToken, verifyRefreshToken } from "../utils/jwt";
-import { refreshToken } from "./usecases/auth/refreshToken";
+// import { refreshToken } from "./usecases/auth/refreshToken";
 import { isObject } from "lodash";
 import moment from "moment";
-import { loginUserWithEmail } from "./usecases/auth/loginUserWithEmail";
+// import { loginUserWithEmail } from "./usecases/auth/loginUserWithEmail";
+import { handleRefreshToken } from "./lib/handlers/auth.handlers";
 
 interface IUser {
   id?: string;
@@ -98,28 +99,27 @@ export const {
     jwt: async ({ token, account, user }) => {
       if (account && user) {
         if (user.email && !user.accessToken) {
-          try {
-            // Use the email from Google/Github to fetch/generate your tokens
-            const email = user.email.toString();
-            const resp = await loginUserWithEmail(email, {
-              userRepository: new UserRepository(),
-            });
-
-            if (resp && resp.token && resp.refreshToken && resp.userInfo) {
-              const { token: accessToken, refreshToken } = resp;
-              return {
-                ...token,
-                accessToken,
-                refreshToken,
-                user: resp.userInfo,
-              };
-            }
-          } catch (err: any) {
-            console.error("OAuth login token generation error:", err);
-            throw new Error(
-              err?.message?.toString() || "internal server error"
-            );
-          }
+          // try {
+          //   // Use the email from Google/Github to fetch/generate your tokens
+          //   const email = user.email.toString();
+          //   const resp = await loginUserWithEmail(email, {
+          //     userRepository: new UserRepository(),
+          //   });
+          //   if (resp && resp.token && resp.refreshToken && resp.userInfo) {
+          //     const { token: accessToken, refreshToken } = resp;
+          //     return {
+          //       ...token,
+          //       accessToken,
+          //       refreshToken,
+          //       user: resp.userInfo,
+          //     };
+          //   }
+          // } catch (err: any) {
+          //   console.error("OAuth login token generation error:", err);
+          //   throw new Error(
+          //     err?.message?.toString() || "internal server error"
+          //   );
+          // }
         } else {
           const accessToken = user.accessToken || "";
           const refreshToken = user.refreshToken || "";
@@ -144,16 +144,10 @@ export const {
           if (rJwtToken && isObject(rJwtToken) && rJwtToken.id) {
             const isExpired = currentTime > rJwtToken.expiredAt;
             if (isExpired) return token;
-
-            const newTokens = await refreshToken(
-              {
-                id: rJwtToken.id,
-                expiredAt: rJwtToken.expiredAt,
-              },
-              {
-                userRepository: new UserRepository(),
-              }
-            );
+            const newTokens = await handleRefreshToken({
+              id: rJwtToken.id,
+              expiredAt: rJwtToken.expiredAt,
+            });
 
             token = {
               ...token,

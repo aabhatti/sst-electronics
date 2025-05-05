@@ -112,7 +112,7 @@ export async function login(formData: ILoginInput) {
 export async function getRefreshTokens(refreshToken: string) {
   try {
     const config = configMap[apiNames.refreshTokens];
-    return await ExecuteHttpRequest(config, null, false, { refreshToken });
+    return await ExecuteHttpRequest(config, {}, false, { refreshToken });
   } catch (error: any) {
     console.log("error in getRefreshTokens catch>>");
     throw error;
