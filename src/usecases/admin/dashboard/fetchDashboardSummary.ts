@@ -5,6 +5,7 @@ import { InstallmentRepository } from "@/repositories/InstallmentRepository";
 import { UserRepository } from "@/repositories/UserRepository";
 import { IJwtPayload } from "@/utils/interfaces";
 import { NotFound } from "../../../../errors";
+import { Types } from "mongoose";
 
 interface FetchDashboardSummaryDeps {
   userRepository: UserRepository;
@@ -43,13 +44,17 @@ async function fetchDashboardSummary(
   }: FetchDashboardSummaryDeps
 ): Promise<FetchDashboardSummaryResponse> {
   const user = await userRepository.findById(jwt.id);
-  console.log("user>>>", user);
   if (!(user && user.email)) {
     throw new NotFound(GenericMessages.UNABLE_TO_FIND_RECORD);
   }
   const isAdmin = allowedAdmins?.includes(user.email);
 
   const pipeline: any[] = [
+    {
+      $match: {
+        $expr: { $ne: ["$paidInstallments", "$noOfInstallments"] },
+      },
+    },
     {
       $group: {
         _id: null,
@@ -100,22 +105,15 @@ async function fetchDashboardSummary(
     },
   ];
 
-  if (isAdmin) {
+  if (!isAdmin) {
     pipeline.unshift({
       $match: {
-        $expr: { $ne: ["$paidInstallments", "$noOfInstallments"] },
-      },
-    });
-  } else {
-    pipeline.unshift({
-      $match: {
-        userId: user.id,
+        userId: user.id ? new Types.ObjectId(user.id) : null,
       },
     });
   }
 
   const result = await dealRepository.findByAggregation(pipeline);
-
   return {
     code: HttpStatusCode.OK,
     message: GenericMessages.RECORD_FETCHED_SUCCESSFULLY,

@@ -47,11 +47,12 @@ export const handleFetchDashboardSummary = async ({
     if (resp?.status === HttpStatusCode.UNAUTHORIZED) {
       handleLogout();
     }
+
     if (resp && resp.status === HttpStatusCode.OK) {
       setData((prev) => ({
         ...prev,
         loading: false,
-        data: resp.data || {},
+        data: resp.data || null,
       }));
     } else {
       setData((prev) => ({
