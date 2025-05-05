@@ -10,6 +10,7 @@ const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 const allowedAdmins = process.env.ADMINS?.split(",");
+const loginKey = process.env.LOGIN_KEY || "";
 
 export {
   serverUrl,
@@ -18,4 +19,5 @@ export {
   githubClientId,
   githubClientSecret,
   allowedAdmins,
+  loginKey,
 };

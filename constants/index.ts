@@ -224,6 +224,7 @@ const authApi = {
   register: "/auth/register",
   login: "/auth/login",
   refresh: "/auth/refresh",
+  emailLogin: "/auth/login/email",
 };
 
 const adminApi = {

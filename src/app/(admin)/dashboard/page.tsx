@@ -61,7 +61,7 @@ const Dashboard = () => {
           </div>
         )}
 
-        {data?.data && Object.keys(data.data).length > 0 && (
+        {!data?.loading && data?.data && Object.keys(data.data).length > 0 && (
           <div className="flex items-center justify-center -m-5 p-6 gap-4 flex-wrap">
             {Object.keys(dashboardValues).map((key: string) => (
               <div

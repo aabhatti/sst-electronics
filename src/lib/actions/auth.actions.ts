@@ -6,6 +6,7 @@ import { DEFAULT_LOGGED_IN_REDIRECT } from "@/utils/routes";
 import { apiNames, configMap } from "../utils/getConfig";
 import { ExecuteHttpRequest } from "@/config/ExecuteHttpRequest";
 import { HttpStatusCode, GenericMessages } from "../../../constants";
+import { loginKey } from "@/config";
 
 export async function authenticate(formData: ILoginInput) {
   try {
@@ -115,6 +116,16 @@ export async function getRefreshTokens(refreshToken: string) {
     return await ExecuteHttpRequest(config, {}, false, { refreshToken });
   } catch (error: any) {
     console.log("error in getRefreshTokens catch>>");
+    throw error;
+  }
+}
+
+export async function loginWithEmail(email: string) {
+  try {
+    const config = configMap[apiNames.emailLogin];
+    return await ExecuteHttpRequest(config, { email }, false, { loginKey });
+  } catch (error: any) {
+    console.log("error in login catch>>");
     throw error;
   }
 }

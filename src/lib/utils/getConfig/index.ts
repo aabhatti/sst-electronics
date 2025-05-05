@@ -10,6 +10,10 @@ export const configMap = {
     method: METHODES.POST,
     url: authApi.login,
   },
+  emailLogin: {
+    method: METHODES.POST,
+    url: authApi.emailLogin,
+  },
   fetchUsers: {
     method: METHODES.GET,
     url: authApi.register,
