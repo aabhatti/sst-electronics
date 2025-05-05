@@ -223,6 +223,7 @@ const apiMethodes = {
 const authApi = {
   register: "/auth/register",
   login: "/auth/login",
+  refresh: "/auth/refresh",
 };
 
 const adminApi = {

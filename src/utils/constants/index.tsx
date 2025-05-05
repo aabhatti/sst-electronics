@@ -7,6 +7,7 @@ export const HTTP_STATUS_CODE = {
   BAD_REQUEST: 400,
   NOT_EXECUTE: 210,
   NOT_FOUND: 404,
+  UN_AUTHORIZE: 401,
   Expectation_Failed: 417,
   CONFLICT: 409,
 };

@@ -17,25 +17,20 @@ interface ResponseData {
 
 export const ExecuteHttpRequest = async (
   config: Config,
-  payload?: any | null,
-  isPublic = false
+  payload?: any | {},
+  isPublic = false,
+  optionalHeaders: Record<string, string> = {}
 ): Promise<ResponseData> => {
-  let headers: Record<string, any> = {};
-
-  // If it's not public, you can add authorization logic
-  if (!isPublic) {
-    headers = getAuthorizationToken();
-  }
-
   try {
-    // Properly typed Axios request
-    const response: AxiosResponse<ResponseData> = await instance[config.method](
-      config.url,
-      payload || {},
-      {
-        headers,
-      }
-    );
+    const headers = isPublic
+      ? {}
+      : await getAuthorizationToken(optionalHeaders);
+    const response: AxiosResponse<ResponseData> = await instance.request({
+      method: config.method,
+      url: config.url,
+      data: payload || {},
+      headers,
+    });
 
     if (isValidResponse(response)) {
       const responseCode = response.data.code;

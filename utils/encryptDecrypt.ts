@@ -19,12 +19,9 @@ const encryptData = (data: any): string => {
 const decryptData = (data: string): any => {
   try {
     if (!data) return "";
-    console.log("data in decryptData>>>", data);
     const decrypted = CryptoJS.AES.decrypt(data, securitykey || "").toString(
       CryptoJS.enc.Utf8
     );
-    console.log("decrypted in decryptData>>>", decrypted);
-
     return JSON.parse(decrypted);
   } catch (err) {
     console.log("err in decryptData>>>", err);

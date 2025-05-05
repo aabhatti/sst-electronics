@@ -14,7 +14,7 @@ export async function fetchInstallments({
 }: IFetchWithPageOffsetSearchParams) {
   try {
     const url = AdminUrls.fetchAllInstallments(page, offset, search);
-    return await ExecuteHttpRequest({ method: METHODES.GET, url }, true);
+    return await ExecuteHttpRequest({ method: METHODES.GET, url });
   } catch (error: any) {
     throw new Error(error);
   }
@@ -24,8 +24,7 @@ export async function createInstallment(data: ICreateInstallmentInput) {
   try {
     return await ExecuteHttpRequest(
       { method: METHODES.POST, url: AdminUrls.createInstallment },
-      data,
-      true
+      data
     );
   } catch (error: any) {
     throw new Error(error);

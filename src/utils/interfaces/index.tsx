@@ -81,6 +81,15 @@ interface IFetchWithPageOffsetSearchParams {
   search: string;
   offset: number;
 }
+
+interface IJwtPayload {
+  id: string;
+  email?: string;
+  role?: string;
+  expiredAt?: number;
+  // Add any other claims in your JWT payload
+}
+
 export type {
   ILoginInput,
   IRegisterInput,
@@ -92,4 +101,5 @@ export type {
   UsersState,
   IFetchUsersParams,
   IFetchWithPageOffsetSearchParams,
+  IJwtPayload,
 };

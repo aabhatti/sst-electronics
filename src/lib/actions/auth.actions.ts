@@ -108,3 +108,13 @@ export async function login(formData: ILoginInput) {
     throw error;
   }
 }
+
+export async function getRefreshTokens(refreshToken: string) {
+  try {
+    const config = configMap[apiNames.refreshTokens];
+    return await ExecuteHttpRequest(config, null, false, { refreshToken });
+  } catch (error: any) {
+    console.log("error in getRefreshTokens catch>>");
+    throw error;
+  }
+}

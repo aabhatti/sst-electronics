@@ -6,7 +6,7 @@ import { METHODES } from "@/utils/constants";
 export async function fetchDashboardSummary() {
   try {
     const url = AdminUrls.fetchDashboardSummary;
-    return await ExecuteHttpRequest({ method: METHODES.GET, url }, true);
+    return await ExecuteHttpRequest({ method: METHODES.GET, url });
   } catch (error: any) {
     console.log("error in  fetchDashboardSummary server>>>", error);
     throw new Error(error);

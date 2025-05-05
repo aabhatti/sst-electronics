@@ -65,9 +65,12 @@ class UserRepository {
     }
   }
 
-  async findOne(id: string | null): Promise<User | null> {
+  async findOne(
+    condition: { [key: string]: string } | {},
+    select: string = "-password -salt -refreshToken"
+  ): Promise<User | null> {
     try {
-      const record = await UserRecord.findById(id).exec();
+      const record = await UserRecord.findOne(condition).select(select).exec();
       if (record) {
         return new User(record);
       }

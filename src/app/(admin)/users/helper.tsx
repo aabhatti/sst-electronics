@@ -21,6 +21,7 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { formatDate } from "@/utils/parser";
+import { handleLogout } from "@/lib/actions/auth.actions";
 
 interface ICreateUsersParams {
   data: ICreateUserInput;
@@ -155,6 +156,9 @@ export const handleFetchUsers = async ({
   try {
     setData((prev) => ({ ...prev, loading: true }));
     const resp = await fetchUsers({ page, offset: OFFSET, search });
+    if (resp?.status === HttpStatusCode.UNAUTHORIZED) {
+      handleLogout();
+    }
     if (resp.status === HttpStatusCode.OK) {
       setData((prev) => ({
         ...prev,

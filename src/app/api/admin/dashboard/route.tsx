@@ -3,18 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { InstallmentRepository } from "@/repositories/InstallmentRepository";
 import { DealRepository } from "@/repositories/DealRepository";
 import { fetchDashboardSummary } from "@/usecases/admin/dashboard/fetchDashboardSummary";
+import { authGuard } from "@/lib/guard/authGuard";
+import { UserRepository } from "@/repositories/UserRepository";
 
 connection();
-export async function GET(req: NextRequest) {
-  try {
-    const resp = await fetchDashboardSummary({
-      installmentRepository: new InstallmentRepository(),
-      dealRepository: new DealRepository(),
-    });
+export const GET = authGuard(async (_: NextRequest, jwt: any) => {
+  const resp = await fetchDashboardSummary(jwt, {
+    userRepository: new UserRepository(),
+    installmentRepository: new InstallmentRepository(),
+    dealRepository: new DealRepository(),
+  });
 
-    return NextResponse.json({ ...resp }, { status: 200 });
-  } catch (err: any) {
-    console.log("err", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
-  }
-}
+  return NextResponse.json({ ...resp }, { status: 200 });
+});

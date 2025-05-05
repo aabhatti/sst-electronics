@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import {
   dashboardValues,
+  formateAmountRupees,
   handleFetchDashboardSummary,
   initialValues,
 } from "./helper";
@@ -29,6 +30,10 @@ const Dashboard = () => {
     [handleRefresh]
   );
 
+  const formateValue = (key: string, value: any) =>
+    formateAmountRupees.includes(key)
+      ? `RS: ${value || 0}/-`
+      : `${value || ""}`;
   return (
     <>
       <div className="flex flex-col flex-1 overflow-auto">
@@ -56,27 +61,27 @@ const Dashboard = () => {
           </div>
         )}
 
-        {data?.data &&
-          data.data.summary &&
-          Object.keys(data.data.summary).length > 0 && (
-            <div className="flex items-center justify-center -m-5 p-6 gap-4">
-              {Object.keys(data.data.summary).map((key) => (
-                <div
-                  key={key}
-                  className={`card flex-1 flex flex-col items-center justify-center ${
-                    (dashboardValues && dashboardValues[key]?.bg) || ""
-                  }`}
-                >
-                  <h3 className="text-2xl font-bold mb-2">
-                    {(dashboardValues && dashboardValues[key]?.name) || key}
-                  </h3>
-                  <p className="text-lg">{`RS: ${data.data?.summary[key]}/-`}</p>
-                </div>
-              ))}
-            </div>
-          )}
+        {data?.data && Object.keys(data.data).length > 0 && (
+          <div className="flex items-center justify-center -m-5 p-6 gap-4 flex-wrap">
+            {Object.keys(dashboardValues).map((key: string) => (
+              <div
+                key={key}
+                className={`card flex-1 flex flex-col items-center justify-center min-w-fit ${
+                  (dashboardValues && dashboardValues[key]?.bg) || ""
+                }`}
+              >
+                <h3 className="text-2xl font-bold mb-2">
+                  {(dashboardValues && dashboardValues[key]?.name) || key}
+                </h3>
+                <p className="text-[24px]">
+                  {formateValue(key, (data.data && data.data[key]) || "")}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
 
-        {data?.data &&
+        {/* {data?.data &&
           data.data.deal &&
           Object.keys(data.data.deal).length > 0 && (
             <div className="flex items-center justify-center -m-5 p-6 gap-4">
@@ -114,7 +119,7 @@ const Dashboard = () => {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
       </div>
     </>
   );

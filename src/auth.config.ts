@@ -10,16 +10,14 @@ import {
 import { allowedAdmins } from "./config";
 
 export const authConfig = {
-  // pages: {
-  //   signIn: "/login",
-  // },
+  pages: {
+    signIn: "/login",
+  },
   session: {
     strategy: "jwt",
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      console.log("auth>>>>>> and >>>>>>>>", auth, nextUrl);
-
       const isLoggedIn = !!auth?.user?.id || !!auth?.user?.email;
       const isAdmin = auth?.user?.email
         ? allowedAdmins?.includes(auth?.user?.email)
@@ -35,7 +33,7 @@ export const authConfig = {
 
       // const isAdminRoute = true;
       // if API route then allowed
-      // if (isApiAuthRoutes) return true;
+      if (isApiAuthRoutes) return true;
       // if not logedin and auth route then allowed
       if (!isLoggedIn && isAuthRoute) return true;
       // if logedin and auth route then redirect to the default route i.e. dashboard

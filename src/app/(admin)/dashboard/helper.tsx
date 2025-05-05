@@ -1,23 +1,22 @@
+import { handleLogout } from "@/lib/actions/auth.actions";
 import { HttpStatusCode } from "../../../../constants";
 // import { error, success } from "@/components/shared/alert";
 import { fetchDashboardSummary } from "@/lib/actions/dashboard.actions";
 
-interface Summary {
-  [key: string]: number;
-}
+// interface Summary {
+//   [key: string]: number;
+// }
 
-interface Installment {
-  [key: string]: number;
-}
+// interface Installment {
+//   [key: string]: number;
+// }
 
-interface Deal {
-  [key: string]: number;
-}
+// interface Deal {
+//   [key: string]: number;
+// }
 
 interface Data {
-  summary: Summary;
-  installment: Installment;
-  deal: Deal;
+  [key: string]: number;
 }
 
 interface StateData {
@@ -45,7 +44,10 @@ export const handleFetchDashboardSummary = async ({
   try {
     setData((prev) => ({ ...prev, loading: true }));
     const resp = await fetchDashboardSummary();
-    if (resp.status === HttpStatusCode.OK) {
+    if (resp?.status === HttpStatusCode.UNAUTHORIZED) {
+      handleLogout();
+    }
+    if (resp && resp.status === HttpStatusCode.OK) {
       setData((prev) => ({
         ...prev,
         loading: false,
@@ -58,6 +60,7 @@ export const handleFetchDashboardSummary = async ({
       }));
     }
   } catch (err) {
+    console.log("err handleFetchDashboardSummary>>>", err);
     setData((prev) => ({ ...prev, loading: false }));
   }
 };
@@ -70,42 +73,45 @@ interface DashboardValuesType {
 }
 
 export const dashboardValues: DashboardValuesType = {
-  totalAmountInvest: {
-    name: "Total Amount Investment",
+  totalDealOpen: {
+    name: "Total Deals Open",
     bg: "bg-info-light",
   },
-  totalAmountReceived: {
-    name: "Total Amount Received",
-    bg: "bg-success-light",
+  totalDueInstallments: {
+    name: "Total Due Installments",
+    bg: "bg-primary-light",
   },
   totalAmountPending: {
     name: "Total Amount Due",
     bg: "bg-danger-light",
   },
 
-  totalNoOfInstallments: {
-    name: "Total no of Installments",
-    bg: "bg-info-light",
-  },
-  totalPaidInstallments: {
-    name: "Total Paid Installments",
-    bg: "bg-success-light",
-  },
-  totalDueInstallments: {
-    name: "Total Due Installments",
-    bg: "bg-danger-light",
-  },
+  // totalAmountInvest: {
+  //   name: "Total Amount Investment",
+  //   bg: "bg-info-light",
+  // },
+  // totalAmountReceived: {
+  //   name: "Total Amount Received",
+  //   bg: "bg-success-light",
+  // },
 
-  totalNoOfDeal: {
-    name: "Total No Of Deals",
-    bg: "bg-info-light",
-  },
-  totalDealClose: {
-    name: "Total Deals Closed",
-    bg: "bg-success-light",
-  },
-  totalDealOpen: {
-    name: "Total Deals Open",
-    bg: "bg-danger-light",
-  },
+  // totalNoOfInstallments: {
+  //   name: "Total no of Installments",
+  //   bg: "bg-info-light",
+  // },
+  // totalPaidInstallments: {
+  //   name: "Total Paid Installments",
+  //   bg: "bg-success-light",
+  // },
+
+  // totalNoOfDeal: {
+  //   name: "Total No Of Deals",
+  //   bg: "bg-info-light",
+  // },
+  // totalDealClose: {
+  //   name: "Total Deals Closed",
+  //   bg: "bg-success-light",
+  // },
 };
+
+export const formateAmountRupees: [key: string] = ["totalAmountPending"];

@@ -3,11 +3,6 @@ import { UserRepository } from "../../repositories/UserRepository";
 import { Conflict, BadRequest } from "../../../errors";
 import { GenericMessages, UserMessages } from "../../../constants";
 
-interface IUser {
-  email: string;
-  password: string;
-}
-
 interface IUserResp {
   id: string;
   token: string | undefined;
@@ -18,20 +13,14 @@ interface LoginUserDeps {
   userRepository: UserRepository;
 }
 
-async function loginUser(
-  body: IUser,
+async function loginUserWithEmail(
+  email: string,
   { userRepository }: LoginUserDeps,
   session?: ClientSession | undefined
 ): Promise<IUserResp | null> {
-  const { email, password } = body;
-
   let user = await userRepository.findByEmail(email);
   if (!user) {
     throw new Conflict(UserMessages.FAILED_TO_FIND_USER);
-  }
-
-  if (!user?.validatePassword(password)) {
-    throw new BadRequest(GenericMessages.INVALID_EMAIL_OR_PASSWORD);
   }
 
   const tokens = user.generateTokens({});
@@ -44,6 +33,10 @@ async function loginUser(
 
   const userInfo = user?.toUserInfo();
 
-  return { ...tokens, userInfo, id: "" };
+  return {
+    ...tokens,
+    userInfo,
+    id: "",
+  };
 }
-export { loginUser };
+export { loginUserWithEmail };

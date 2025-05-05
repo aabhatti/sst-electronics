@@ -14,6 +14,11 @@ export const configMap = {
     method: METHODES.GET,
     url: authApi.register,
   },
+
+  refreshTokens: {
+    method: METHODES.GET,
+    url: authApi.refresh,
+  },
 };
 
 // Define apiNames as a strongly typed object

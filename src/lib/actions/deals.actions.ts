@@ -14,7 +14,7 @@ export async function fetchDeals({
 }: IFetchWithPageOffsetSearchParams) {
   try {
     const url = AdminUrls.fetchAllDeals(page, offset, search);
-    return await ExecuteHttpRequest({ method: METHODES.GET, url }, true);
+    return await ExecuteHttpRequest({ method: METHODES.GET, url });
   } catch (error: any) {
     throw new Error(error);
   }
@@ -24,8 +24,7 @@ export async function createDeal(data: ICreateDealInput) {
   try {
     return await ExecuteHttpRequest(
       { method: METHODES.POST, url: AdminUrls.createDeal },
-      data,
-      true
+      data
     );
   } catch (error: any) {
     throw new Error(error);
@@ -35,7 +34,7 @@ export async function createDeal(data: ICreateDealInput) {
 export async function fetchDealsByUserId(userId: string) {
   try {
     const url = AdminUrls.fetchDealsByUserId(userId);
-    return await ExecuteHttpRequest({ method: METHODES.GET, url }, true);
+    return await ExecuteHttpRequest({ method: METHODES.GET, url });
   } catch (error: any) {
     throw new Error(error);
   }
