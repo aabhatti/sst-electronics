@@ -20,6 +20,7 @@ const UserSchema = z.object({
   lastName: z.string().optional(),
   name: z.string().optional().default(""),
   email: z.string().email(),
+  role: z.string().default("user"),
   cnic: z.string().optional().default(""),
   mobile: z.string().optional(),
   address: z.string().optional(),
@@ -38,6 +39,7 @@ interface IUser {
   lastName?: string | undefined;
   name: string;
   email: string;
+  role: string;
   cnic?: string | undefined;
   mobile?: string | undefined;
   address?: string | undefined;
@@ -56,6 +58,7 @@ class User {
   lastName?: string;
   name: string;
   email: string;
+  role: string;
   cnic?: string;
   mobile?: string;
   address?: string;
@@ -74,6 +77,7 @@ class User {
     this.lastName = parsed.lastName;
     this.name = parsed.name;
     this.email = parsed.email;
+    this.role = parsed.role;
     this.cnic = parsed.cnic || "";
     this.mobile = parsed.mobile;
     this.address = parsed.address;
@@ -92,7 +96,7 @@ class User {
     expiredAt?: string | number | undefined;
   }) {
     if (!expiredAt) {
-      expiredAt = moment().add(48, "hours").valueOf();
+      expiredAt = moment().add(24, "hours").valueOf();
     }
 
     return {
@@ -117,7 +121,7 @@ class User {
       firstName: this.firstName,
       lastName: this.lastName,
       name: this.name,
-      role: UserConstants.USER,
+      role: this.role,
     });
   }
 
@@ -128,6 +132,7 @@ class User {
       firstName: this.firstName,
       lastName: this.lastName,
       name: this.name,
+      role: this.role,
     });
   }
 
@@ -136,7 +141,7 @@ class User {
       id: this.id,
       email: this.email,
       password,
-      role: UserConstants.USER,
+      role: this.role,
     });
   }
 
@@ -147,6 +152,7 @@ class User {
       firstName: this.firstName,
       lastName: this.lastName,
       name: this.name,
+      role: this.role,
     };
   }
 
@@ -154,6 +160,7 @@ class User {
     return {
       id: this.id,
       email: this.email,
+      role: this.role,
       firstName: this.firstName,
       lastName: this.lastName,
       name: this.name,

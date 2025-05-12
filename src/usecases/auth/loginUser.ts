@@ -26,11 +26,8 @@ async function loginUser(
   const { email, password } = body;
 
   let user = await userRepository.findByEmail(email);
-  if (!user) {
-    throw new Conflict(UserMessages.FAILED_TO_FIND_USER);
-  }
 
-  if (!user?.validatePassword(password)) {
+  if (!user || !user?.validatePassword(password)) {
     throw new BadRequest(GenericMessages.INVALID_EMAIL_OR_PASSWORD);
   }
 

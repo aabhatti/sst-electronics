@@ -3,7 +3,11 @@ import isEmpty from "lodash/isEmpty";
 import { UserRepository } from "../../repositories/UserRepository";
 import { IUser, User } from "../../models/User";
 import { Conflict, InternalServerError } from "../../../errors";
-import { UserMessages, HttpStatusCode } from "../../../constants";
+import {
+  UserMessages,
+  HttpStatusCode,
+  UserConstants,
+} from "../../../constants";
 
 interface RegisterUserDeps {
   userRepository: UserRepository;
@@ -25,6 +29,7 @@ async function registerUser(
     lastName: body?.lastName,
     name: `${body?.firstName || ""} ${body?.lastName || ""}`,
     email: body.email,
+    role: UserConstants.USER,
   });
 
   if (body.password) creatingUser.setPassword(body.password);

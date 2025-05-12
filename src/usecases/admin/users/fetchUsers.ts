@@ -4,6 +4,7 @@ import {
   UserMessages,
   HttpStatusCode,
   OFFSET_LIMIT,
+  UserConstants,
 } from "../../../../constants";
 import { getPaginationWithTotalCountFacet } from "../../../../utils/facet";
 import {
@@ -45,7 +46,9 @@ async function fetchUsers(
     : 0;
 
   let obj: any = {};
-  let condition: any = {};
+  let condition: any = {
+    role: UserConstants.USER,
+  };
 
   if (searched) {
     const dateSearch = getDatesSearchCondition(searched);

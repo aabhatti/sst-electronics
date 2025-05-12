@@ -3,7 +3,11 @@ import isEmpty from "lodash/isEmpty";
 import { UserRepository } from "../../../repositories/UserRepository";
 import { User, IUser } from "../../../models/User";
 import { Conflict, InternalServerError } from "../../../../errors";
-import { UserMessages, HttpStatusCode } from "../../../../constants";
+import {
+  UserMessages,
+  HttpStatusCode,
+  UserConstants,
+} from "../../../../constants";
 
 interface CreateDeps {
   userRepository: UserRepository;
@@ -45,6 +49,7 @@ async function createUser(
     cnic: cnic || "",
     mobile: mobile || "",
     address: address || "",
+    role: UserConstants.USER,
   });
 
   let userCreation = await userRepository.save(creatingUser, session);
